@@ -1,5 +1,2 @@
-# Master Theses at NTNU
-
-This repository contains information about the Masters theses at NTNU.
-
-An example of an individual thesis can be found as a clonable template at  MACS-thesis-NTNU.  
+# IMT4904 Master Thesis Report
+LaTex repository for my Master thesis @ Gjøvik University College/ NTNU Gjøvik.
