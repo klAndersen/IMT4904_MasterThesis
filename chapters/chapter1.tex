@@ -1,0 +1,68 @@
+%\chapter{Introduction}
+\label{chap:introduction}
+
+\section{Topic covered/Research area}
+\label{sec:topic_covered}
+The goal of this thesis is to research and analyse coding questions posted on StackOverflow. Since most systems developed and researched focuses on finding good answers, 
+it would be interesting to see if it was possible to develop a system that could analyse and predict good questions. To narrow down the field, the focus here will only 
+be on programming and coding questions. Therefore StackOverflow was selected. StackOverflow is a part of the StackExchange community, where each branch is related to 
+a specific field with domain experts. Questions (and answers) can be ranked high or low by being given votes. Questions can also be closed for various reasons (e.g. 
+duplicate, off topic, unclear, etc) \cite{Stackoverflow.com2016a}. 
+%% This gives a lot of options on how to analyse the available data.
+\newline
+To be able to analyse questions, an \gls{ai} system was developed by using the \gls{svm} library LIBSVM. The data used for the training was XML dumps of the StackOverflow 
+database \cite{StackExchange2016}.
+\newline
+\ldots write more here\ldots
+
+\section{Problem description}
+\label{sec:problem_description}
+Question-answering is today a field where the main focus is on finding answers that best matches the given question, regardless of the quality of the question asked. 
+However, there is not a lot of research being done related to how to improve the quality of the question people asks. In both higher education ( Bachelor, Master and Ph.d.) 
+and research, the first step is to define one or more questions to describe the problem being solved. For students (and researchers), this can easily become a tedious task. 
+What if there was a system that could give a prediction on the quality of your question?
+
+\section{Research questions}
+\label{sec:research_questions}
+
+\begin{itemize}
+	\item What defines a good (coding) question?
+	\item Can we predict if a new question will be defined as a good question by use of \gls{svm}?
+	\item If a question has a lot of good answers, does this influence the rating of the question? 
+	(e.g. question-answers with well formatted code snippets)
+	\item Can the results of the \gls{svm} be improved if the feature set is using more complex values\footnote{		
+		Perhaps not the best formulation, but basically the question is whether or not there would be any improvement to 
+		the analysis if one added additional measurements. E.g. if de-facto is to only use question sentence, what happens 
+		if length and symbol (e.g. smileys, question marks, etc.) measurements were added? Could it then predict more 
+		accurately whether or not this was a good question?		
+		}?
+\end{itemize}
+
+\section{Methodology to be used}
+\label{sec:methodology_to_use}
+
+\section{Justification, Motivation and Benefits}
+\label{sec:justification}
+One can draw comparison between academic peer-review and the peer-review done within the StackExchange community. The posted content is read, scored and given feedback. 
+Based on that feedback, users can then choose to update or edit their question (or answer). Therefore, using both the data and the answers as resources are completely 
+valid. LIBSVM is a library that has been used both in research and education, and there should therefore be no problems with presented results and its quality (\textit{will add
+references here to papers using libsvm}). Using sigmoid threshold because the interest lie within whether or not it is a good question, and not the classification of why it is 
+a bad question.
+\newline
+There is not a lot of research or resources related to asking and defining good questions. With this research, a system can be developed that can not only give your question a 
+score, but in the future also point out which parts of the question are bad. The system can be used both by researchers and students to improve their question quality and learn 
+to be better at asking questions. This in turn will be beneficial for the work/research they are doing.
+
+
+\section{Limitations}
+\label{sec:limitations}
+Amount of time available; e.g. processing of questions from dataset. libsvm is large and thus would require a lot of time if fine tuning were needed. not all the available 
+data from the dataset can be tested
+
+\section{Thesis contribution}
+\label{sec:thesis_contribution}
+Research what the users of StackOverflow sees as good questions and use this to create a system for predicting good coding questions.
+
+\section{Thesis structure}
+\label{sec:thesis_structure}
+\textit{summary of the thesis; e.g. in Chapter \ref{chap:chapter2} previous research is presented, in Chapter \ref{chap:chapter6} a conclusion is made.}

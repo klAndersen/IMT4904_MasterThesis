@@ -1,0 +1,69 @@
+%% Use short name MACS MIS, CIMET, MTDMT, and if you are doing MMT or MIS  the language,  english or norwegian
+\documentclass[MACS,english,a4paper,oneside]{ntnuthesis/ntnuthesis}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}     % For utf8 encoded .tex files allows norwegian characters in the files. This can be dangerous if you change to a differnt editor.
+\usepackage[pdftex]{graphicx, hyperref}   % For cross references in pdf
+\usepackage{color}              % For colouring text 
+\hypersetup{colorlinks=true,     
+	linkcolor=blue,          % color of internal links (change box color with linkbordercolor)
+	citecolor=blue,        % color of links to bibliography
+	filecolor=blue,      % color of file links
+	urlcolor=blue           % color of external links
+}
+\usepackage{csvsimple}  % for simple table reading and display
+\usepackage{url}
+
+%% added by me
+	
+	% acronyms, abbreviations, etc.
+	\usepackage[section,numberedsection=autolabel,acronym]{glossaries}
+	\usepackage{makeidx}
+	
+	% Generate the glossary; must be called after hyperref
+	\makeindex
+	\makeglossaries
+		
+	\input{../header/acronyms}
+
+\begin{document}
+	
+	\input{../header/MastersThesisData} % this is the file which contains all the details about your thesis
+	\makefrontpages % make the frontpages
+	
+	\input{../header/MastersIntro}
+	
+	\tableofcontents
+	
+	\hypersetup{pageanchor=true}
+	
+	% Comment with a percent to remove figures or tables:
+	\listoffigures
+	\listoftables
+	
+	
+	%% Chapter list
+	\chapter{Introduction}
+	\input{../chapters/chapter1} 
+	
+	\chapter{State of the art}
+	\input{../chapters/chapter2} 
+	
+	\chapter{Methodology}
+	\input{../chapters/chapter3} 
+	
+	\chapter{chapter4}
+	\input{../chapters/chapter4} 
+	
+	\chapter{Discussions}
+	\input{../chapters/chapter5} 
+	
+	\chapter{Conclusion/Summary}
+	\input{../chapters/chapter6} 
+	
+	% bibliography
+	\bibliographystyle{ntnuthesis/ntnuthesis}
+	\bibliography{../chapters/IMT4904_klAndersen}
+	
+	\input{../appendix/appendix}
+\end{document}
