@@ -98,11 +98,83 @@ ROWS IDENTIFIED BY '<row>';
 
 \section{Development process} 
 \label{sec:libsvm_implementation}
-program development \\
-library choices \\
-implementation of scikit-learn \\
-issues during development, etc
+When starting the development, most of the focus was on retrieving the data from the database, and being able 
+to process it for text analysis. 
 
+The main problem was that all the questions contained HTML, starting with the 
+<p> tag, as shown in Listing \ref{lst:unprocessed_question}.
+
+\begin{lstlisting}[caption={Question before processing (Question ID: 941156)}, label={lst:unprocessed_question}] 
+<p>
+Why do we need callbacks in ASP.NET or any server side technology?
+</p>&#xA;&#xA;<p>One answer can be, to achieve asynchronous calls. 
+</p>&#xA;&#xA;<p>But I am not satisfied with this answer.</p>
+&#xA;&#xA;<p>Please explain it in a different way.
+</p>
+&#xA;
+\end{lstlisting}
+
+
+program development \\
+issues with setting up environment, installations, etc \\
+library choices: scikitlearn, pandas, bs4, etc \\
+implementation of scikit-learn \\
+issues during development, etc \\
+changed from aug to march dataset to get more data \\
+switching from -10/+50 to -5/+50 to get more separation (and more results for bad) \\
+switching from "good"/"bad" to +/-1 for class label (bcz libsvm)
+
+
+\begin{comment}
+	Timeline:
+		1. Created retrieval method for bad questions from db
+			1.1. Using pandas to store data retrieved from db
+		2. Added HTML class to remove tags
+			Source: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
+			Accepted answer: "answered May 29 '09 at 11:47 Eloff"
+			And comment to this answer by 'pihentagyu aka James Doepp' (May 21 '15 at 17:49)
+		3. Tutorial by: \url{http://radimrehurek.com/data_science_python/}
+		4. Removal of codeblocks from the question
+			4.1 Using BeatifulSoup to processes tags without end-tags			
+			4.2 Issues with losing the tail (text after codeblock); attaching it to parent
+			4.3 Issue "NoneType + str: TypeError". Caused by parent not having tail. 
+				Fixed by adding a .tail and setting it to '' on the <parent>.
+			4.4 HTML w/ XML causing issues; parser fails (because parser was also xml, adding xml 
+				to beginning of text). Example: \url{http://stackoverflow.com/questions/19535331/print-page-specific-area-or-element}
+			4.5 Filtering out questions that failed by adding their index to a temp list, and then 
+				removing them from dataset
+		5. Issue: Scikit-learn documentation is for v17.1, whereas I was using developer version v18.0
+		   (part of the issue was that it wasn't installable, so it was installed from GitHub repo instead)
+		   considered switching to libsvm (which wasn't installable through pypi in the beginning)
+		6. Instead of removing codeblocks, the text 'has\_codeblock' was added to indicate code was used
+			6.1 Stored the processed questions to .csv
+		7. Discovered data missing in some questions by looking at the CSV. 
+		   Some <code> snippetes weren't removed. Content found after EOF
+		   Issue 4.4 was fixed by removing all lxml conversion and using bs4 instead
+		8. Questions start with <p>, this was removed by setting all text to be on one line
+		9. Removal of numeric and hexadecimal values from text. Issue with trash data, e.g:
+			\url{http://stackoverflow.com/questions/856307/wordwrap-a-very-long-string}
+		10. Trash data: Using NLTK, NLTK.WordNet and enchant
+			10.1 Tested out WordNet, could not discover english words. Does not contain all english words
+			10.2 Tested out enchant, but could not in all cases either discover all english words
+			10.3 Using Porter stemming to reduce features
+			10.? \url{http://www.irfanelahi.com/data-science-document-classification-python/#Lexical-
+			Analysis-of-the-Text-Data}
+			10.? Setting min\_df=0.01 (ignore those occuring in less then 1\%) - helped a lot 
+		11. Stemming of data, model creation and gridsearch with SGD			
+		12. Model based on 20,000 samples (10k good, 10k bad) - took approx ~3hours for both models
+			Model 1 was for all data (no test set). Model 2 was based on train\_test\_split
+		13. Added tags column to the used dataset. Added the unprocessed dataset (but html is removed)
+		14. Tested out different SVM algorithms (SVC, SGD and LinearSVC)
+			Issue was that I managed to overwrite the .csv, so I had to do everything over again
+			took approximately 24-36 hours to complete (+ 3days before hand to make everything run smoothly).
+		15. Attempted to use optparse, argparse to make it executable. 
+			Problem is that it exits after command is run. Need it to continue running to be able to:
+				a) create new (or load existing) model
+				b) use model from a) to predict quality of entered question (rinse/repeat)
+		16. Used while loop instead (loop until exit entered). shortcuts are the same as with argparse, but 
+			without the '-' in front (e.g. instead of -e, just press 'e' to exit)
+\end{comment}
 
 \section{Feature sets, attributes and processing}
 \label{sec:feature_sets}
