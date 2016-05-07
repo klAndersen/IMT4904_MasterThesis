@@ -24,20 +24,20 @@ to be outdated, the latest dataset was downloaded from (\url{https://archive.org
 \begin{lstlisting}[caption={Content in stackoverflow.com-Tags.xml}, label={lst:so_xml_file}] 
 <?xml version="1.0" encoding="utf-8"?>
 <tags>
-<row Id="1" TagName=".net" Count="227675" ExcerptPostId="3624959" 
-WikiPostId="3607476" />
-<row Id="2" TagName="html" Count="511091" ExcerptPostId="3673183" 
-WikiPostId="3673182" />
+<row Id="1" TagName=".net" Count="227675" 
+ExcerptPostId="3624959" WikiPostId="3607476" />
+<row Id="2" TagName="html" Count="511091" 
+ExcerptPostId="3673183" WikiPostId="3673182" />
 ...
 </tags>
 \end{lstlisting}
 
 \subsection{MySQL Database}
 In the beginning, the issue was getting access to the file and see how it looked like. Since most of these XML 
-files had a large file size (ranging from 3,9 MB to 71,9 GB) none of the editors could open them. Attempting to open 
-them through Python code also failed, since there was not enough memory to process everything. The only solution 
-was therefore to create a MySQL database that could contain all the data. 
-
+files had a large file size (ranging from 3,9 MB to 71,9 GB) none of the editors could open them. Attempting to 
+open them through Python code also failed, since there was not enough memory to process everything. The only 
+solution was therefore to create a MySQL database that could contain all the data. 
+\vspace{0.5em}\newline
 Setting up the MySQL database was not a straight forward process. The operative system I was running was Arch 
 Linux, where they had switched from using Oracle's MySQL to MariaDB\footnote{See 
 	\url{https://wiki.archlinux.org/index.php/MySQL}.}. One of the main problems was the available storage 
@@ -47,29 +47,30 @@ space\footnote{The HDD with Arch Linux installed had a disk size of 500 GB, with
 and connection loss (e.g. "Error Code: 2013. Lost connection to MySQL server during query"). To avoid losing 
 the connection to the database, the timeout values had to be changed in MySQL Workbench 
 (shown in Figure \ref{fig:mysql_wb_settings}).
-
+% figure showing the settings for MySQL Workbench timeout values
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{mysql_wb_settings}
 	\caption{MySQL Workbench: Setting timeout values to avoid connection loss}
 	\label{fig:mysql_wb_settings}
 \end{figure}
+% space
 
+\noindent
 The next problem was the lack of disk space. MySQL by default stores all databases and belonging tables in 
- /var/lib/mysql/, and it also creates temporary backup files (where the file size is equal to the size of the 
- current database). Since the default folder for temporary files was on /root, the disk space was used up in 
- less than 30 minutes. Therefore, two things needed to be done. First, disable the storage of temporary files, 
- and secondly change the storage location for the database. The problem when tinkering with the configuration 
- file is that things easily break. Which is what happened, and a clean install was needed for both 
- MariaDB and MySQL (the changed settings can be seen in Listing  \ref{lst:mariadb_config_file}). The final step 
- was to create symbolic links that linked the database to the 
- location where the tables where stored (this has to be done before creating the tables, if not MySQL 
- Workbench will store the tables in /var/lib/mysql/)\footnote{It should be noted that after an upgrade of 
- 	MariaDB, MySQL and MariaDB could no longer find the tables, even if they still were in the /home/mysql/ 
- 	 folder. It is therefore advisable to dump the database after inserting all the tables, since it goes a lot 
- 	 faster to restore the database from dump rather than insertion from XML files.}. 
-
-
+/var/lib/mysql/, and it also creates temporary backup files (where the file size is equal to the size of the 
+current database). Since the default folder for temporary files was on /root, the disk space was used up in 
+less than 30 minutes. Therefore, two things needed to be done. First, disable the storage of temporary files, 
+and secondly change the storage location for the database. The problem when tinkering with the configuration 
+file is that things easily break. Which is what happened, and a clean install was needed for both 
+MariaDB and MySQL (the changed settings can be seen in Listing  \ref{lst:mariadb_config_file}). The final step 
+was to create symbolic links that linked the database to the  location where the tables where stored (this 
+has to be done before creating the tables, if not MySQL  Workbench will store the tables in 
+/var/lib/mysql/)\footnote{It should be noted that after an upgrade of MariaDB, MySQL and MariaDB could no 
+longer find the tables, even if they still were in the /home/mysql/ folder. It is therefore advisable to dump 
+the database after inserting all the tables, since it goes a lot faster to restore the database from dump 
+rather than insertion from XML files.}. 
+% listing of changes made to config file (MariaDB)
 \begin{lstlisting}[caption={Changes made to config file: /etc/mysql/my.cnf}, label={lst:mariadb_config_file}] 
 # disable storage of temporary files
 #tmpdir = /tmp/		  
@@ -80,14 +81,6 @@ The next problem was the lack of disk space. MySQL by default stores all databas
 datadir = /home/mysql 
 \end{lstlisting}
 
-Listing \ref{lst:load_xml_file} shows how the files were loaded into the tables, and the complete database can 
-be seen in Appendix \ref{app:mysql_database}, p.~\pageref{app:mysql_database}. Since the Posts table is large 
-(\textasciitilde 29,5 million rows) and it contains both questions and answers, two new tables were created; 
-"posvote\_Posts"\footnote{The Posts table has a file size of \textasciitilde 43,6 GB, whereas posvote\_Posts file 
-	size is \textasciitilde 11,2 GB. negvote\_Posts has a file size of \textasciitilde 1,33 GB.} and 
-"negvote\_Posts". posvote\_Posts contains questions with a score higher then zero (score > 0) and negvote\_Posts 
-contains all questions with a score lower then zero (score < 0).
-
 % Listing showing the SQL for loading XML row data into MySQL
 \begin{lstlisting}[caption={Load XML file into a table in the MySQL database}, label={lst:load_xml_file}] 
 LOAD XML LOCAL INFILE 
@@ -96,15 +89,31 @@ INTO TABLE db_table
 ROWS IDENTIFIED BY '<row>';
 \end{lstlisting}
 
+\noindent
+Listing \ref{lst:load_xml_file} shows how the files were loaded into the tables, and the complete database can 
+be seen in Appendix \ref{app:mysql_database}, p.~\pageref{app:mysql_database}. Since the Posts table is large 
+(\textasciitilde 29,5 million rows) and it contains both questions and answers, two new tables were created; 
+"posvote\_Posts"\footnote{The Posts table has a file size of \textasciitilde 43,6 GB, whereas posvote\_Posts file 
+	size is \textasciitilde 11,2 GB. negvote\_Posts has a file size of \textasciitilde 1,33 GB.} and 
+"negvote\_Posts". posvote\_Posts contains questions with a score higher then zero (score > 0) and negvote\_Posts 
+contains all questions with a score lower then zero (score < 0).
+
 \section{Development process} 
 \label{sec:libsvm_implementation}
-When starting the development, most of the focus was on retrieving the data from the database, and being able 
-to process it for text analysis. 
+When starting the development, the focus was on retrieving the data from the database, and processing it for 
+text analysis. To be able to store all the retrieved columns and the belonging rows without creating object 
+classes, the pandas.DataFrame\footnote{Pandas: \url{http://pandas.pydata.org/}.} was used. 
+% add something a bit more detailed about pandas; what makes it good, etc.
 
-The main problem was that all the questions contained HTML, starting with the 
-<p> tag, as shown in Listing \ref{lst:unprocessed_question}.
-
-\begin{lstlisting}[caption={Question before processing (Question ID: 941156)}, label={lst:unprocessed_question}] 
+The questions retrieved needed to be processed before any analysis could be done. The reason for this is because 
+the questions was written as HTML (including HTML entities). An example is shown in Listing 
+\ref{lst:unprocessed_question}. Every question starts with the <p> tag, and if the question contains code 
+samples, these are wrapped with a <code> tag. To convert the HTML text into readable text, a HTML parser class 
+was created (based on answer by \cite{Eloff2009}).
+\newpage\noindent
+% listing with question before HTML is removed
+\begin{lstlisting}[caption={Question before HTML is removed (Question ID: 941156)}, 
+label={lst:unprocessed_question}, basicstyle=\small] 
 <p>
 Why do we need callbacks in ASP.NET or any server side technology?
 </p>&#xA;&#xA;<p>One answer can be, to achieve asynchronous calls. 
@@ -113,24 +122,59 @@ Why do we need callbacks in ASP.NET or any server side technology?
 </p>
 &#xA;
 \end{lstlisting}
+% space
+
+\noindent
+To process the questions, CountVectorizer from scikit-learn was used. CountVectorizer uses the vocabulary found 
+in the text and counts the frequency of each word \cite{Scikitlearn.org2016b} \cite[4.2.3]{Scikitlearn.org2016}. 
+When looking at this vocabulary, a lot of of un-important words was found (a lot which came from the code 
+samples) provided in some of the questions. At first all code samples were removed from the text, but later on 
+they were replaced with the value 'has\_codeblock', indicating that this question contained one or more code 
+ samples. This was achieved by using a combination of lxml\footnote{lxml: \url{http://lxml.de/}} and 
+bs4\footnote{BeatifulSoup: \url{https://www.crummy.com/software/BeautifulSoup/}} (BeatifulSoup). lxml was used 
+to construct an XML tree containing all the tags (to be able to retrieve the content by searching for a given 
+tag), and bs4 was used for beautifying the HTML (since in some cases an error was thrown complaining about 
+"Missing end tag").
+\vspace{0.5em}\newline
+However, for some questions, part of the text was lost, and for others, some <code> tags was not removed. 
+On inspection, it was found that the trailing text following the <code> samples was stored in a .tail attribute. 
+Since the <code> was removed, the .tail attribute was also removed. This was fixed by storing the the content 
+of the <code> .tail attribute into its <parent>\footnote{It was also necessary to check if the 
+	<parent> had a .tail, if not, the .tail attribute had to be set for the <parent> to avoid the error: 
+	"NoneType + str: TypeError".} (where <parent> is the tag that contained the given <code></code>) .tail 
+attribute. As for the non-complete removal of <code> tags, this error mostly occurred for code samples that 
+contained XML or HTML code\footnote{One example is this question: \\
+	\url{http://stackoverflow.com/questions/19535331/print-page-specific-area-or-element}.}, because the lxml 
+parser failed. The solution was to replace the lxml parser with bs4 and just change the content of the <code> 
+tag to the value 'has\_codeblock'.
+\vspace{0.5em}\newline
+Considering the size of the dataset, and that the source code was hosted on GitHub, I was hesitant to store 
+the training data in a separate file. However, when loading 20,000 samples from the database with a 'WHERE' 
+parameter, things tend to go more slow. At this point, it was decided to try to dump the loaded data from the 
+database to a file. This was achieved by using pandas.DataFrame.to\_csv\footnote{pandas.DataFrame.to\_csv: \\
+	\url{http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html}.}. At a later point, 
+the unprocessed dataset was also dumped to a CSV file for replicability\footnote{The only change made to the 
+	unprocessed dataset was removing the HTML tags.}.
+\vspace{0.5em}\newline
 
 
-program development \\
-issues with setting up environment, installations, etc \\
-library choices: scikitlearn, pandas, bs4, etc \\
-implementation of scikit-learn \\
-issues during development, etc \\
-changed from aug to march dataset to get more data \\
-switching from -10/+50 to -5/+50 to get more separation (and more results for bad) \\
-switching from "good"/"bad" to +/-1 for class label (bcz libsvm)
-
+Removal of numeric and hexadecimal values from text. Issue with trash data, e.g: \\
+\url{http://stackoverflow.com/questions/856307/wordwrap-a-very-long-string} \\
+ Trash data: Using NLTK, NLTK.WordNet and enchant \\
+ Tested out WordNet, could not discover english words. Does not contain all english words \\
+ Tested out enchant, but could not in all  \\
+ Setting min\_df=0.01 (ignore those occuring in less then 1\%) - helped a lot \\
+ Started training with SGD \\
+ Tested out different SVM algorithms (SVC, SGD and LinearSVC) \\
+ Making it executable; e.g. started with opt/argparse, therefore shortcuts are (almost) the same
 
 \begin{comment}
 	Timeline:
 		1. Created retrieval method for bad questions from db
 			1.1. Using pandas to store data retrieved from db
 		2. Added HTML class to remove tags
-			Source: http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
+			Answer source: \url{http://stackoverflow.com/a/925630}
+			Source: \url{http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python}
 			Accepted answer: "answered May 29 '09 at 11:47 Eloff"
 			And comment to this answer by 'pihentagyu aka James Doepp' (May 21 '15 at 17:49)
 		3. Tutorial by: \url{http://radimrehurek.com/data_science_python/}
@@ -140,7 +184,8 @@ switching from "good"/"bad" to +/-1 for class label (bcz libsvm)
 			4.3 Issue "NoneType + str: TypeError". Caused by parent not having tail. 
 				Fixed by adding a .tail and setting it to '' on the <parent>.
 			4.4 HTML w/ XML causing issues; parser fails (because parser was also xml, adding xml 
-				to beginning of text). Example: \url{http://stackoverflow.com/questions/19535331/print-page-specific-area-or-element}
+				to beginning of text). Example: 
+				\url{http://stackoverflow.com/questions/19535331/print-page-specific-area-or-element}
 			4.5 Filtering out questions that failed by adding their index to a temp list, and then 
 				removing them from dataset
 		5. Issue: Scikit-learn documentation is for v17.1, whereas I was using developer version v18.0
@@ -174,6 +219,19 @@ switching from "good"/"bad" to +/-1 for class label (bcz libsvm)
 				b) use model from a) to predict quality of entered question (rinse/repeat)
 		16. Used while loop instead (loop until exit entered). shortcuts are the same as with argparse, but 
 			without the '-' in front (e.g. instead of -e, just press 'e' to exit)
+			
+		Additional Notes (which might be relevant for the next section):
+		
+			- issues with setting up environment, installations, etc
+			- switching from "good"/"bad" to +/-1 for class label (bcz libsvm)
+			- switching from -10/+50 to -5/+50 to get more separation (and more results for bad)
+			
+		Potentially useful links:
+		
+		http://billchambers.me/tutorials/2015/01/14/python-nlp-cheatsheet-nltk-scikit-learn.html
+		http://stackoverflow.com/questions/28064634/random-state-pseudo-random-numberin-scikit-learn
+		http://stackoverflow.com/questions/35382657/my-pipeline-configuration-for-text-classification-using-
+		sklearn-in-python
 \end{comment}
 
 \section{Feature sets, attributes and processing}
