@@ -1,68 +1,119 @@
 %\chapter{Introduction}
 \label{chap:introduction}
 
-\section{Topic covered/Research area}
+\section{Topic}
 \label{sec:topic_covered}
-The goal of this thesis is to research and analyse coding questions posted on StackOverflow. Since most systems developed and researched focuses on finding good answers, 
-it would be interesting to see if it was possible to develop a system that could analyse and predict good questions. To narrow down the field, the focus here will only 
-be on programming and coding questions. Therefore StackOverflow was selected. StackOverflow is a part of the StackExchange community, where each branch is related to 
-a specific field with domain experts. Questions (and answers) can be ranked high or low by being given votes. Questions can also be closed for various reasons (e.g. 
-duplicate, off topic, unclear, etc) \cite{Stackoverflow.com2016a}. 
-%% This gives a lot of options on how to analyse the available data.
-\newline
-To be able to analyse questions, an \gls{ai} system was developed by using the \gls{svm} library LIBSVM. The data used for the training was XML dumps of the StackOverflow 
-database \cite{StackExchange2016}.
-\newline
-\ldots write more here\ldots
+StackOverflow is a part of the StackExchange community, where each community is related to a specific field with 
+ domain experts. However, a requirement is that the questions are of good quality \cite{Stackoverflow.com2016c, 
+ 	 Stackoverflow.com2016d, Stackoverflow.com2016e}. Through peer-review, the quality of questions are filtered 
+  by using votes. If a question is good, it gets up-voted, if it is bad, it gets down-voted. The votes is only 
+   for the current question, but they still have an impact on the user, by use of reputation 
+   \cite{Stackoverflow.com2016b}. If a question is bad, it can be closed or deleted (e.g. duplicate, off topic, 
+  unclear, etc) \cite{Stackoverflow.com2016a}. 
+\vspace{0.5em}\newline
+The goal of this thesis is to research and analyse coding questions posted on StackOverflow. Most systems focus 
+on finding good answers for the question asked, and not if it is a good question. It would therefore 
+be interesting to see if it was possible to develop a system that could predict the quality of a question before 
+posting it on StackOverflow.
 
 \section{Problem description}
 \label{sec:problem_description}
-Question-answering is today a field where the main focus is on finding answers that best matches the given question, regardless of the quality of the question asked. 
-However, there is not a lot of research being done related to how to improve the quality of the question people asks. In both higher education ( Bachelor, Master and Ph.d.) 
-and research, the first step is to define one or more questions to describe the problem being solved. For students (and researchers), this can easily become a tedious task. 
-What if there was a system that could give a prediction on the quality of your question?
+Many systems focus on finding the answer matching the users question, and not on the quality of the question 
+ asked. Many users have a negative view on StackOverflow due to their questions being down-voted or closed, 
+because they simply do not meet the standard. Being able to ask a question that is considered good would be 
+ helpful both to the community and the user, since it would help the user be better at asking questions. 
+Furthermore, this could also be used in education to help computer science students improve their 
+questions when seeking help.
+
+%What if there was a system that could give a prediction on the quality of your question?
 
 \section{Research questions}
 \label{sec:research_questions}
 
 \begin{itemize}
 	\item What defines a good (coding) question?
-	\item Can we predict if a new question will be defined as a good question by use of \gls{svm}?
-	\item If a question has a lot of good answers, does this influence the rating of the question? 
-	(e.g. question-answers with well formatted code snippets)
-	\item Can the results of the \gls{svm} be improved if the feature set is using more complex values\footnote{		
-		Perhaps not the best formulation, but basically the question is whether or not there would be any improvement to 
-		the analysis if one added additional measurements. E.g. if de-facto is to only use question sentence, what happens 
-		if length and symbol (e.g. smileys, question marks, etc.) measurements were added? Could it then predict more 
-		accurately whether or not this was a good question?		
-		}?
+	\item Can we predict a questions quality by using \gls{svm}?
+	\item What type of features increases the accuracy of the \gls{svm}?
 \end{itemize}
 
 \section{Methodology to be used}
 \label{sec:methodology_to_use}
+To be able to solve this problem, one needs to understand how text classification is done, and what methods 
+others have used for this. A requirement is also to have a dataset that contains the questions that have 
+been asked on StackOverflow. This is achieved by using the dataset that is available through StackExchanges 
+archive\footnote{StackExchange dataset: \url{https://archive.org/details/stackexchange} \\ (Downloaded 30. 
+	March 2016).} \cite{StackExchange2016}. Stackoverflow was started in 2008, meaning it now contains 
+approximately 8 years of data, which has been continuously reviewed by domain experts. 
+\vspace{0.5em}\newline
+Considering the size of the dataset and the amount of questions that are posted on StackOverflow, going through 
+all questions manually would be to big a job for such a limited timeframe. Therefore only a selected amount of 
+questions was looked at to get an overview to see if it was possible to see any differences between good and 
+bad questions. 
+\vspace{0.5em}\newline
+To analyse more questions a program was developed in Python, based on \gls{svm}. Since \gls{svm} is complex, the 
+library scikit-learn \cite{PedregosaVaroquauxGramfortEtAl2011} was used. In the beginning the word quality was 
+tested by using term frequency, and at the end feature detectors were developed to see if it was possible to 
+further enhance accuracy.
+\vspace{0.5em}\newline
+To be able to have proper backup, and also be able to see the development process, the program was uploaded 
+to a GitHub repository\footnote{GitHub repository: 
+	 \url{https://github.com/klAndersen/IMT4904_MasterThesis_Code}}. In addition to 
+the source code, the repository also contains an SQL script for creating the database tables\footnote{Note that 
+	this only creates the database and the table structures, it does not contain any of the StackOverflow data}, 
+the sampled dataset that was used (.csv file) and the created \gls{svm} models.
+
+\begin{comment}
+write something about how dataset was processed, e.g. started with N features, then n, then M, etc.
+Originally, I used a dataset that was downloaded in August 2015, but found that this was to outdated.
+\end{comment}
 
 \section{Justification, Motivation and Benefits}
 \label{sec:justification}
-One can draw comparison between academic peer-review and the peer-review done within the StackExchange community. The posted content is read, scored and given feedback. 
-Based on that feedback, users can then choose to update or edit their question (or answer). Therefore, using both the data and the answers as resources are completely 
-valid. LIBSVM is a library that has been used both in research and education, and there should therefore be no problems with presented results and its quality (\textit{will add
-references here to papers using libsvm}). Using sigmoid threshold because the interest lie within whether or not it is a good question, and not the classification of why it is 
-a bad question.
-\newline
-There is not a lot of research or resources related to asking and defining good questions. With this research, a system can be developed that can not only give your question a 
-score, but in the future also point out which parts of the question are bad. The system can be used both by researchers and students to improve their question quality and learn 
-to be better at asking questions. This in turn will be beneficial for the work/research they are doing.
-
+The quality of a question is based on the votes given by the users of the StackOverflow community. Therefore the 
+vote score was used 
+ to label the question as either good (score > 0) or bad (score < 0). This is justified by the fact that 
+ you can draw a comparison between the peer-review process used in academia and the peer-review process used 
+ in StackOverflow. The process starts with someone posting a question, which is then read, scored and given 
+ feedback (through comments or answers). The feedback can then improve the question through edits by the poster, 
+ based on the feedback given 
+ (e.g. adding additional information or explaining how the given problem(s) occurred).
+\vspace{0.5em}\newline
+Scikit-learns \gls{svm} implementation is based on libsvm \cite{ChangLin2011}, but it is simpler to use. 
+In addition, scikit-learn focuses on code quality\footnote{Coverage on their GitHub repository was 94\% on 
+	06. May 2015.}, to ensure that everything works as it should \cite[p.~3]{PedregosaVaroquauxGramfortEtAl2011}.
+\vspace{0.5em}\newline
+It is not a lot of research being done related to asking and defining good questions. Although the focus is only 
+on programming questions, it can still be useful to improve question quality. Even if you cannot predict if it is 
+a good question, you can still avoid asking a bad questions. This in turn can help to
+improve the question quality (at least acceptability), and avoid asking questions that will be closed or ignored on 
+StackOverflow.
 
 \section{Limitations}
 \label{sec:limitations}
-Amount of time available; e.g. processing of questions from dataset. libsvm is large and thus would require a lot of time if fine tuning were needed. not all the available 
-data from the dataset can be tested
-
+The greatest limitation is the time available. The total dataset has a size of 141,8 GB (but that is for all the 
+ StackOverflow data, not just the questions). Filling the database, retrieving the relevant questions and 
+ training the \gls{svm} takes time\footnote{Between 2-3 hours after feature reduction}. Furthermore, it also 
+ takes a lot of time to read through questions and look for differences between good and bad questions. 
+Developed feature detectors may not have that much impact on accuracy, which means more time must be used on 
+re-training and finding other features that can be of interest.
+ 
 \section{Thesis contribution}
 \label{sec:thesis_contribution}
-Research what the users of StackOverflow sees as good questions and use this to create a system for predicting good coding questions.
+This thesis contribution can be summarized as to the following: Predicting (programming) question quality by 
+ using \gls{ai} and \gls{ml} to improve the questions quality. Stackoverflow was started in 2008, which means 
+ that it now contains approximately 8 years of data, which has been continuously reviewed and judged by domain 
+ experts. Yet, many still fails at asking the good questions. Many are of course ignored or down-voted because 
+ they are interpreted as homework, but there are also a lot of users that just do not know how to ask a good 
+ question. Hopefully this research can help with that, so that future users (and students) can benefit to 
+ improve the quality of their questions.
 
 \section{Thesis structure}
 \label{sec:thesis_structure}
-\textit{summary of the thesis; e.g. in Chapter \ref{chap:chapter2} previous research is presented, in Chapter \ref{chap:chapter6} a conclusion is made.}
+The following is the structure of this thesis:
+\begin{itemize}
+	\item Chapter \ref{chap:chapter2}: State of the art and relevant research
+	\item Chapter \ref{chap:chapter3}: Methodology 
+	\item Chapter \ref{chap:chapter4}: (unused placeholder)
+	\item Chapter \ref{chap:chapter5}: Discussion on development, the thesis and limitations
+	\item Chapter \ref{chap:chapter6}: Conclusion and suggestions for further work
+\end{itemize}

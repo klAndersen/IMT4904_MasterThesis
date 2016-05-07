@@ -1,17 +1,112 @@
 %\chapter{Methodology}
 \label{chap:chapter3}
 
-\section{\glsentrylong{svm} (\glsentryshort{svm})}
-\label{sec:svm}
-this might either be a) removed or b) merged with section below
+\section{Dataset and MySQL Database}
+\label{sec:dataset_db}
 
-\section{LIBSVM Implementation}
+\subsection{Dataset}
+The dataset contains all information that is currently available in the StackExchange community 
+(at the time the dataset was created). The following is a list of the tables found in the dataset:
+\begin{itemize}
+	\item Badges: Badges awarded to users.
+	\item Comments: Comments given either to a question or an answer.
+	\item Posts: Posts on StackExchange, this contains both questions and answers.
+	\item Posthistory: The history of a given post (e.g. edits, reason for closing, etc.).
+	\item Postlinks: Link to other Posts (e.g. duplicates).
+	\item Users: Information about the given user registered at the given community.
+	\item Votes: Type of vote given to a Post (e.g. up/down, vote to close, etc.).
+\end{itemize}
+In the beginning, the dataset that was used was downloaded in August 2015. However, since this turned out 
+to be outdated, the latest dataset was downloaded from (\url{https://archive.org/details/stackexchange}) on 
+30. March 2016. The dataset comes in zip-files, where each zip-file contains all the rows found in the given 
+ table. These rows are presented in an XML file, as shown in Listing \ref{lst:so_xml_file}.
+% listing
+\begin{lstlisting}[caption={Content in stackoverflow.com-Tags.xml}, label={lst:so_xml_file}] 
+<?xml version="1.0" encoding="utf-8"?>
+<tags>
+<row Id="1" TagName=".net" Count="227675" ExcerptPostId="3624959" 
+WikiPostId="3607476" />
+<row Id="2" TagName="html" Count="511091" ExcerptPostId="3673183" 
+WikiPostId="3673182" />
+...
+</tags>
+\end{lstlisting}
+
+\subsection{MySQL Database}
+In the beginning, the issue was getting access to the file and see how it looked like. Since most of these XML 
+files had a large file size (ranging from 3,9 MB to 71,9 GB) none of the editors could open them. Attempting to open 
+them through Python code also failed, since there was not enough memory to process everything. The only solution 
+was therefore to create a MySQL database that could contain all the data. 
+
+Setting up the MySQL database was not a straight forward process. The operative system I was running was Arch 
+Linux, where they had switched from using Oracle's MySQL to MariaDB\footnote{See 
+	\url{https://wiki.archlinux.org/index.php/MySQL}.}. One of the main problems was the available storage 
+space\footnote{The HDD with Arch Linux installed had a disk size of 500 GB, with four partitions; root, var, 
+	swap and home. 40 GB was used for /root and /var, 12 GB was used for swap and the remainder was used for 
+	/home.} and the varying file sizes. Some of the issues were mainly connection timeout, no more disk space 
+and connection loss (e.g. "Error Code: 2013. Lost connection to MySQL server during query"). To avoid losing 
+the connection to the database, the timeout values had to be changed in MySQL Workbench 
+(shown in Figure \ref{fig:mysql_wb_settings}).
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{mysql_wb_settings}
+	\caption{MySQL Workbench: Setting timeout values to avoid connection loss}
+	\label{fig:mysql_wb_settings}
+\end{figure}
+
+The next problem was the lack of disk space. MySQL by default stores all databases and belonging tables in 
+ /var/lib/mysql/, and it also creates temporary backup files (where the file size is equal to the size of the 
+ current database). Since the default folder for temporary files was on /root, the disk space was used up in 
+ less than 30 minutes. Therefore, two things needed to be done. First, disable the storage of temporary files, 
+ and secondly change the storage location for the database. The problem when tinkering with the configuration 
+ file is that things easily break. Which is what happened, and a clean install was needed for both 
+ MariaDB and MySQL (the changed settings can be seen in Listing  \ref{lst:mariadb_config_file}). The final step 
+ was to create symbolic links that linked the database to the 
+ location where the tables where stored (this has to be done before creating the tables, if not MySQL 
+ Workbench will store the tables in /var/lib/mysql/)\footnote{It should be noted that after an upgrade of 
+ 	MariaDB, MySQL and MariaDB could no longer find the tables, even if they still were in the /home/mysql/ 
+ 	 folder. It is therefore advisable to dump the database after inserting all the tables, since it goes a lot 
+ 	 faster to restore the database from dump rather than insertion from XML files.}. 
+
+
+\begin{lstlisting}[caption={Changes made to config file: /etc/mysql/my.cnf}, label={lst:mariadb_config_file}] 
+# disable storage of temporary files
+#tmpdir = /tmp/		  
+# disable storage of log files
+#log-bin = mysql-bin  
+
+# set directory for storing database files
+datadir = /home/mysql 
+\end{lstlisting}
+
+Listing \ref{lst:load_xml_file} shows how the files were loaded into the tables, and the complete database can 
+be seen in Appendix \ref{app:mysql_database}, p.~\pageref{app:mysql_database}. Since the Posts table is large 
+(\textasciitilde 29,5 million rows) and it contains both questions and answers, two new tables were created; 
+"posvote\_Posts"\footnote{The Posts table has a file size of \textasciitilde 43,6 GB, whereas posvote\_Posts file 
+	size is \textasciitilde 11,2 GB. negvote\_Posts has a file size of \textasciitilde 1,33 GB.} and 
+"negvote\_Posts". posvote\_Posts contains questions with a score higher then zero (score > 0) and negvote\_Posts 
+contains all questions with a score lower then zero (score < 0).
+
+% Listing showing the SQL for loading XML row data into MySQL
+\begin{lstlisting}[caption={Load XML file into a table in the MySQL database}, label={lst:load_xml_file}] 
+LOAD XML LOCAL INFILE 
+path_to_xml_file
+INTO TABLE db_table
+ROWS IDENTIFIED BY '<row>';
+\end{lstlisting}
+
+\section{Development process} 
 \label{sec:libsvm_implementation}
-basically an explanation as to how libsvm was used in this thesis
+program development \\
+library choices \\
+implementation of scikit-learn \\
+issues during development, etc
+
 
 \section{Feature sets, attributes and processing}
 \label{sec:feature_sets}
 what features were selected and why? \\
-how was data processed (e.g. retrieved from db, converted to libsvm format, and so forth) \\
+how was data processed (e.g. retrieved from db, converted to scikit-learn format, and so forth) \\
 attributes: length, symbols, question sentence only, code snippet, votes, closed, etc.
 

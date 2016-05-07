@@ -1,6 +1,50 @@
 % \addcontentsline{toc}{chapter}{Abstract}
 \chapter*{Abstract}
 
-This is a summary of the thesis including the conclusion of what was discovered.
+%This is a summary of the thesis including the conclusion of what was discovered.
+
+% write messy notes now, cleanup afterwards; ignore if its too much in this round..
+
+When you have a question you need an answer to, the solution many uses is to go online and use Google or another 
+type of search engine. However, the degree of difficulty in regards to finding an answer varies with the problem 
+you need an answer to. Today, the Internet offers a wide range of resources to acquire new knowledge, everything 
+ from encyclopaedias to blogs, forums and Question-Answer communities. However, when you are writing code, or 
+  developing complex programs, it can be easy to get stuck and not figure out why something stopped working. 
+\vspace{0.5em}\newline
+Depending on the complexity of the problem, the only solution might be to go to an online community for help. 
+One such community is StackExchange (consisting of 154 different communities), which is home to StackOverflow. 
+A requirement for all StackExchange sites is that questions should be of good quality. The quality of a question 
+is measured by use of votes and reputation. The votes are used to grade the question (or answer), whereas the 
+reputation belongs to the user. 
+\vspace{0.5em}\newline
+% Re-write paragraph below later on
+By using \gls{ml}, I wanted to see if it was possible to predict whether a new question would be viewed as a good
+ question on StackOverflow. This was done by using the dataset containing all posts on StackOverflow and the 
+ \gls{ml} method \gls{svm} (by using scikit-learn for Python). A lot of time was used understanding how 
+ scikit-learn worked and how to properly implement \gls{svm} to analyse the questions. 
+\vspace{0.5em}\newline
+One of the interesting finds was that the average down-vote score for 10,000 was 7. To develop the feature 
+detectors, a total of 100 good and bad questions were looked at to see if there was anything that stood out. 
+It was a lot harder to find anything significant for what was a good question, but it was easier to spot the bad 
+ questions (e.g. homework, no code-samples, no explanation to what had been done before, etc.).
+\vspace{0.5em}\newline
+% double check numbers later on to see that these are indeed correct
+Before any processing was done, the \gls{svm} had a vocabulary of 69,766 features. To reduce this amount, 
+stop-words were added (reducing to 69,462 features) and removal of numbers and hexa-decimal values (27,624). 
+The most significant change was when the document term frequency were set to 1\%, which gave a total of 440 
+features.
+
+Write something more about feature detectors, results, etc.
+
+
+
+\begin{comment}
+- Peer-review process \\
+- Duplicates \\
+- Bias \\
+- Code examples (or lack thereof) \\
+- Easier to spot bad questions \\
+- Homework is not accepted \\
+\end{comment}
 
 \hypersetup{pageanchor=false}

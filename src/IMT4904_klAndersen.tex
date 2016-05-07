@@ -15,6 +15,16 @@
 \usepackage{url}
 
 %% added by me
+	\usepackage{listings}
+	\usepackage{tikz}
+	%% include path for figures, graphics, etc
+	\graphicspath{ {../figures/} }
+	%% use tikz library for figures, nodes, images, etc.
+	\usetikzlibrary{shapes.geometric,arrows}
+	%% valid extensions for import in figures, etc.
+	\DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg,.bmp}
+	%% to be able to comment out larger sections of text
+	\usepackage{verbatim}
 	
 	% acronyms, abbreviations, etc.
 	\usepackage[section,numberedsection=autolabel,acronym]{glossaries}
