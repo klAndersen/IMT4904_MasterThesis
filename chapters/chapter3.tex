@@ -244,9 +244,61 @@ Attempting to make program runnable from command line; e.g. started with opt/arg
 
 \section{Feature sets, attributes and processing}
 \label{sec:feature_sets}
-what features were selected and why? \\
-how was data processed (e.g. retrieved from db, converted to scikit-learn format, and so forth) \\
-attributes: length, symbols, question sentence only, code snippet, votes, closed, etc.
+When retrieving the questions from the database, the vote score was set to less than -10 for bad question 
+and greater than 50 for good questions (retrieval limit set to 10,000; 20,000 total). However, the vote score 
+was set too low for the bad questions, since only 683 rows was returned. The score was then set to less than 
+-5. When using pandas.Categorical to get an statistical overview (code snippet in Listing 
+\ref{lst:pandas_categorical} and result in Table \ref{tab:pandas_categorical}), one can see that for 10,000 
+samples, the average vote score was -7. This could be an indicator that when a question has a vote score below 
+-5, they are ignored.
+
+\newpage
+\begin{lstlisting}[caption={Getting Categorical data from pandas.DataFrame}, 
+label={lst:pandas_categorical}, basicstyle=\small] 
+from pandas import DataFrame, Categorical
+
+# get statistics from pandas.DataFrame
+temp_df = __so_dataframe.loc[:, ("Score", "Body", "Title", 
+	"AnswerCount", "length")]
+temp_df.loc[:, CLASS_LABEL_KEY] = Categorical(__so_dataframe.loc[:, 
+							"label"])
+
+# prints out the questions AnswerCount, Score and length
+print(temp_df.groupby("label").describe())
+# prints all selected columns
+print(temp_df.groupby("label").describe(include='all'))
+\end{lstlisting}
+
+\begin{table}[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |c |}
+		\hline
+		Class 		& Statistics	& AnswerCount		& Score 		& Question length 	\\ \hline
+		~ 			& ~ 			& ~  				& ~ 			& ~					\\ \hline
+		% Bad Questions
+		-1 			& mean 		& 2.0483 			& -7.0275 		& 319.226 		\\ \hline
+		~ 			& std 		& 1.3129 			& 2.676 		& 382.115  		\\ \hline
+		~ 			& min 		& 0.0 				& -147.0 		& 13.0  		\\ \hline
+		~ 			& 25\% 		& 1.0 				& -7.0 			& 153.0 		\\ \hline
+		~ 			& 50\% 		& 2.0 				& -6.0 			& 239.0  		\\ \hline
+		~ 			& 75\% 		& 3.0 				& -6.0 			& 379.0  		\\ \hline
+		~ 			& max 		& 20.0 				& -6.0 			& 13673.0  		\\ \hline
+		% space
+		~ 			& ~ 		& ~  				& ~ 			& ~				\\ \hline
+		% Good Questions
+		1 			& mean 		& 11.9379 			& 182.5483 		& 459.329		\\ \hline
+		~ 			& std 		& 13.707824			& 317.47217 	& 531.187559  		\\ \hline
+		~ 			& min 		& 0.0 				& 51.0 			& 13.0  		\\ \hline
+		~ 			& 25\% 		& 6.0 				& 67.0 			& 189.0 		\\ \hline
+		~ 			& 50\% 		& 9.0 				& 96.0 			& 328.0  		\\ \hline
+		~ 			& 75\% 		& 14.0 				& 173.0 		& 558.0  		\\ \hline
+		~ 			& max 		& 518.0 			& 9432.0 		& 18867.0  		\\ \hline
+		
+	\end{tabular}
+	\caption{Results from pandas.DataFrame and pandas.Categorical. -1 is for bad questions (votes < -5), 
+		and 1 are for good questions (votes > 50).}
+	\label{tab:pandas_categorical}
+\end{table}
 
 \begin{table}[tbp]
 	\centering
@@ -266,3 +318,13 @@ attributes: length, symbols, question sentence only, code snippet, votes, closed
 	\label{tab:feature_reduction}
 \end{table}
 
+what features were selected and why? \\
+how was data processed (e.g. retrieved from db, converted to scikit-learn format, and so forth) \\
+attributes: length, symbols, question sentence only, code snippet, votes, closed, etc.
+
+\begin{itemize}
+	\item Hypothesis1
+	\item Hypothesis2
+	\item Hypothesis3
+	\item Hypothesis4
+\end{itemize}
