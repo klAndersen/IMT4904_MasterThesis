@@ -156,17 +156,25 @@ database to a file. This was achieved by using pandas.DataFrame.to\_csv\footnote
 the unprocessed dataset was also dumped to a CSV file for replicability\footnote{The only change made to the 
 	unprocessed dataset was removing the HTML tags.}.
 \vspace{0.5em}\newline
+Further examination showed that the vocabulary contained a lot of numerical and hexadecimal values, but also 
+a lot of non-English words. The numerical and hexadecimal values were replaced using regular expressions to 
+'has\_hexadecimal' and 'has\_numeric'. The non-English words were a bit more troublesome to handle, since 
+these were mainly used to prove a point or show an example of the issue they were having\footnote{ 
+	\url{http://stackoverflow.com/questions/856307/wordwrap-a-very-long-string}.}. Attempts were made to filter 
+them out by using corpus.words.words() and 
+corpus.wordnet.synset() from \gls{nltk}\footnote{\url{http://www.nltk.org/}}, and 
+PyEnchant\footnote{\url{http://pythonhosted.org/pyenchant/}}. However, WordNet does not have a complete database 
+of all English words, and they all claimed some words were not English even though they were.
+\vspace{0.5em}\newline
+The solution turned out to be a lot simpler. Instead of creating filters, the CountVectorizer already had one 
+built in. By adjusting the minimum document frequency (min\_df) and set it to 0.01, it would ignore words 
+that did not appear in less then 1\% of all documents.
 
-
-Removal of numeric and hexadecimal values from text. Issue with trash data, e.g: \\
-\url{http://stackoverflow.com/questions/856307/wordwrap-a-very-long-string} \\
- Trash data: Using NLTK, NLTK.WordNet and enchant \\
- Tested out WordNet, could not discover english words. Does not contain all english words \\
- Tested out enchant, but could not in all  \\
- Setting min\_df=0.01 (ignore those occuring in less then 1\%) - helped a lot \\
- Started training with SGD \\
- Tested out different SVM algorithms (SVC, SGD and LinearSVC) \\
- Making it executable; e.g. started with opt/argparse, therefore shortcuts are (almost) the same
+~\\
+To write: \\
+Using SGD (based on tutorials from scikit-learn) \\
+Testing out different text classification algorithms (SVC, SGD and LinearSVC) \\
+Attempting to make program runnable from command line; e.g. started with opt/argparse, ended with while loop
 
 \begin{comment}
 	Timeline:
@@ -239,4 +247,22 @@ Removal of numeric and hexadecimal values from text. Issue with trash data, e.g:
 what features were selected and why? \\
 how was data processed (e.g. retrieved from db, converted to scikit-learn format, and so forth) \\
 attributes: length, symbols, question sentence only, code snippet, votes, closed, etc.
+
+\begin{table}[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		Step & Text processing  & Vocabulary count & CountVectorizer  \\ \hline
+		1 	& None 									& 69766 	& analyzer="word" \\ \hline
+		2 	& Stop words 							& 69462 	& 
+			\shortstack{analyzer="word", \\ stop\_words="english"} \\ \hline
+		3 	& \shortstack{Removal of code, 
+			hexadecimal \\ and numerical values} 	& 27624 	& 
+			\shortstack{analyzer="word", \\ stop\_words="english"} \\ \hline
+		4 	& Minimum document frequency 			& 440 		& 
+				\shortstack{analyzer="word", min\_df=0.01, \\ stop\_words="english"} \\ \hline
+	\end{tabular}
+	\caption{Feature reduction steps before and after text was processed.}
+	\label{tab:feature_reduction}
+\end{table}
 
