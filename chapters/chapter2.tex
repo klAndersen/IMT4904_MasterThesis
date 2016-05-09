@@ -1,6 +1,10 @@
 %\chapter{State of the art}
 \label{chap:chapter2}
-summary of existing and relevant research for this thesis
+The goal of this target is to document the current state of the art technologies, and research 
+that has been done by others. This is needed to both understand how to use text classification and 
+classify questions. Furthermore, some of the papers have also done comparisons on \gls{svm} and 
+other types of \gls{ai} and \gls{ml} algorithms, which concluded that for text classification, 
+\gls{svm} had the highest accuracy.
 
 Citation list (content to come):
 \begin{itemize}
@@ -41,15 +45,50 @@ Citation list (content to come):
 	\item \cite{AhmedYangJohri2015}: stackexchange, technical vs non-technical communities activity
 \end{itemize}
 
+% could be re-phrased into "in this paper, they define question analysis with two different approaches..."
+In the paper by \cite{TobaAdrianiManurung2011}, they experiment with the use of statistical 
+learning to find the expected answer pattern for factoid \gls{qa} pairs. E.g. if you ask someone where a certain event took place, the answer pattern would be a location. They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, low precision\footnote{Low precision can occur if the feature sets are not fitted well enough during 
+	classifier training \cite[p.~283]{TobaAdrianiManurung2011}.}). Pattern-based would match 
+word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be 
+based on the accuracy of the classifier (e.g. lexical or linguistic feature sets). 
+\begin{comment}
+% this paragraph may not be relevant for this report
+The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian 
+Analogical Reasoning (BAR). Features sets are then extracted from the training set by use of binary 
+values checking if the question contains a given question word. The BAR framework then learns the 
+related features and computes the estimation for them. Thereafter \gls{qa} pairs are retrieved from 
+the testing set and compared against the training set. Afterwards, the \gls{qa} pairs that have 
+identical question words are identified, and overlapping pairs are grouped according their named 
+entity group.
+
+To retrieve named entities, they used two different recognizers. The first was Stanford (extracts the
+person, organization and location), and the second was dictionary based (extract number
+entities and fine-grained noun-based entities). 
+
+Question words were extracted by building a question word list from the training set (achieved 
+by using Stanford Part-of-Speech (POS) tagger). Then for each question, look for the appearance 
+of the question word to create the feature set.
+
+Mapped named-entities; e.g. ORGANIZATION became NEorganization.
+
+\end{comment}
+
+\cite{XuZhouWang2012}
+
+
 \section{Text classification}
 \label{sec:text_classification}
-a more general introduction to text classification and the \gls{ai} techniques used \\
-e.g. papers comparing systems to use as argument for why svm was chosen
+Text classification can be done in many different ways, since the content and size rarely will be 
+equal. The classification is also based on what you want to retrieve from the text. Do you want 
+an answer to a question, or do you want to see which documents are most relevant for the problem 
+you are currently working on (e.g. searching for research papers that are relevant to your work).
 
 \section{Question classification}
 \label{sec:question_answering}
-i'm thinking this needs to be split into sub-subsections or several sub-sections, mainly because I'm a bit unsure what I should put here \\
-the following are some examples: 
+Question classification and analysis can be seen as a sub-topic of text classification. In most 
+papers, the basis is that the user has a question they need an answer to. What is the best way 
+to find that answer, and in some cases what is the quickest way to display said answer?
+ 
 \begin{itemize}
 	\item question-answering techniques and analyses
 	\item ontology and semantics
@@ -58,4 +97,6 @@ the following are some examples:
 
 \section{\glsentrylong{svm} (\glsentryshort{svm})}
 \label{sec:svm}
-basically papers that have used (lib)svm for text classification, qa, etc
+\gls{svm} is the chosen \gls{ml} algorithm that was chosen to use for the question analysis. This 
+section is mainly intended as a light introduction to what \gls{svm} is, and what the most common 
+uses are. Furthermore, in what way can this be utilized for text and question classification?
