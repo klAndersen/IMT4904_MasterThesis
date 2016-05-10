@@ -1,0 +1,471 @@
+A Classification of Questions using SVM and Semantic Similarity Analysis 
+(Jinzhong Xu, Yanan Zhou, Yuan Wang)
+
+Question-answering (qa) system which includes question analysis, information retrieval and answer extraction. 
+Question category is an important part of the question analysis, the same goes for follow-up process, since it 
+affects the accuracy of the answer extraction. Challenging, since few language processing tools handle Chinese characters. 
+Better to classify based on the domain of the question characteristics. The developed system is a qa for tourism.
+System performance is based on accuracy of qa classification. For the application in question, svm and question semantic 
+similarity was used. The SVM was trained on coarse categories, and the question semantic similarity on the sub-categories.
+
+Original method for question classification is usually rule-based approach, where the rules decide the category.
+Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts.
+Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results.
+Another method is using statistics (e.g. by using SVM). See p. 2 for numerical values from (Zhang and Li); first paragraph.
+
+The question database was based on questions asked by the users of the existing system. Divided questions into 13 coarse 
+categories and 150 sub-categories. Coarse category was just a category identifier, whereas sub-categories was built on sentences.
+First the user question is classified into one of the 13 categories by using SVM. Thereafter it was checked if it matched 
+one of those in the sub-categories.
+
+SVM explanation on p. 2, Section IV. 
+Used RBF kernel in this experiment. Notes that the selection and organization of features is the main issue when working 
+with classification. Features and feature space can have a significant impact on both accuracy and efficiency of the classifier.
+Compared with rule-based, question features for a specific domain can have greater benefits. To improve performance, the 
+classification must improve the question characteristics. Their feature selection was based on semantic analysis and lexical analysis.
+They also needed to add a step for word segmentation and Part-Of-Speech (POS) tagging (since it was Chinese text processing).
+
+To improve classification efficiency, domain knowledge was added by using domain term concept hiearchy (basically if words 
+had the same meaning or concept, then they were added to a feature vector). They used LIBSVM for coarse classification.
+The sub-classification was done by measuring the similarity between the users question and those in the sub-categories 
+(calculated by utilizing word similarity based on term concept hierarchy). Function words (e.g. preposition, conjunction words) 
+is not relevant when measuring semantic similarity, so function words should be pruned. Terms concept hierarchy knowledge can 
+be utilized to calculate the semantic similarity of two questions. When pre-processing, if there were different words in 
+different questions that had the same concept, the words were replaced so that they all had the same word for that concept.
+
+The corpus contained a training set of 3000 questions and the test set had 1500 questions. Questions were segmented, POS-tagged 
+and then features were extracted. For the SVM, they used cross-validation, where the training set was dvided into five parts of 
+equal size. After a classifier had been trained on the first four, the last was used to get the cross-validation accuracy (to 
+ensure correct classification).
+
+Two different experiments, the first compared feature sets, the second compared Bayesian, SVM and the two-level classification 
+methods in the paper. When comparing different feature sets, the first feature was the body of question, interrogative word and 
+attached elements, and the second was terms concept hierarchy based feature extraction by methods in the paper. 
+
+The results showed that the use of terms concept hierarchy was more suitable for question classification in specific tourism domain, 
+and the method of two level question classification based on SVM and question semantic similarity could improve the 
+results of question classification.
+
+
+
+
+A support vector machine-based context-ranking model for question answering 
+(Show-Jane Yen, Yu-Chieh Wu, Jie-Chi Yang, Yue-Shi Lee, Chung-Jung Lee, Jui-Jung Liu)
+
+QA is a method for finding the answer to a given question from an unknown amount of documents. This paper uses machine learning qa 
+framework, which integrates a question classifier, simple document/passage retrievers, and context-ranking models. The question 
+classifier categorizes the answer based on the given question by re-ranking passages in the context-ranking model. The model uses 
+sequential labeling of tasks, which is combined with features to predict if the input passage is relevant to the question type. 
+
+The goal of most automatic qa systems is to find the exact answer to the question asked by the user. 
+Existing QA technology involves two main steps: information retrieval (IR) and information extraction (IE).
+IR is used to retrieve the relevant documents after completed analysis or classification. IE then processes 
+the retrieved documents to find the answers the user is looking for. High quality systems generally requires 
+multiple external components.
+
+The purpose of question classification is to detect the answer type of the input question.
+    Interesting paragraph (first one) in Section 2.1 on results in regards to question classification and svm.
+
+"
+Lexical information is essential in question classification because it gives the classifier the ability to identify unknown words.
+"Earlier research (Li and Roth) found that human-made related words improved classifiers, where word clusters became classifier features.
+Traditional approach was using bag-of-words (BOWs) model, but this has a 1-1 relationship and cannot map when new words appear.
+However, the proposed cluster-based model had n-1 relationship. where similar words were mapped to the same group. 
+"
+
+Looking for answers in a small set is easier then searching all documents. By using a document retriever, 
+only documents related to the question is retrieved, where the passage retriever divides the documents into 
+paragraphs and ranks them based on the given evaluation metric(s).
+
+Extracted the following features:
+- Lexical (Word form): The word form
+- Part of Speech (POS): The part-of-speech tag of the word 
+- Named-Entity Class (NE): The named entity tag of the word
+- Term-match degree: match degree indicates how effectively the word matches one of the question terms in stem form or synonym form. seven 
+    match degrees (from degree = 7 to degree = 1): named-entity match, question first noun phrase match, question term exact match, stem match, 
+    synonym match, hyponym match, and hypernym match
+- Token feature: The token feature involves identifying specific symbols and punctuations within the given 
+    token (e.g. "$" or "%")
+
+Combining the WordNet clusters clearly leads to higher accuracy than using the original method (from 84.40% 
+to 85.60% for fine-grained and from 89.40% to 90.00% for coarse-grained). This prediction performance 
+increases by combining both WordNet clusters and the related words (88.60%). Using approximately 3000 
+training questions, the question classifier achieves more than 82% accuracy. 
+
+The accuracy rates reach 84.4% and 85.6% of the accuracy rates without and with the ‘‘auto-derived’’ word 
+clusters, respectively.
+
+
+
+
+An Analysis of a High-Performance Japanese Question Answering System 
+(HIDEKI ISOZAKI)
+
+Fine-grained answer taxonomy improves qa performance, but difficult to create accurate answer extraction because ML methods require a lot of 
+training data and training rules. In this paper, they built a fine-grained system by using a coarse-grained named entity recognizer and a 
+Japanese lexicon "Nihongo Goi-taikei." They found that named entity/numerical expression recognition and word sense-based answer
+extraction contributed to system performance.
+
+The mainstream of the system is composed of four modules: Question Analysis, Document 
+Retrieval, Answer-Extraction, and Answer Evaluation (AEv has several sub-modules).
+
+The question analysis module normalized question and determined answer types. Question 
+normalization was used to simply the "answer-type determination rules.". Useless expressions 
+were removed from the question. Expressions with the same meaning were nromalized into one. 
+After normalization, a morphological analyzer (ALTJAWS; based on Japanese lexicon) was used to divide question into words (since Japanese don't use spaces). 
+"
+ALTJAWS also provides part-of-speech tags, word senses, bunsetsu chunks,
+and normal forms. Nihongo Goi-taikei classifies 300,000 words into about 3000
+categories (word senses). Bunsetsu is a basic unit of Japanese grammar, which
+consists of one or more content words optionally followed by a sequence of
+function words.
+"
+The analyzer then detects question words (e.g. who, what, where, when) and a "focus word" 
+for answer-type classification ("wa"). {the word before 'wa' is the topic, everything after is 
+asking a question about/description of topic [Japanese From Zero 1, p. 42]}
+
+Mapping of answer types; word sense ID 51 is “infant,” 52 is “male infant,” 53 is “female
+infant,” 54 is “child,” 55 is “boy,” and 56 is “girl.” This table maps 51 and 54 to
+PERSON, 52 and 55 to MALE, and 53 and 56 to FEMALE (where the numbers are the ID in a mapping 
+table). These were then attached to each word.
+
+Retrieval module is important since answer must be found within limited time (and you can't 
+look through all documents). Normalized all versions (kanji, hiragana, and katakana) to kanjii.
+Abandoned use of TF-IDF based paragraph retrieval becuase the paragraphs were to short to cover 
+all query terms. Same problem can occur when using  passage retrieval modules. If it is too
+short terms will not be covered, if it is too long, passage scores will not reflect the density distribution.
+"
+Many QA systems employ passage retrieval modules that split
+documents into fixed-size passages of 300 words or three sentences. 
+"
+
+Answer extraction separates based on the candidate it belongs to (e.g. Location, organization, school, hospital, etc). Suffixes are then used to indicate which candidate group it belongs to. 
+If it belongs to more than one, it is added in both. This is called suffix constraint rule. 
+Use of noun-phrases in combination with suffixes.
+
+"
+Each answer candidate in a document is then represented by four compo-
+nents: an answer string, its full name, its document ID, and its location inside
+the document. If an answer candidate for PERSON is too short, it must be a sur-
+name or a first name. In order to disambiguate the candidate, the extraction
+module searches for its full name in the document. The full name is used when
+the system outputs the best answers.
+"
+Scoring function for Answer evaluation on p. 8-9
+
+
+
+
+Analysis of the Reputation System and User Contributions on a Question Answering 
+Website: StackOverflow 
+(Dana Movshovitz-Attias, Yair Movshovitz-Attias, Peter Steenkiste and Christos Faloutsos)
+
+Study of the user system on StackOverflow. Analysis of SO's reputation system. 
+Although most of the questions are asked by low reputation users, the average 
+shows that high reputation users asks more questions. 
+
+qa sites provides a place where people can ask either general or domain specific 
+questions. Domain specific qa sites requires users to be familiar with both the 
+site, rules and questions that can be asked. qa sites also works as an archive of 
+knowledge which can be accessed later on. Mostly expert users that answers questions.
+
+Active users are rewarded with reputation (rep. score depends on activity). 
+Before, asking questions gave more reputation, now giving answers give more 
+reputation. Expert users can be identified not only by reputation, but also by 
+the badges they have.
+
+"
+Q&A based knowledge sharing communities can also be studied in the context of 
+information retrieval, in which a question is a query, and the answers are its results. 
+"
+
+Showed that users are awarded more reputation for good answers than good questions. 
+Users with high reputation is considered as expert users (since answers give more rep). 
+ "System reputation can be considered as a measure of expertise".
+ 
+    https://blog.stackoverflow.com/2009/04/a-day-in-the-penalty-box/
+
+
+    
+
+A Practical Guide to Support Vector Classification 
+(Chih-Wei Hsu, Chih-Chung Chang, and Chih-Jen Lin)
+
+Documentation of SVM and libSVM; cookbook approach. Recipe for acceptable results 
+(not intended for SVM researchers). Classification usually involves separating data 
+into training and test set. Training set contains labeled data (expected outcome), 
+whereas test set is the data we want to predict the labels for. 
+SVM has four basic kernels; linear, polynomial, radial basis function (RBF), and 
+sigmoid. Suggested steps for procedure when transforming and training svm. 
+
+Recommends the use of gridsearch on C and gamma using cross-validation.
+Should do a coarse grid search first, then narrow it down by basing it on 
+the results from coarse search
+
+
+
+
+A Study on Sigmoid Kernels for SVM and the Training of non-PSD Kernels by SMO-type 
+Methods (Hsuan-Tien Lin and Chih-Jen Lin) 
+
+-> Skipped for now; 32 pages...
+
+
+
+
+An Empirical Study on Developer Interactions in StackOverflow
+(Shaowei Wang, David Lo, Lingxiao Jiang)
+
+Framework for answering research questions, using data from SO as input. 
+Looking at topics and topic modeling, to assign questions to topics (where topic labels are unknown). 
+Text and graph analysis. Every question could contain normal text and code snippet. Separate processing 
+of text and code. 
+
+Three contributions:
+
+1. We investigate the distribution of questioners and answerers and investigate their behaviors.
+2. We analyze the role bias of people in StackOverflow: whether most people are predominantly questioners or answerers.
+3. We employ topic modeling to assign topics to tens of thousands of questions from StackOverflow.
+
+"
+Topic modeling is a way to unsupervisedly group a pool of words into groups. It is unsupervised as there is no need for
+users to provide a labeled training data containing words assigned to predefined labels.
+"
+
+Framework input: question, asked_by, list_of{answer, answered_by}. 
+
+Data processor generates three outputs:
+
+1. statistics: Number of times each developer answers questions, posts questions, proportion of a developer’s posts that are questions.
+2. Help/Directed Graph: Each node in the graph is a developer. A directed edge from developer D1 to D2 in the graph denotes that developer D1 helps developer D2.
+3. Question content: Normal text and code snippet.
+
+The second processing component analyzes question content. Two sub-steps; content pre-processing and topic modeling.
+"
+The content pre-processing step takes in both normal text and code, performs tokenization, stop word removal, and stemming. 
+Tokenization breaks a paragraph into word tokens. Stop word removal removes commonly used words like: is, are, I, you, etc. 
+Stemming reduces a word to its root form, e.g., reading to read, etc. For the code, we remove reserved keywords such as: if, while, etc.,
+curly brackets, etc, and extract identifiers and comments. These are then subjected to tokenization, stemming, and stop word removal too.
+"
+
+Research questions:
+
+What are the distributions of developers that post questions?
+What are the distributions of developers that answer questions?
+Do developers that ask questions answer questions too?
+Do developers receiving help returns the favor?
+What topics do developers ask about and what are the distributions of the topics?
+
+
+
+
+A Taxonomy of Questions for Question Generation
+(Rodney D. Nielsen1, Jason Buckingham, Gary Knoll, Ben Marsh and Leysia Palen)
+
+Question generation depends on the system to which it is embedded. 
+Questions are intended to evaluate knowledge, understanding and skills. 
+Socratic tutoring: Questions should help students understand something they did not understand before. 
+Help system: System should learn what resulted in the request for help.
+Paper focuses on describing question taxonomy ofr tutoring systems (validated via human tutoring transcript analyses).
+Goal was to detail HCI design. Mapping from classification of learner interactions to tutor response.
+Revised the taxonomies considering redundancy, usefulness, and completeness.
+If two labels had the same meaning they were merged. When categories differed, the most generic was selected.
+-> Mostly primary taxonomy, p. 2, Figure 1 that is relevant for my thesis
+
+
+Boosting for Text Classification with Semantic Features
+(Stephan Bloehdorn, Andreas Hotho)
+
+-> Skipped for now; 18 pages...
+
+
+
+
+Chaotic time series prediction using fuzzy sigmoid kernel-based support vector machines
+(liu han, liu ding, deng ling-feng)
+
+Chaos theory, chaos system control and chaos signal prediction.
+Chaos signal comes from nonlinear system as a type of broad band noise, div-dimensional, sensitive to initial conditions, 
+and difficult to make long-term prediction. [In the time the paper was written], chaos theory became more important in 
+communication, radar, control, signal processing, etc. Chaotic time series prediction is based on embedding theorem and 
+phase space reconstruction theory, to regain chaos attractors in a higher-dimensional space.
+
+SVM use because it has better generalization (principal of structural risk minimization), and by transforming the problem of 
+optimal classification plane into problem of convex quadratic programming, svm can resolve practical problems (e.g. small data samples, 
+non-linearity, high-dimension, local minimization, etc).  
+
+When using svm, data needs to be mapped into a high-dimension featured space by using symmetric and positive semi-definite (PSD) 
+kernel function to transform linear non-separable problems into linear separable. Mathematically, kernel functions must meet 
+Mercer conditions (https://en.wikipedia.org/wiki/Mercer%27s_theorem). Kernels that can achieve this are linear, polynomial, Gauss 
+and sigmoid (sigmoid has some restrictions, and only works under specific constraints). Sigmoid kernel is a non-linear function, 
+making hardware implementation difficult and timeconsuming.
+
+In this paper, sigmoid function is combined with fuzzy logic. Experimented on two types of chaotical time series predictions.
+Found that CPU time can be decreased at the cost of prediction accuracy. 
+
+Advantages of fuzzy sigmoid kernel:
+
+1. Kernel function is differentiable at any point in entire region.
+2. Membership functions can be easily implemented by a microprocessor (e.g. DSP).
+3. Nonlinear kernel function can be approximated by a number of fuzzy membership functions with different complexities.
+
+In the experiments, C in svm and alpa, beta kernel function was determined by using 10-fold crossvalidation. 
+svm was trained using iterated re-weighted least square (IRWLS), which was more effective than quadratic programming (in 
+regards to execution time and memory consumption). 
+
+
+
+
+Discovering Value from Community Activity on Focused Question Answering Sites: A Case Study of Stack Overflow
+(Ashton Anderson,  Daniel Huttenlocher, Jon Kleinberg, Jure Leskovec)
+
+Many Q&A sites employ voting and reputation mechanisms as centerpieces of their design to help users identify the trustworthiness and accuracy of the content.
+Since a lot of qa sites are focusing on having at least some domain experts, the questions and answers now have a lasting value. Since these are archived 
+and quality measured by voting system, search engines can rank the answers. This way, users who have never been to the site can find questions similar to 
+their problem, and in addition see suggestions to other solutions from the others who may have posted their answer.
+
+Authors questions together with the set of corresponding answers. Two aspects; question level and full-site level.
+The ability to see all answers (qa: 1-n) give a better context for solution(s) rather than viewing one at a time (qa: 1-1).
+Also mentions reputation and vote system (question quality). Two tasks they want to solve; 
+
+1. Prediction of long-lasting value: given the activity on a question within a short interval after it was posed, 
+can we tell whether it will continue to draw attention long into the future? 
+
+2. Prediction of whether a question has been sufficiently answered: given the answers to a question so far, and 
+the activity around the question, can we tell whether the needs of the question-asker have been met yet?
+
+First principle:
+Generally expert users answers first. Latent "pyramid", where expert users are at the top. 
+Question starts at the top, being looked at by expert users. Then it gets filtered down if unanswered.
+
+Second principle:
+Higher activity level signals not only question interest, but it is also beneficial to all answers given (evaluation and reputation). 
+High activity can correspond to lasting value of a question. 
+
+Subjective questions are frowned upon by SO community. Deep expertise and domain knowledge is thus often essential to
+providing a good answer. 
+
+The longer a question goes unanswered, the more likely it is that no satisfactory answer will be given (i.e. no answer will be accepted).
+Expert users are more prone to be "answer-dominant", gaining reputation from answering questions. Users with over 100K reputation earn 
+more from accepted and less from up-votes. Idiosyncrasy on SO, can only gain 200 rep points daily, after that you can only gain reputation 
+by accepted answers or bounty. Only high-rep users hit the daily cap.
+
+Questions on Stack Overflow are supposed to be answerable factually and objectively (if not, they are marked as a "Community Wiki" question 
+and actions on them do not count towards reputation score). This creates an incentive to answer quickly, since it is likely that the first 
+correct answer may well be accepted.
+
+Feature list: 
+
+1. Questioner features (SA ), 4 features total: questioner reputation, # of questioner’s questions and answers, questioner’s percentage of 
+accepted answers on their previous questions.
+
+2. Activity and Q/A quality measures (SB ), 8 features total: # of favorites, # of page views, # positive and negative votes on question, 
+# of answers, maximum answerer reputation, highest answer score, reputation of answerer who wrote highest-scoring answer.
+
+3. Community process features (SC ), 8 features total: average answerer reputation, median answerer reputation, fraction of sum of answerer 
+reputations contributed by max answerer reputation, sum of answerer reputations, length of answer by highest-reputation answerer, # of comments 
+on answer by highest-reputation answerer, length of highest-scoring answer, # of comments on highest-scoring answer.
+
+4. Temporal process features (SD ), 7 features total: average time between answers, median time between answers, minimum time between answers, 
+time-rank of highest-scoring answer, wall-clock time elapsed between question creation and highest-scoring answer, time-rank of answer by 
+highest-reputation answerer, wall-clock time elapsed between question creation and answer by highest-reputation answerer.
+
+Only registered users can favorite a question, whereas the full Internet population contributes to its pageviews.
+
+
+
+
+Does Online Q&A Activity Vary Based on Topic: A Comparison of Technical and Non-technical Stack Exchange Forums
+(Saif Ahmed, Seungwon Yang, Aditya Johri)
+
+Growing participation in online qa forums. Classify online communities on StackExchange into two genres; technical and non-technical. 
+Examines the effect of contribution by comparing differences between technical and non-technical communities (user participation). 
+Started with qa for computer programming (SO, started in 2008), which later expanded by using the SO model, which is today known as StackExchange (SE).
+Forums can be categorized into technical (largely professional or problem based) and non-technical (largely hobbyists or interest based).
+A few highly active users are responsible for the majority of participation and overall users can be characterized as lurkers, help-seekers (askers) and givers (responders)
+
+In (AndersonHuttenlocherKleinbergEtAl2012), authors found that, the probability of a response being chosen as the best one, depends on temporal characteristics of its arrivals, 
+like response speed which could be applicable to predict long-term value of a post. Besides, the other work (SinhaManiGupta2013) shows that, successfully of being answered about 
+expert topic is not only because of the technical design, but also the regular involvement of design team of that community. Mentions reputation system (motivation factor). 
+
+Compared the forum for code-review forum (CR) as technical instance and bicycle forum (BC) as non-technical one.
+Found strong correlation between number of answers given and reputation score achieved by a user which is quite similar for both the forums.
+
+
+
+
+FINDING A GROWTH BUSINESS MODEL AT StackOverflow, inc.
+M. Sewak et al.
+
+As pointed out on StackOverflow's career website, by earning reputation points, "Stack Overflow Careers help top developers get great jobs at great companies."
+[http://careers.stackoverflow.com/]
+Stack Overflow describes itself as a fusiona wiki, blog, forum, and social rating website, emphasizing itself as a platform for open and free exchange of information.
+[http://stackoverflow.com/about]
+
+Spolsky and Atwood built Stack Overflow to provide high-quality, relevant information in a freely accessible way. They envisioned that Stack Overflow would be a combination of 
+collaboration technologies, including open editing (like Wikipedia), feedback driven user ranking (like Reddit or Digg), moderated content (like blogs), and forums to create a 
+distinctive format.
+
+Users are rewarded for responding and voting with Badges and Karma. This system encourages users to return and make positive contributions to the site, greatly increasing the quality 
+of responses posted. Stack Overflow immediately received positive reviews like "it's a Q&A site where the right answer isn’t buried on page fifty, it’s almost always at the top."
+[http://blog.stackoverflow.com/2010/05/announcing-our-series-a/]
+
+SO was optimized with Search Engine Optimization (SEO) so that pages could be indexed by search engines.
+
+In October 2009, the company announced Stack Exchange, a service that offered whitelabel installations of the Stack Overflow platform for use by third parties on a software-as-a-service 
+basis. In December 2009, Stack Exchange was selected by Google to power its Android developer support forums.
+
+Spolsky and Atwood studied the behavior of users on similar Q&A sites. They analyzed the quality of answers, the kinds of questions asked and the visitor demographics. For instance, they 
+found that Yahoo! Answers primarily attracted teenagers and Mahalo Answers contained questions related to free or discounted products and services. In contrast, Spolsky and Atwood wanted 
+StackOverflow to target professional programmers. 
+
+Building blocks:
+
+1. Voting: To increase the quality of answers, visitors are encouraged to vote on answers they found useful. The answers are arranged by the number of votes received. 
+This process ensures the best answers are displayed at the top, quickly showing the best solution in the presence of multiple possible answers. Users gain reputation 
+points when others vote for their questions or answers.
+
+2. Tags: To facilitate an easy retrieval of previous questions that have been answered, each question is associated with a variety of tags. Tags help direct questions 
+to experts from a specific field, improving the quality and speed of responses. Users may also customize the Stack Overflow website by specifying tags of interest and 
+filtering out uninteresting ones, making their search experience more efficient.
+
+3.Badges: To encourage participation and improve the quality of discussion, StackOverflow introduced the concept of badges. These awards, shown on the user's profile, 
+are given to users who consistently provide high quality answers or ask popular and relevant questions.
+
+4.Karma and Bounties: Karma is a type of currency system that encourages and rewards participation. Users who earn enough karma enjoy special privileges. For example, 
+only a user with sufficient karma can comment on answers and even modify questions. Users win karma by selecting the correct and most relevant answer to their questions.
+
+5.Data Dump: Stack Overflow provides a “data dump”, which stores all the site's user-generated content under a Creative Commons license.3.3 This license allows people to
+share and adapt content as long as it is correctly attributed to its author. Under the Creative Commons license, any derivative works must also be distributed under an 
+“open” license. Monthly snapshots of the database are available for download via BitTorrent.
+
+6.Pre-Search: Pre-Search provides a list of potentially related questions to a user before the user is allowed to post a new question. This prevents having multiple copies 
+of the same question, enabling efficient retrieval of relevant answers. 
+
+7.Search Engine Optimization: It is critical for Stack Overflow to score top results in searches to increase its user base and to build its reputation as the “one stop shop” 
+for all programming related questions. Therefore, it uses various search engine optimization techniques to increase its visibility on search engines. For instance, the URL of 
+a particular page on the site contains keywords from the corresponding topic.
+
+8.Critical Mass: Atwood and Spolsky used their blogs to promote Stack Overflow and direct traffic to it, ensuring the presence of an initial community. Atwood answered questions 
+so quality answers were available on the website from the outset. 
+
+9.Performance: Built on a Microsoft software stack, Stack Overflow achieves high performance at a very low cost. Spolsky boasts that Stack Overflow's performance is comparable to 
+websites with similar traffic, but only requires one-tenth of the hardware.
+
+As Spolsky described in a Google Tech Talk, 
+“Our hope is that a large body of the questions that are in Stack Overflow will become the canonical place on the Internet to learn about very very narrow specific questions 
+about very very narrow and specific programming topics.”
+[http://www.youtube.com/watch?v=NWHfY_lvKIQ] -> 18:15-18:29
+
+
+
+
+How Do Programmers Ask and Answer Questions on the Web?
+(Christoph Treude, Ohad Barzilay, Margaret-Anne Storey)
+
+
+
+
+
+
+

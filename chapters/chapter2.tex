@@ -43,11 +43,20 @@ Citation list (content to come):
 	\item \cite{ShortWongZeng2014}: tag recommendation SO
 	\item \cite{PosnettWarburgDevanbuEtAl2012}: questions, answers, activity and reputation on SO
 	\item \cite{AhmedYangJohri2015}: stackexchange, technical vs non-technical communities activity
+	\item \cite{FuJiaXu2008}: domain ontology, qa
+	\item \cite{LiRoth2002,LiRoth,LiRothSmall} qa classification, semantics
+	\item \cite{AndersonHuttenlocherKleinbergEtAl2012} so, qa, post quality	
+	\item \cite{SinhaManiGupta2013} qa, design, anwer response	
+	\item \cite{Klein2016,SpaceMachine.net2016,Wissner-Gross2016} datasets
+%	\item \cite{AndersonHuttenlocherKleinbergEtAl2012}
 \end{itemize}
 
 % could be re-phrased into "in this paper, they define question analysis with two different approaches..."
 In the paper by \cite{TobaAdrianiManurung2011}, they experiment with the use of statistical 
-learning to find the expected answer pattern for factoid \gls{qa} pairs. E.g. if you ask someone where a certain event took place, the answer pattern would be a location. They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, low precision\footnote{Low precision can occur if the feature sets are not fitted well enough during 
+learning to find the expected answer pattern for factoid \gls{qa} pairs. E.g. if you ask 
+someone where a certain event took place, the answer pattern would be a location. They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} 
+(high recall, low precision\footnote{Low precision can occur if the feature sets are not fitted 
+	well enough during 
 	classifier training \cite[p.~283]{TobaAdrianiManurung2011}.}). Pattern-based would match 
 word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be 
 based on the accuracy of the classifier (e.g. lexical or linguistic feature sets). 
@@ -73,7 +82,16 @@ Mapped named-entities; e.g. ORGANIZATION became NEorganization.
 
 \end{comment}
 
-\cite{XuZhouWang2012}
+\cite{XuZhouWang2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. The 
+system included question analysis, \gls{ir} and answer extraction. The question classification 
+accuracy was important to the overall performance of the system. The system was built using 
+\gls{svm} and question semantic similarity, and the feature selection was based on lexical features 
+and domain terms hierarchy. The original method for question classification is mainly rule-based, 
+where the rules decide the category (difficult to extract all the rules for the question category). 
+Another method is using statistics, as was done in \cite{ZhangLee2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
+Questions were divided into 13 coarse categories and 150 sub-categories. The difference between 
+these were that the sub-categories was built on sentences.
+
 
 
 \section{Text classification}
@@ -100,3 +118,8 @@ to find that answer, and in some cases what is the quickest way to display said 
 \gls{svm} is the chosen \gls{ml} algorithm that was chosen to use for the question analysis. This 
 section is mainly intended as a light introduction to what \gls{svm} is, and what the most common 
 uses are. Furthermore, in what way can this be utilized for text and question classification?
+
+\section{Dataset}
+\label{sec:dataset}
+short about the datasets, others who has used it, and datasets in general, e.g. 
+\cite{Klein2016,SpaceMachine.net2016,Wissner-Gross2016}
