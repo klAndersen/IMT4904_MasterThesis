@@ -14,6 +14,17 @@
 \usepackage{csvsimple}  % for simple table reading and display
 \usepackage{url}
 
+% Set to true ONLY if using Harvard citation style
+\newboolean{HarvardCitations}
+\setboolean{HarvardCitations}{false} % false for computer science, true for interaction design and harvard style
+
+
+\ifthenelse{\boolean{HarvardCitations}}{%
+	\usepackage{natbib} % for Harvard names as citations.
+}{%
+\usepackage[numbers]{natbib} % for Vancover numbers in bibliography
+}
+
 %% added by me
 	\usepackage{listings}
 	\usepackage{tikz}
@@ -72,7 +83,11 @@
 	\input{../chapters/chapter6} 
 	
 	% bibliography
-	\bibliographystyle{ntnuthesis/ntnuthesis}
+	\ifthenelse{\boolean{HarvardCitations}}{%
+		\bibliographystyle{agsm} % used for Harvard style references. Names - Humanities & Interaction Design
+	}{%
+	\bibliographystyle{ntnuthesis/ntnuthesis} %used for Vancover style references. Numbers - Computer Science & Physics
+	}
 	\bibliography{../chapters/IMT4904_klAndersen}
 	
 	\input{../appendix/appendix}

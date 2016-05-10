@@ -13,5 +13,4 @@ The structure will be changed after the template is done (since it looks pretty 
 * /chapters: Chapters 1-n (main content in thesis)
 * /figures: Forked folder
 * /header: Header files (e.g. content not in main report; preface, acknowledgement, etc.)
-* /ntnuthesis: Forked folder with template(s)
 * /src: root and build files
