@@ -14,18 +14,19 @@
 \usepackage{csvsimple}  % for simple table reading and display
 \usepackage{url}
 
-% Set to true ONLY if using Harvard citation style
-\newboolean{HarvardCitations}
-\setboolean{HarvardCitations}{false} % false for computer science, true for interaction design and harvard style
-
-
-\ifthenelse{\boolean{HarvardCitations}}{%
-	\usepackage{natbib} % for Harvard names as citations.
-}{%
-\usepackage[numbers]{natbib} % for Vancover numbers in bibliography
-}
-
 %% added by me
+	\usepackage{csquotes}% Recommended
+	%bibliograhpy
+	\usepackage[style=authoryear, % harvard style (author, year)
+				bibstyle=numeric, % lists bibliography as numeric [1] ..., [2] ..., etc.
+				citestyle=numeric, % numeric citing; where \cite gives numeric, but \textcite gives authoryear
+				backend=biber, % backend
+				%% backref takes you back from bibliography to the page you clicked reference
+				%% example: (cit. on p. 7), where 7 would take you back to that page
+				% backref=true,  
+				maxcitenames=2, % max number of names to list when using author names (et al.)
+				doi=true]{biblatex}
+	
 	\usepackage{listings}
 	\usepackage{tikz}
 	%% include path for figures, graphics, etc
@@ -35,8 +36,7 @@
 	%% valid extensions for import in figures, etc.
 	\DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg,.bmp}
 	%% to be able to comment out larger sections of text
-	\usepackage{verbatim}
-	
+	\usepackage{verbatim}	
 	% acronyms, abbreviations, etc.
 	\usepackage[section,numberedsection=autolabel,acronym]{glossaries}
 	\usepackage{makeidx}
@@ -44,6 +44,21 @@
 	% Generate the glossary; must be called after hyperref
 	\makeindex
 	\makeglossaries
+	%% loads the bibliography for biblatex and for texniccenter
+	%% this is to enable auto-complete and being able to search through all entries
+	\makeatletter
+	\@ifpackageloaded{biblatex}{\addbibresource{../chapters/IMT4904_klAndersen.bib}}{\bibliography{../chapters/IMT4904_klAndersen}}
+	\makeatother
+	%% decrease size of listing font
+	\lstset{%
+		basicstyle=\ttfamily\footnotesize\bfseries,
+		columns=fullflexible}
+		
+	%% changes the cite command into autocite
+	\renewcommand*{\cite}{\autocite}
+	%% adds comma between author--year; (author, year)
+	\renewcommand*{\nameyeardelim}{\addcomma\space}
+	\newcommand{\citet}{\textcite}
 		
 	\input{../header/acronyms}
 
@@ -82,13 +97,19 @@
 	\chapter{Conclusion/Summary}
 	\input{../chapters/chapter6} 
 	
+	% Start the references on a new page
+	\clearpage
+	\printbibliography
+	
+\begin{comment}
 	% bibliography
 	\ifthenelse{\boolean{HarvardCitations}}{%
 		\bibliographystyle{agsm} % used for Harvard style references. Names - Humanities & Interaction Design
 	}{%
 	\bibliographystyle{ntnuthesis/ntnuthesis} %used for Vancover style references. Numbers - Computer Science & Physics
 	}
-	\bibliography{../chapters/IMT4904_klAndersen}
+	\bibliography{../chapters/IMT4904_klAndersen}	
+\end{comment}
 	
 	\input{../appendix/appendix}
 \end{document}

@@ -15,9 +15,47 @@ If you want it to be just parenthetical to the sentence at the end, then use \te
 
 \end{comment}
 ~\\
-citep: \citep{ChangLin2011} \\
-% ask simon about this
-citet: \citet{ChangLin2011} \\
+\textbf{Example for Simon:} \\\\
+I can either use \verb|\cite{ChangLin2011}| and get: \cite{ChangLin2011}. \\
+Or I can use \verb|\citet{ChangLin2011}| and get: \citet{ChangLin2011}. \\
+\verb|\cite| is based on \verb|\renewcommand*{\cite}{\autocite}|, \\
+and \verb|\citet| is based on \verb|\newcommand{\citet}{\textcite}|. \\
+Unfortunately, you can't get the year, but at least you can now get in-text citation. \\\\
+The listing below shows the whole command:
+
+\begin{lstlisting}
+	# HEADER/BEFORE \begin{document}
+
+	\usepackage{csquotes}% Recommended
+	%bibliograhpy
+	\usepackage[style=authoryear, % harvard style (author, year)
+	bibstyle=numeric, % lists bibliography as numeric [1] ..., [2] ..., etc.
+	citestyle=numeric, % numeric citing; where \cite gives numeric, 
+	but \textcite gives authoryear
+	backend=biber, % backend
+	%% backref takes you back from bibliography to the page you clicked reference
+	%% example: (cit. on p. 7), where 7 would take you back to that page
+	% backref=true,  
+	maxcitenames=2, % max number of names to list when using author names (et al.)
+	doi=true]{biblatex}
+	
+	%% loads the bibliography for biblatex and for texniccenter
+	%% this is to enable auto-complete and being able to search through all entries
+	\makeatletter
+	\@ifpackageloaded{biblatex}{\addbibresource{bibfile.bib}}{\bibliography{bibfile}}
+	\makeatother
+	
+	%% changes the cite command into autocite
+	\renewcommand*{\cite}{\autocite}
+	%% adds comma between author--year; (author, year)
+	\renewcommand*{\nameyeardelim}{\addcomma\space}
+	\newcommand{\citet}{\textcite}
+	
+	# ADD AT THE END, WHEREVER YOU WANT BIBLIOGRAPHY PRINTED
+	% Start the references on a new page
+	\clearpage
+	\printbibliography
+\end{lstlisting}
 
 Citation list (content to come):
 \begin{itemize}
@@ -65,7 +103,7 @@ Citation list (content to come):
 \end{itemize}
 
 % could be re-phrased into "in this paper, they define question analysis with two different approaches..."
-In the paper by \cite{TobaAdrianiManurung2011}, they experiment with the use of statistical 
+In the paper by \citet{TobaAdrianiManurung2011}, they experiment with the use of statistical 
 learning to find the expected answer pattern for factoid \gls{qa} pairs. E.g. if you ask 
 someone where a certain event took place, the answer pattern would be a location. They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} 
 (high recall, low precision\footnote{Low precision can occur if the feature sets are not fitted 
@@ -95,7 +133,7 @@ Mapped named-entities; e.g. ORGANIZATION became NEorganization.
 
 \end{comment}
 
-\cite{XuZhouWang2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. The 
+\citet{XuZhouWang2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. The 
 system included question analysis, \gls{ir} and answer extraction. The question classification 
 accuracy was important to the overall performance of the system. The system was built using 
 \gls{svm} and question semantic similarity, and the feature selection was based on lexical features 
