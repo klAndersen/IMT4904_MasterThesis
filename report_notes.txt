@@ -612,20 +612,54 @@ Focal hypothesis =====> Focal hypothesis explanation, taken from: "Selective hyp
 Is Question Answering fit for the Semantic Web?: a Survey
 (Vanessa Lopez, Victoria Uren, Marta Sabou and Enrico Motta)
 
+Semantic web (sw); search and query has become difficult and challenging. Need user friendly UI for query and data exploration. qa ontology based on structured semantic information. 
+New interest in search technologies, since we are close to reaching critical mass for large-scale distributed semantic web. 
+Two most common uses of sw is interpretation of web queries/resources based on described background knowledge, and searching through large datasets/KB as alternative/complacent to current web.
+Difficult for end-users to understand the complexity of the logic-based sw. Challenging to process and querying content, hard to scale models to cope with available semantic data. 
 
+Paper presents survey of ontology-based qa systems. Looks at novel research area from two perspectives. The first is contribution to qa systems in general, and second is the potential for end-users 
+to beyond the sw interfaces to help brigde gap between users and sw. Classification of a qa system or approaches to sw content query according to four dimensions  based on the type of questions (input), 
+the sources (unstructured data such as documents, or structured data in a semantic or non-semantic space), the scope (domain-specific, open-domain), and the traditional intrinsic problems derived from 
+the search environment and scope of the system.
 
+The goal of qa systems is to allow users to ask questions the way they want to by using natural language (NL) to receive a related answer to their problem. 
 
+We can classify a QA system, and any semantic approach for searching and querying SW content, according to four interlinked dimensions: 
+(1) the input or type of questions it is able to accept (facts, dialogs, etc); 
+(2) the sources from which it can derive the answers (structured vs. un-structured data); 
+(3) the scope (domain specific vs. domain independent), 
+(4) how it copes with the traditional intrinsic problems that the search environment imposes in any non-trivial search system (e.g., adaptability and ambiguity).
 
+Input is related to the question asked by the user. The goal is to allow the user to enter their question without having to understand the complexity, e.g. SQL-queries. 
+The best feature for keyword-based search is simplicity, but simplicity can also be a problem. The reason is that this simplicity removes the ability to map the relation 
+between the words and context needed to intepret the entered keyword(s).
 
+Five increasingly sophisticated types: 
+- systems capable of processing factual questions (factoids), 
+- systems enabling reasoning mechanisms, 
+- systems that fuse answers from different sources, 
+- interactive (dialog) systems 
+- systems capable of analogical reasoning.
 
+Most qa systems focuses on factoids, where you have 'WH-' queries (who, what, how many, etc.), commands (name all, give me, etc.) requiring an element or list of elements as an answer, 
+or affirmation / negation questions. As pointed out in (Hunter, 2000) more difficult kinds of factual questions include those which ask for opinion, like Why or How questions, 
+which require understanding of causality or instru-mental relations, What questions which provide little constraint in the answer type, and definition questions.
+Focus in this paper is on factoid, namely 'What' queries. In the SW context factual QA means that answers are ground facts as typically found in KBs and provides an initial foun-dation to 
+tackle more ambitious forms of QA.
 
+qa systems can be domain-specific (closed domain) or domain-independent (open domain).
 
+In order to take full advantage of the inherent characteristics of the semantic information space to extract the most accurate answers for the users, 
+QA systems need to tackle various traditional intrinsic problems derived from the search environment, such as:
 
+- Mapping the terminology and information needs of the user into the terminology used by the sources (1. evaluation, 2. portability/adaptability, 3. correct answer)
+- Disambiguating between all possible interpretations of a user query. Ambiguity. Issues with interpretation in open-domain system, e.g. words can have different meanings. 
+- Answer and source quality/trust, e.g. fusion of similar answers
+- Scalability; there is a trade-off between the complexity of the querying process and the amount of data sys-tems can use in response to a user demand in a reasonable time.
 
+What does the user know about the question being asked, and the system processing the question? E.g. natural language processing vs. users expectations to what they can ask
 
-
-
-
+p. 4, column 2
 
 
 
