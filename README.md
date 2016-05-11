@@ -1,14 +1,13 @@
 # IMT4904 Master Thesis Report
 LaTex repository for my Master thesis @ Gjøvik University College/ NTNU Gjøvik.
 
-Since the thesis template is still under construction, I've added my own files in sub-folders to avoid issues during fetch. 
+This is a remake of the old repository, which is why the commit history may seem messy. 
 
-This way the template and example files will get updated, and changes can be added without loss of data.
+The repo was re-made to avoid syncing issues since the forking did not update the forked template repo.
 
-The structure will be changed after the template is done (since it looks pretty messy right now).
+Based on the following template: https://github.com/COPCSE-NTNU/master-theses-NTNU
 
 ## Directory list
-* Current level: Forked files mainly
 * /appendix: Files used in appendix
 * /chapters: Chapters 1-n (main content in thesis)
 * /figures: Forked folder
