@@ -1,3 +1,10 @@
+﻿============================================================================================================================
+Note! This is a short summary of said reports, based on relevance for my master thesis. Not all quotations are marked ("quote"), 
+and is not intended to be a "self-written" document. Merely as a helpful summary for myself when referencing to said report in 
+my thesis.
+============================================================================================================================
+
+
 A Classification of Questions using SVM and Semantic Similarity Analysis 
 (Jinzhong Xu, Yanan Zhou, Yuan Wang)
 
@@ -462,6 +469,86 @@ about very very narrow and specific programming topics.”
 
 How Do Programmers Ask and Answer Questions on the Web?
 (Christoph Treude, Ohad Barzilay, Margaret-Anne Storey)
+
+Analysis of data from SO to categorize questions that are asked. Exploration of answered/unanswered questions. 
+Findings indicate qa websites are particularly effective at code reviews and conceptual questions.
+
+"
+Letovsky [8] identified five main question types: why,
+how, what, whether and discrepancy. Fritz and Murphy
+[4] provide a list of questions that focus on issues that occur
+within a project. Sillito et al. [12] provide a similar list focusing
+on questions during evolution tasks. LaToza and Myers
+[7] found that the most difficult questions from a developer’s
+perspective dealt with intent and rationale. In their study
+on information needs in software development, Ko et al. [6]
+found that the most frequently sought information included
+awareness about artifacts and coworkers.
+"
+
+9 SO design descisions:
+
+1. Voting
+2. Tags
+3. Editing
+4. Badges (karma)
+5. Pre-search
+6. Google UI
+7. Performance (search engine optimization)
+8. Critical mass: several programmers were explicitly asked to contribute in the early stages of Stack Overflow.
+
+Research questions:
+
+1. What kinds of questions are asked on Q&A websites for programmers?
+2. Which questions are answered and which ones remain unanswered?
+3. Who answers questions and why?
+4. How are the best answers selected?
+5. How does a Q&A website contribute to the body of software development knowledge?
+
+qualitative coding of questions and tags; tags for topics, question coding for question nature.
+
+Defines successful and unsuccessful questions as follows: A successful question has an accepted answer, 
+and an unsuccessful question has no answer.
+
+The first limitation lies in the small amount of data we analyzed in our random sample. However, by triangulating our findings 
+through qualitative coding of tags and questions, we were able to mitigate some of these concerns. Our definitions of successful 
+and unsuccessful questions are limited. They offer a first approximation, but in future research we will have to analyze the answers 
+in more detail to understand the differences between successful and unsuccessful uses of Q&A websites
+
+
+
+
+Information selection and use in hypothesis testing: What is a good question, and what is a good answer?
+(LOUISA M. SLOWIACZEK, JOSHUA KLAYMAN, STEVEN J. SHERMAN, RICHARD B. SKOV; 1992)
+
+Hypothesis testing includes information selection (asking questions) and the use of information (answers to questions asked).
+Two experiments using different kinds of inferences (category membership of individuals and composition of sampled populations).
+Third experiment showed that certain information-gathering tendencies and insensitivity to answer diagnosticity can contribute to a 
+tendency toward preservation of the initial hypothesis. These results illustrate the importance of viewing hypothesistesting
+behavior as an interactive, multistage process that includes selecting questions, interpreting data, and drawing inferences.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
