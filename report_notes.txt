@@ -527,6 +527,113 @@ Third experiment showed that certain information-gathering tendencies and insens
 tendency toward preservation of the initial hypothesis. These results illustrate the importance of viewing hypothesistesting
 behavior as an interactive, multistage process that includes selecting questions, interpreting data, and drawing inferences.
 
+Critical elements in hypothesis testing is having a good question, and knowing what to do with the answer. 
+Gives example of a fictional planet which contains only two creatures. These can only answer 'yes' or 'no', but they will 
+answer truthfully. Based on a given feature list, what question would you ask to be able to classify the creature you encounter?
+(ironically, I choose the same features as others had in the referenced study)
+
+When using information-gathering strategies, results show that people are influenced by different characteristics for a question, 
+when choosing what to ask (sometimes in contradiction to statistical prescriptions). Clear preference to questions that are diagnostic; 
+questions which distinguish hypothesis from the alternative. 
+
+Sensitivity to the diagnosticity of questions is important because it leads to an efficient selection of tests.
+Efficient information gathering does not guarantee efficient or unbiased use of the information gathered. 
+Whereas optimal information selection depends on the diagnosticity of the question, optimal revision of initial beliefs
+depends on the diagnosticity of the specific answers received.
+
+Given that different answers can have different diagnosticities, how might one measure the overall diagnostic value of a question? 
+The measure must account for the chance of obtaining all possible answers and the value (e.g. probability) that answer would provide.
+One way of doing this is to compare the a priori likelihood of correctly accepting or rejecting the hypothesis with and without asking 
+the question (Baron, 1985, chap. 4). 
+The probability of guessing the correct race would increase based on the question asked, and the answer given. E.g. starting at 0.5, 
+asking Feature4; then its a 0.7 chance it will say 'yes' (and 0.3 it will say 'no'). The classification accuracy for that creature would 
+then be 0.64 if it says 'yes' and 0.83 if it says 'no' (presuming that 'yes'/'no' racial guess is based on the given race with the highest 
+probability for said answer). This gives a priori chance of correct guess when asking about Feature4 as: (.70 x .64) + (.30 x .83) = .70, 
+an increase of .20 over the naive state (naive state was 0.5).
+
+This problem can be re-formulated into a Hypothesis, where H0 and H1 is either 'yes' or 'no' (or more defined, the race is...).
+Selection of hypothesis based on percentage/probability distribution, e.g. choosing those features that stands most out/is highly separated.
+Also a question on what type of answers (and how many) one can expect from each indiviual.
+Easy to assume that a good question will get a good answer (e.g. overestimation of yes/no when deciding which race creature belongs to).
+Sensitivity in regards to the yes/no answer given (e.g. treating all cases as identical, etc).
+
+Beach hypothesized that subjects regarded smaller probabilities as generally less informative, and their judgments were therefore correlated with 
+the sum of the probabilities. However, a reanalysis shows that the mean responses in Beach's Figure 1 (p. 60) are better predicted by the difference
+between the probabilities (26%and 8%). In other words, when judging the diagnosticity of information, Beach's subjects were influenced by the differences 
+in percentages, which corresponds to the diagnosticity of the question, and not just by the appropriate ratios. The same process, we propose, underlies 
+insensitivity to answer diagnosticity. People underestimate differences in the diagnosticity of "yes" and "no" answers to the same question, because the 
+difference in percentages is the same for both answers.
+
+Insufficient sensitivity to the difference in diagnosticity of different answers to a question can lead subjects to over- or underestimate the information
+value of a datum. The net effect of this insensitivity depends on the questions asked. Features with symmetrical probabilities (e.g., present in 30% of one group and
+70% of the other) present no difficulty: "yes" and "no" answers are in fact equally diagnostic, in opposite directions. With asymmetrical features, however, one answer
+is always more diagnostic than the other (e.g., Feature 4" discussed earlier, in which the feature is present in 90% of one group and 50% of the other). There is evidence
+that people prefer to ask about features with one extreme probability, compared with symmetrical questions of equal diagnosticity (see Baron et al., 1988, with regard toveertainty
+bias"). Thus, people may tend to select exactly those questions for which insensitivity to answer diagnosticity leads to inaccurate inferences.
+
+Skov and Sherman (1986) found that subjects' preference for extreme probabilities was also hypothesisdependent. Subjects tend to select questions about features
+that are either very likely or very unlikely under the working hypothesis, in preference to features with similarly extreme probabilities with regard to the alternative.
+ 
+If, as we propose, people are insufficiently sensitive to the difference in diagnosticity between different answers, the net effect will be that they will overestimate the impact of
+the hypothesis-eonfirming answers relative to hypothesisdisconfirming answers. On balance, then, inferential errors will tend to be in favor of the working hypothesis. 
+Thus, the combination of a preference for extreme probabilities, given the hypothesis, and insensitivity to answer diagnosticity may contribute to hypothesis preservation.
+
+It has also been suggested that people may give more weight to data that confirm the hypothesis being tested than they do to disconfirming data.
+
+In general, then, the subjects greatly underestimated the difference between moderately diagnostic and highly diagnostic answers. A normative difference of 19% in probability
+estimates was judged as a difference of only 6%. In particular, the subjects seemed to underestimate the diagnosticity of the more diagnostic answers (i.e., when the
+normative probability was .83). Individual-subject analyses confirm that most subjects did not consistently distinguish the high- and low-diagnosticity answers: Of 168
+subjects, 83 (49%) at least once assigned a lower probability estimate to a high-diagnosticityanswer than to a low diagnosticity answer. 
+
+The results of Experiments 1 and 2 suggest that when people evaluate the impact of evidence, they are insufficiently sensitive to the diagnosticity of the specific answer
+received. This produces systematic errors in inferences drawn from certain kinds of questions. What are the expected consequences of these inferential errors in the evaluation of a hypothesis?
+
+Findings also illustrate the importance of looking at a phenomenon such as insensitivity to answer diagnosticity in relationship to the broader context of processes at different stages of hypothesis
+testing. These processes include gathering information (selecting questions to ask), assessing the information value of data (estimating the confidence associated with individual answers), and drawing 
+inferences based on sets of data (estimating the makeup of underlying populations). People conform to normative statistical models in some aspects of hypothesis testing (e.g., sensitivity to the 
+diagnostic value of questions).
+
+People show preferences that are not dictated by normative considerations but do not necessarily lead to errors in judgment (e.g., preferences for questions for which the likely answer confirms the 
+hypothesis). And in some aspects, people clearly deviate from normative standards (e.g., insufficient sensitivity to the diagnostic value of different answers to the same question). Moreover, judgments and
+preferences at early stages in the hypothesis-testing process can combine with judgments at later stages to influence final inferences and beliefs and to produce effects that do not arise from any single 
+component. Our findings suggest, for example, that people may arrive at an unwarranted belief that the world is as it was hypothesized to be-not necessarily because of a motivation to perceive the expected 
+but because of a particular sequence of judgments and inferences, some normatively appropriate, some not.
+
+
+Focal hypothesis =====> Focal hypothesis explanation, taken from: "Selective hypothesis testing" (SANBONMATSU, DAVID M and POSAVAC, STEVEN S and KARDES, FRANK R)
+		A focal hypothesis is generated on the basis of some criteria or set of standards. The focal hypothesis, in turn, serves to guide the gathering and assimilation of evidence. 
+		When the evidence for the focal hypothesis is sufficient or satisficing(Simon, 1956, 1979), confirmation occurs, and the search for further information is truncated. 
+		Conversely, if the gathered evidence fails to support the hypothesis, a new alternative is generated. The process of testing and re-generating continues until a suitable response 
+		is found or until the perceived benefits of gathering additional evidence are outweighed by the costs (Gettys & Fisher, 1979) 
+
+
+
+
+Is Question Answering fit for the Semantic Web?: a Survey
+(Vanessa Lopez, Victoria Uren, Marta Sabou and Enrico Motta)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
