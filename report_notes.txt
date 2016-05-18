@@ -131,8 +131,8 @@ The analyzer then detects question words (e.g. who, what, where, when) and a "fo
 for answer-type classification ("wa"). {the word before 'wa' is the topic, everything after is 
 asking a question about/description of topic [Japanese From Zero 1, p. 42]}
 
-Mapping of answer types; word sense ID 51 is “infant,” 52 is “male infant,” 53 is “female
-infant,” 54 is “child,” 55 is “boy,” and 56 is “girl.” This table maps 51 and 54 to
+Mapping of answer types; word sense ID 51 is "infant," 52 is "male infant," 53 is "female
+infant," 54 is "child," 55 is "boy," and 56 is "girl." This table maps 51 and 54 to
 PERSON, 52 and 55 to MALE, and 53 and 56 to FEMALE (where the numbers are the ID in a mapping 
 table). These were then attached to each word.
 
@@ -442,14 +442,14 @@ are given to users who consistently provide high quality answers or ask popular 
 4.Karma and Bounties: Karma is a type of currency system that encourages and rewards participation. Users who earn enough karma enjoy special privileges. For example, 
 only a user with sufficient karma can comment on answers and even modify questions. Users win karma by selecting the correct and most relevant answer to their questions.
 
-5.Data Dump: Stack Overflow provides a “data dump”, which stores all the site's user-generated content under a Creative Commons license.3.3 This license allows people to
+5.Data Dump: Stack Overflow provides a "data dump", which stores all the site's user-generated content under a Creative Commons license.3.3 This license allows people to
 share and adapt content as long as it is correctly attributed to its author. Under the Creative Commons license, any derivative works must also be distributed under an 
-“open” license. Monthly snapshots of the database are available for download via BitTorrent.
+"open" license. Monthly snapshots of the database are available for download via BitTorrent.
 
 6.Pre-Search: Pre-Search provides a list of potentially related questions to a user before the user is allowed to post a new question. This prevents having multiple copies 
 of the same question, enabling efficient retrieval of relevant answers. 
 
-7.Search Engine Optimization: It is critical for Stack Overflow to score top results in searches to increase its user base and to build its reputation as the “one stop shop” 
+7.Search Engine Optimization: It is critical for Stack Overflow to score top results in searches to increase its user base and to build its reputation as the "one stop shop" 
 for all programming related questions. Therefore, it uses various search engine optimization techniques to increase its visibility on search engines. For instance, the URL of 
 a particular page on the site contains keywords from the corresponding topic.
 
@@ -460,8 +460,8 @@ so quality answers were available on the website from the outset.
 websites with similar traffic, but only requires one-tenth of the hardware.
 
 As Spolsky described in a Google Tech Talk, 
-“Our hope is that a large body of the questions that are in Stack Overflow will become the canonical place on the Internet to learn about very very narrow specific questions 
-about very very narrow and specific programming topics.”
+"Our hope is that a large body of the questions that are in Stack Overflow will become the canonical place on the Internet to learn about very very narrow specific questions 
+about very very narrow and specific programming topics."
 [http://www.youtube.com/watch?v=NWHfY_lvKIQ] -> 18:15-18:29
 
 
@@ -659,7 +659,317 @@ QA systems need to tackle various traditional intrinsic problems derived from th
 
 What does the user know about the question being asked, and the system processing the question? E.g. natural language processing vs. users expectations to what they can ask
 
-p. 4, column 2
+NL was used to access databases as early as the late 60's, early 70's. The first qa systems were domain specific, and developed in the 60's as NL interfaces to expert systems 
+(BASEBALL: US baseball league and LUNAR: geological analysis of rocks from the Apollo missions).
+
+---> NLIDB: Natural Language Interfaces to Databases
+
+early NLIDB relied on pattern matching.  a rule says that if a user's request contains the word "capital" followed by a country name, the system should print the capital which 
+corresponds to the country name, so the same rule will handle "what is the capital of Italy?", "print the capital of Italy", "could you please tell me the capital of Italy". 
+drawback was that they were built for particular databases, so they were not adaptable for other domains. Configuration was troublesome due to domain-specific grammar, 
+hardwired knowledge or hand-written mapping rules developed by domain experts.
+
+next generation of NLIDBs used intermediate representation language, where user input was separated from the database structure. Since the (domain-independent) linguistic process (user input) 
+was separated from the (domain-dependent) mapping process (database operations), frontends could be more portable.
+
+The formal semantics approach presented in (De Roeck et al., 1991) follows this paradigm and clearly separates between the NL front ends, which have a
+very high degree of portability, from the back end. The front end provides a mapping between sentences of English and expressions of a formal semantic
+theory, and the back end maps these into expressions, which are meaningful with respect to the domain in question. Adapting a developed system to a new 
+application requires altering the domain specific back end alone.
+
+MASQUE/SQL (Androutsopoulos et al., 1993) is a portable NL front end to SQL databases. It first translates the NL query into an intermediate logic
+representation, and then translates the logic query into SQL. The semi-automatic configuration procedure uses a built-in domain editor, which helps 
+the user to describe the entity types to which the database refers, using an is-a hierarchy, and then to declare the words expected to appear in the 
+NL questions and to define their meaning in terms of a logic predicate that is linked to a database table/view.
+
+PRECISE maps questions to the corresponding SQL query by identifying classes of questions that are understood in a well defined sense: the paper defines 
+a formal notion of semantically tractable questions. Questions are translated into sets of attribute/value pairs and a relation token corresponds to either 
+an attribute token or a value token. Each attribute in the database is associated with a wh-value (what, where, etc.). PRECISE uses a lexcion to find synonyms. 
+The database elements selected by the matcher are assembled into a SQL query, if more than one possible query is found, the user is asked to choose between the 
+possible interpretations. However, in PRECISE the problem of finding a mapping from the tokenization to the database requires all tokens to be distinct; questions 
+with unknown words are not semantically tractable and cannot be handled. As a consequence, PRECISE will not answer a question that contains words absent from its 
+lexicon. 
+
+Using the example suggested in (Popescu et al., 2003), the question "what are some of the neighbourhoods of Chicago?" cannot be handled by PRECISE because the word 
+"neighbourhood" is unknown. When tested on several hundred questions, 80% of them were semantically tractable questions, which PRECISE answered correctly, and the other 
+20% were not handled.
+
+NLI have attracted considerable interest in the Health Care area. In the approach presented in (Hallet et al., 2007) users can pose complex NL queries to
+a large medical repository, question formulation is facilitated by means of Conceptual Authoring. A logical representation is constructed using a query
+editing NL interface, where, instead of typing in text, all editing operations are defined directly on an underlying logical representation governed by a 
+predefined ontology ensuring that no problem of interpretation arises.
+
+To reduce the formal complexity of creating underlying grammars for different domains, (Minock et al., 2008), and most recently C-PHRASE (Minock et al., 2010) 
+present a state-of-the-art authoring system for NLIDB. The author builds the semantic grammar through a series of naming, tailoring and defining operations within a
+web-based GUI, as such the NLI can be configured by non-specialized, web based technical teams. In that system queries are represented as expressions in an extended 
+version of Codd’s Tuple Calculus, which may be directly mapped to SQL queries or first-order logic expressions. Higher-order predicates are also used to support 
+ranking and superlatives.
+
+Work on qa different from querying structured data. IR perspective, processing text to find and retrieve the answer.
+ARDA's Advanced Question Answering for Intelligence funded the AQUAINT program; multi-project effort for qa system performance improvement over free large heterogeneous 
+collections of structured and unstructured text or media. 
+
+Linguistic problems are common in most NL systems. Some use shallow keyword-based techniques to find interesting sentences (based on words that refers to entities that are 
+the same as the answer type). Ranking is based on syntactic features such as word order or similarity to the query. Templates can be used to find answers that are just 
+reformulations of the question. Most systems classify queries based on answer type (e.g. name, quantity, dates, etc). Question classes arranged hierarchically in taxonomies, 
+requiring different strategies based on the question type. Utilize word knowledge through resources like WordNet or ontologies Suggested Upper Merged Ontology (SUMO) to 
+get the qa type. Other options are also: named-entity (NE) recognition, relation extraction, co-reference resolution, syntactic alternations, word sense disambiguation (WSD), 
+logical inferences and temporal-spatial reasoning.
+
+qa application with text has two steps:
+
+1. identifying the semantic type of the entity sought by the question
+2. determining additional constraints on the answer entity
+
+Hierarchies of question types based on answer looked for.
+
+LASSO (Moldovan et al., 1999) a question type hierarchy was constructed from the analysis of the TREC-8 training data, and a score of 55.5% for short answers and 64.5% for long answers was achieved. 
+Given a question, LASSO can find automatically 
+(a) the type of the question (what, why, who, how, where), 
+(b) the type of the answer (person, location, etc.), 
+(c) the focus of the question, defined as the "main information required by the interrogation" (useful for "what" questions, which usually leave implicit the type of the answer which is sought),
+(d) the relevant keywords from the question. Occasionally, some words of the question do not occur in the answer (for example, the focus "day of the week" is very unlikely to appear in the answer). 
+Therefore, LASSO implements NE recognition heuristics for locating the possible answers.
+
+FALCON the semantic categories of the answers are mapped into categories covered by a NE Recognizer. When the answer type is identified, it is mapped into an answer taxonomy, where the top categories are 
+connected to several word classes from WordNet. In an example presented in (Harabaigiu et al., 2000), FALCON identifies the expected answer type of the question "what do penguins eat?" as food because "it 
+is the most widely used concept in the glosses of the sub-hierarchy of the noun synset {eating, feeding}". All nouns (and lexical alterations), immediately related to the concept that determines the answer 
+type, are considered among the other query keywords. Also, FALCON gives a cached answer if the similar question has already been asked before; a similarity measure is calculated to see if the given question 
+is a reformulation of a previous one.
+
+DIMAP, extracts "semantic relation triples" after a document is parsed, converting a document into triples. The DIMAP triples are stored in a database in order to be used to answer the question. The semantic 
+relation triple described consists of a discourse entity, a semantic relation that characterizes the entity’s role in the sentence and a governing word to which the entity stands in the semantic relation. The 
+parsing process generates an average of 9.8 triples per sentence in a document. The same analysis was done for each question, generating on average 3.3 triples per sentence, with one triple for each question 
+containing an unbound variable, corresponding to the type of question (the system categorized questions in six types: time, location, who, what, size and number questions).
+
+Web qa systems have the same main components as factoid systems;
+
+(1) query formulation mechanism converting NL query into IR query
+(2) web search engine searching through related documents (instead of IR engine)
+(3) answer extraction module (e.g. using WordNet or NE to classify answer type)
+
+Mulder (Kwok al., 2001) is a QA system for factual questions over the Web, which relies on multiple queries sent to the search engine Google. To form the right queries for the search engine, the query is classified 
+using WordNet to determine the type of the object of the verb in the question (numerical, nominal, temporal), then a reformulation module converts a question into a set of keyword queries by using different strategies: 
+extracting the most important keywords, quoting partial sentences (detecting noun phrases), conjugating the verb, or performing query expansion with WordNet. In Mulder, an answer is extracted from the snippets or 
+summaries returned by Google, which is less expensive than extracting answers directly from a Web page. Then, to reduce the noise or incorrect information typically found on the Web and improve accuracy, Mulder clusters 
+similar answers together and picks the best answer with a voting procedure. Mulder takes advantage of Google ranking algorithms base on PageRank, the proximity or frequency of the words, and the wider coverage provided by 
+Google: "with a large collection there is a higher probability of finding target sentences". An evaluation using the TREC-8 questions, based on the Web, instead of the TREC document collection, showed that Mulder’s
+recall is more than a factor of three higher than AskJeeves.
+
+AskJeeves looks up the user’s question in its database and returns a list of matching questions that it knows how to answer, the user selects the most appropriate entry in the list, and he is taken to the Web pages where the 
+answer can be found. AskJeeves relies on human editors to match question templates with authoritative sites.
+
+mentions FAQFINDER
+
+Google itself is also evolving into a NL search engine, providing precise answers to some specific factual queries, together with the Web pages from which the answers have been obtained. However, it does not yet distinguish 
+between queries such as "where Barack Obama was born" or "when Barack Obama was born"  (as per May 2011).
+
+Current trend is to use semantics to look for web pages based on query words meaning, instead of matching keywords and using page rank (popularity). 
+Also approaches focusing on obtaining structured answers to user queries from pre-compiled semantic information, used to understand and disambiguate intended meaning and relationship of query words.
+
+START (Katz et al., 2002) answers questions about geography and the MIT infolab, with a performance of 67% over 326 thousand queries. It uses highly edited KBs to retrieve tuples in the subject-relation-object form, as pointed out 
+by (Katz et al., 2002), although not all possible queries can be represented in the binary relational model, in practice these exceptions occur very infrequently. START compares the user query against the annotations derived from 
+the KB. However, START suffers from the knowledge acquisition bottleneck, as only trained individuals can add knowledge and expand the system’s coverage (by integrating new Web sources). 
+
+Commercial systems include PowerSet, which tries to match the meaning of a query with the meaning of a sentence in Wikipedia. Powerset not only works on the query side of the search (converting the NL queries into database understandable queries, 
+and then highlighting the relevant passage of the document), but it also reads every word of every (Wikipedia) page to extract the semantic meaning. It does so by compiling factzs - similar to triples, from pages across Wikipedia, together with 
+the Wikipedia page locations and sentences that support each factz and using Freebase and its semantic resources to annotate them. The Wolfram Alpha knowledge inference engine builds a broad trusted KB about the world by ingesting massive amounts 
+of information (approx. 10TBs, still a tiny fraction of the Web), while True Knowledge relies on users to add and curate information.
+
+Ontology-based semantic QA systems (also called semantic qa systems in paper), takes NL queries and ontology as input, and returns answers from KB (where KB is based on passed ontology). Allows user to have no prior knowledge to vocabulary or 
+onotology structure.
+
+Two different main aspects for ontology-based qa systems:
+
+(1) degree of domain customization required (correlates to retrieval performance)
+(2) subset of NL understanding  (full grammar-based NL, controlled or guided NL, pattern based). Needed to reduce omplexity and the habitability problem. Main issue hindering successful use of NLI.
+
+At one end of the spectrum, systems are tailored to a domain and most of the customization has to be performed or supervised by domain experts. For instance QACID (Fernandez et al., 2009) is based on a collection of queries from a given domain that 
+are analyzed and grouped into clusters, where each cluster, containing alternative formulations of the same query, is manually associated with SPARQL queries. In the middle of the spectrum, a system such as ORAKEL (Cimiano et al., 2007) requires a 
+significant domain-specific lexicon customization process, while for systems like the e-librarian (Linckels, 2005) performance is dependent on the manual creation of a domain dependent lexicon and dictionary. At the other end of the spectrum, in 
+systems like AquaLog (Lopez et al., 2007), the customization is done on the fly while the system is being used, by using interactivity to learn the jargon of the user over time. GINSENG (Bernstein and Kauffman et al., 2006) guides the user through 
+menus to specify NL queries, while systems such as PANTO (Wang, 2007), NLP-Reduce, Querix (Kaufmann et al., 2006) and QuestIO (Tablan et al., 2008), generate lexicons, or ontology annotations (FREya by Damljanovic et al.), on demand when a KB is loaded. 
+
+see p. 9--13 for a summary of various Semantic ontology-based qa systems (listed in paragraph above); perhaps reference these as: "...various systems using different implementations are listed in \cite[p.~9--13]{XXX}. with a comparison of these on \cite[p.~12]{XXX}..."
+
+qa systems vary in portability, customization and ontology domain. Common for most ontology-aware systems is that they are domain restricted (either us of one at a domain or a large one covering limited sets). 
+User still has to tell the system which ontologies to use. Difficult to predict the feasibility of these models to scale up to open and heterogeneous environments, where an unlimited set of topics is covered. 
+
+Domain-specific grammar-based systems: 
+Grammar is used to syntactically analyze and interpret (presuming no linguistic ambiguities; interpretation checks how terms link to each other) the structure of a NL query.
+Difficult to devise grammars that are sufficiently expressive. Grammar is often limited to syntactic structure they can understand, or they are domain independent. Since users often use limited language in interfaces, 
+grammar does not need to be complete. Systems requiring users to provide domain-specific grammar is not suitable for a multi-ontology open scenario.
+
+Pattern-matching (pm) or bag-of-words (bow) approaches:
+Searches for patterns in the users query. "the more flexible and less controlled a query language is, the more complex a system’s question analyzing component needs to be to compensate for the freedom of the query language" (Kaufmann and Bernstein, 2007). 
+Naive and flexible pattern-matching systems work well in closed scenarios, where complexity is reduced to a minimum by only employing two basic NLP techniques: stemming and synonym expansion. The best feature is ontology independence, where even ungrammatical 
+and ill-formed questions can be processed. However, lack of semantics and disambiguation hinders scalability in regards to  a large open scenario. pm or bow combined with the freedom of NL can result in too any interpretations of the words relation. 
+This increases the risk of not finding correct translations and suffers from the habitability problem. (Hildebrand et al., 2007): 
+"Naïve approaches to semantic search are computationally too expensive and increase the number of results dramatically, systems thus need to find a way to reduce the search space". 
+
+Guided interfaces: 
+Guided and controlled interfaces generate dynamic grammar rules for each class, property and instance, and presents the users with word options (e.g. Google search engine; word suggestion). 
+All possible completions to user query is not feasible in a large multi-ontology scenario. 
+"It is important to note that the vocabulary grows with every additional loaded KB, though users have signaled that they prefer to load only one KB at a time" (Kaufmann, 2009; describing GINO).
+
+Disambiguation by dialogs and user interaction: 
+
+Dialogs are popular and convenient for resolving ambiguous queries, especially when context and ontology semantics are not enough to choose interpretation.
+However, asking users for help everytime ambiguity arises, makes it hard to use the system for qa processing in a multi-domain scenarios with multiple ontologies  
+"the task of creating and ranking the suggestions before showing them to the user is quite complex, and this complexity arises [sic] as the queried knowledge source grows" (Damljanovic et al., 2010). 
+
+Domain dependent lexicons and dictionaries:
+At the expense of portability, high performance can be achieved by using domain dependent dictionaries. 
+However it is not feasible to manually build, or rely on the existence of domain dictionaries in an environment with a potentially unlimited number of domains.
+
+Lexicons generated on demand when a KB is loaded:
+
+Efficiency of automatically generating lexicons, decreases with the onotology size and is challenging if multiple large-scale ontologies are to be queried simultaneously.
+In contrast with the structured indexes, entity indexes can benefit from less challenging constraints in terms of index space, creation time and maintenance.
+However, ignoring the remaining context provided by the query terms can ultimately lead to an increase in query execution time to find the adequate mappings.
+
+Benefits of onotology-based qa (p. 19):
+
+- Ontology independence: 
+Solved portability problem by combining the knowledge encoded in ontology with the (often shallow) domain-independent syntactic parsing, 
+since these are the primary sources for understanding the user query (no need to encode specific domain-dependent rules). Therefore these 
+systems are practically ontology independent, less costly to produce, and require little effort to bring in new sources. Can also optimize 
+performance based on manual configuration or automatic learning mechanisms based on user feedback.
+
+- Able to handle unknown vocabulary in the user query: 
+If query term is lexically dissimilar from the from the ontology's vocabulary, and it is not in any manually or automatically created 
+lexicon, you can study the ontology "neighborhood" of  other query terms to find the value/relation looked for. In some cases, that may 
+be all the information needed.
+
+- Deal with ambiguities:
+
+When ontologies are directly used to give meaning to the queries expressed by the user and 
+retrieve answers, the main advantage is the possibility to link words to obtain their meaning based 
+on the ontological taxonomy and inherit relationships, and thus, to deal with ambiguities more efficiently.
+
+the main benefits of ontology-based QA systems are that they make use of the semantic information to interpret and provide precise answers to questions posed in NL and are 
+able to cope with ambiguities in a way that makes the system highly portable.
+
+Although linguistic and ambiguity problems are common in most kinds of NL understanding systems, building a QA system over the SW has the following advantages:
+
+
+- Balancing relatively easy design and accuracy: 
+current state of the art open systems to query documents on the Web require sophisticated syntactic, 
+semantic and contextual processing to construct an answer, including NE recognition. These systems 
+classify queries using hierarchies of question types based on the types of answers sought (e.g., person, location, date, etc.) 
+and filter small text fragments that contain strings with the same type as the expected answers. 
+In ontology-based QA there is no need to build complex hierarchies, to manually map specific answer types to WordNet conceptual hierarchies or 
+to build heuristics to recognize named entities, as the semantic information needed to determine the type of an answer is in the publicly available 
+ontology (ies). As argued in (Mollá and Vicedo, 2007) a major difference between open-domain QA and ontology-based QA is the existence of domain-dependent 
+information that can be used to improve the accuracy of the system.
+
+
+- Exploiting relationships for query translation: 
+NE recognition and IE are powerful tools for free-text QA, but scaling well discovering relationships between entities is problematic.
+IE methods does not always capture all the information (e.g. semantics, unknown answer forms, disregarding patterns, lack of WordNet coverage for question verb(s)).
+QA systems over semantic data can benefit from exploiting the explicit ontological relationships and the semantics of the ontology schema (e.g., type, subclassOf, 
+domain and range), to understand and disambiguate a query. WordNet is only used for query expansion, to bridge the gap between the vocabulary of the user and the 
+ontology terminology through lexically related words (such as synonyms).
+
+- Handling queries in which the answer type is unknown: 
+What queries, in which the type of the expected answer is unknown, are harder than other types of queries when querying free text (Hunter, 2000). However, the ontology 
+simplifies handling what-is queries because the possible answer types are constrained by the types of the possible relations in the ontology.
+
+- Structured answers are constructed from ontological facts: 
+Mapping arbitrary query concepts to existing ontology entities, where answers are obtained by extracting semantic entities matching the facts, or fulfill the ontological 
+triples or SPARQL queries. The approach to answer extraction in text-based QA requires first identifying entities matching the expected answer in text, e.g., using the 
+WordNet mapping approach. Second, the answers within these relevant passages are selected using a set of proximity-based heuristics, whose weights are set by a 
+machine-learning algorithm (Pasca, 2003). Although IR methods scale well, valid answers in documents that do not follow the syntactic patterns expected by the QA system 
+can be easily disregarded.
+
+- Combining multiple pieces of information: 
+
+Ontological semantic systems can exploit the power of ontologies as a model of knowledge to give precise, focused answers, where multiple pieces of information (that may 
+come from different sources) can be inferred and combined together. In contrast, QA systems over free text cannot do so, as they retrieve pre-written paragraphs of text 
+or answer strings (typically NPs or named entities) extracted verbatim from relevant text (Pasca, 2003).	
+
+It is costly to produce large amounts of domain background knowledge for proprietary open domain approaches (domain background knowledge is a requirement).
+Even though they are based on semantics, these systems does not take full advantage of the all the information available from the SW. Key difference, since they 
+use an internal structure for their knowledge, and they claim ownership of a trusted and curated homogeneous KB instead of supporting users exploring distributed knowledge 
+sources on the Web.
+
+There are still several issues when attempting to benefit from using Web data to get the most accurate answer to the users query:
+
+- Heterogeneity and openness: 
+High ambiguity can cause lack of context for precision, because there are many alternatives for translations and interpretations.
+
+- Dealing with scalability as well as knowledge incompleteness: 
+Need filtering and ranking techniques to scale large data amounts. Often a large number of onotological hits with different domains across the same dataset which can be mapped to user query terms.
+Un-feasible to explore all solutions to get the semantically sound mappings, but filtering and domain-coverage heuristics to shift focus to precisions requires certain assumptions about source quality. 
+With too strict filtering and heuristics, recall will be affected in a noisy environment where sources contain redundant and duplicated terms, and incomplete information. The cause can be that not all 
+ontological elements are populated at instance level, or lack of schema information (no domain and range for properties, or type for classes, difficult to parse literals, etc.).
+
+- Sparseness: 
+The potential is overshadowed by the sparseness and incompleteness of the SW when compared to the Web (Polleres, 2010). During the search process, it may happen that a) there are no available ontologies 
+that cover the query, or b) there are ontologies that cover the domain of the query but only contain parts of the answer.
+
+
+
+Large Scale Semi-supervised Linear SVM with Stochastic Gradient Descent
+(Xin ZHOU, Conghui ZHU, Sheng LI, Mo YU)
+
+Issue with training time over large scale data. Focus on reducing training time by using semi-supervised learning and transductive support vector machines (TSVMs).
+Stochastic gradient descent (SGD), also referred to as stochastic approximation algorithms [11] has been shown to have great promise for large scale learning.
+Paper is mostly equations and mathematical proofs of proposed theory; not applicable for thesis.
+
+
+Latent Semantic Analysis for Question Classification with Neural Networks
+(Babak Loni, Seyedeh Halleh Khoshnevis, Pascal Wiggers)
+
+Question classification (qc): predict the entity type of the answer of a natural language question, mostly achieved by using machine learning.
+Used Latent Semantic Analysis (LSA) technique to reduce the large feature space of questions to a much smaller and efficient feature space.
+Two different classifiers: Back-Propagation Neural Networks (BPNN) and Support Vector Machines (SVM). Found that using LSA on question classification 
+made it more time efficient and improved classification accuracy by removing redundant features. Discovered that when the original feature space is compact and efficient,
+its reduced space performs better than a large feature space with a rich set of features. They also found that in the reduced feature space, BPNN was better than SVM. 
+Competitive with state-of-the-art, even though they used smaller feature space.
+
+qa is about getting an answer to a question, not a list of documents. qc maps a question to a category (pre-defined), which specifies the expected answer type.
+Focus is on fact based questions. Class determination can reduce feature space, in addition to specify the search strategy. A problem with qc learning systems 
+is the high dimensional feature space (typically caused by the n-grams over all the vocabulary words).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
