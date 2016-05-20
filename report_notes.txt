@@ -999,7 +999,189 @@ Lexical semantic information sources:
 (4) automatically-generated semantically similar words for every common English word based on distributional similarity
 
 if a word w occurs in a question, the question representation is augmented with the semantic category(ies) of the word.
-10/21
+
+Performance is evaluated by the global accuracy of the classifiers for all the coarse or fine classes (Accuracy), 
+and the accuracy of the classifiers for a specific class c (Precision[c]), defined as follows:
+
+Accuracy = # of correct predictions  /  # of predictions
+
+precison[c] = # of correct predictions of class c  /  # of predictions of class c
+
+Note to self: Map graph over feature impact (unprocessed, singular, all)
+Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)).
+
+observed that classifying questions just based on question words (1) does not correspond well to the desired taxonomy, and (2) is too crude
+since a large fraction of the questions are ‘What questions’.
+
+misclassifications: lack of context sensitivity in semantical analysis, necessity of identifying the question focus by analyzing syntactic
+structures and ambiguity (ambiguity causes the classifier not to output equivalent term as the first choice)
+
+goal of the work is to show that a sensible incorporation of semantic features can improve the quality of question classification significantly.
+
+
+
+
+Learning Surface Text Patterns for a Question Answering System
+(Deepak Ravichandran and Eduard Hovy)
+
+Explores power of surface text patterns for open-domain question answering systems. Developed a method for learning the patterns automatically.
+Tagged corpus built from Internet (hand-crafted examples of each question to Altavista). Automatical pattern extraction and standardization of returned documents.
+Calculates precision for each pattern and average precision for each question type.
+
+Use of phrases to find correct answer; e.g. "<NAME> was born in <BIRTHDATE>" <NAME> "(<BIRTHDATE>–" as regular expression to find correct answer.
+Assumes each sentence to be a simple sequence of words and searches for repeated word orderings as evidence for useful answer phrases.
+uses suffix trees (based on computational biology, e.g. DNA sequences) for extracting substrings of optimal length.
+observed need for matching part of speech and/or semantic types, and could not handle long-distance dependencies due to wildcard matching.
+cannot work for types of question that require multiple words from the question to be in the answer sentence. Lack of case-sensitivity.
+
+
+
+
+Learning Word Vectors for Sentiment Analysis
+(Andrew L. Maas, Raymond E. Daly, Peter T. Pham, Dan Huang, Andrew Y. Ng, and Christopher Potts)
+
+Even though expressive content and descriptive semantic content are distinct, sentiment information can be lost. It can learn that two words are close 
+(similar/equal meaning), but cannot understand that two other words are the complete opposite (negative) of those words. Dataset based on IMDB reviews.
+semantic component of model shares its probabilistic foundation with LDA, but is factored in a manner designed to discover word vectors rather than latent topics.
+Vector space models (VSMs) seek to model words directly. Using term frequency (tf) and inverse document frequency (idf) weighting to transform the values
+in a VSM often increases the performance of retrieval and categorization systems.
+model does not attempt to model individual topics, but instead directly models word probabilities conditioned on the topic mixture
+
+25,000 movie reviews from IMDB, including at most 30 reviews from any movie in the collection. built a fixed dictionary of the 5,000 most frequent
+tokens, but ignored the 50 most frequent terms from the original full vocabulary. Stemming was not applied because the model learned similar representations for words 
+of the same stem when the data suggests it. Allowed non-word tokens (e.g. '!', ':-)'), since it could be sentiment relevant. Mapped ratings to [0,1].
+Semantic component did not require labels.
+
+Applied truncated SVD to a tf.idf weighted, cosine normalized count matrix, which is a standard weighting and smoothing scheme for VSM induction.
+Left LDA hyperparameters at their default values. Used 10-fold CV.
+Constructed dataset contains an even number of positive and negative reviews, so randomly guessing yields 50% accuracy
+
+
+
+
+LIBLINEAR: A Library for Large Linear Classification
+(Rong-En Fan, Kai-Wei Chang, Cho-Jui Hsieh, Xiang-Rui Wang, Chih-Jen Lin)
+
+large-scale linear classification, supports logistic regression and linear support vector machines. 
+Inherits many of the features from libsvm.
+supports two popular binary linear classifiers: LR and linear SVM.
+
+
+
+LIBSVM: A Library for Support Vector Machines
+(Chih-Chung Chang and Chih-Jen Lin)
+
+Support Vector Machines (SVMs) are a popular machine learning method for classification, regression, and other learning tasks. Started work in 2000. Supports:
+
+1. SVC: support vector classification, (two-class and multi-class). 
+2. SVR: support vector regression. 
+3. One-class SVM.
+
+Classification: Accuracy = (# correctly predicted data  /  # total testing data) * 100
+Regression: outputs MSE (mean squared error) and r2 (squared correlation coefficient).
+
+Mostly equations and mathematical theorems and proof in relation to system documentation. 
+
+
+
+
+Mining Stack Exchange: Expertise Is Evident from Initial Contributions
+(Daryl Posnett, Eric Warburg, Premkumar Devanbu, Vladimir Filkov)
+
+Participants are not compensated for their services and anyone can freely gain value from the efforts of the users; Stack Exchange is therefore a gift economy.
+Since users are rewarded with votes and reputation, Stack Exchange functions as a learning community (creating a valuable qa archive). 
+Wants to find out if the product quality (delivered answers improves) and if the answers provided by users improve over time.
+Found that overall answer scores decrease and users relationship to the community is unrelated to answer quality. Proves that answering skill (getting high average answer scores) 
+is there from the beginning, and those with bad answers/low scores are continous (no indication of change in quality).
+
+Stackexchange ranked 2nd among reference sites, 4th among computer science sites, and 97th overall among all websites.
+Jeff Atwood stated that the goal the community is not just to provide quality answers to the users, but also, when it pertains to software programmers,
+to trick them into becoming better communicators. Since programmers constitute most of its users, one of the original goals of Stack Exchange is to improve over time people’s
+abilities to provide better answers.
+
+"Linus' Law" - claiming that "with many eyeballs, all bugs are shallow"; suggesting that program bug-fixing efforts are facilitated by the participation of more users.
+
+Stack Exchange can be viewed as an instance of an online learning community, where individuals help each other gain expertise, both in terms of domain knowledge, and in
+answering questions well and to the point. It has long been argued that people learn better in co-operating groups than on their own.
+Important design goals of learning communities: help users find relevant content; help users find people with relevant knowledge and motivate people to learn.
+
+Used SE dataset to construct posting history for each user over time. Used data from 'serverfault.com' (they didn't use SO due to its size being to computationally expensive).
+
+
+
+
+Modeling Problem Difficulty and Expertise in StackOverflow
+(Benjamin V. Hanrahan, Gregorio Convertino, Les Nelson)
+
+Focus is on developing indicators for problems and experts. Examine how complex problems are handled and shared between experts. 
+Answering questions should be parallell to the experts knowledge, e.g. complex problems are handled by (domain) expert users, and basics by those that know the answer.
+
+Duration between the when a question was first posted and when an answer was accepted by the poster as a proxy for difficulty.
+Extracted events for the questions, to construct a language to describe a given questions activity. Used the following grammar:
+
+- Actor Type: Questioner (user posting the question), Accepted Answerer (user posting accepted answer), Unaccepted Answerer (users posting the other answers), and Someone 
+		(participants in the question (e.g. comments)). 
+- Action: Posting, Commenting, Editing, Answering, Accepting, Voting Up, and Voting Down. 
+- Object: Question or an Answer.
+
+
+
+
+N-Gram-Based Text Categorization
+(William B. Cavnar and John M. Trenkle)
+
+Text categorization is a fundamental task in document processing, allowing the automated handling of enormous streams of documents in electronic form.
+Paper is about a N-gram-based system for text categorization that is tolerant of textual errors. The system worked well for language classification,
+in one test it got 99.8% classification rate on Usenet newsgroup articles (written in different languages). It also worked well for computer-oriented articles (subject) 
+where the highest classification rate was 80%.
+
+text categorization: an incoming document is assigned to some pre-existing category. characteristics:
+
+- categorization must work reliably in spite of textual errors.
+- categorization must be efficient, consuming as little storage and processing time as possible, because of the sheer volume of documents to be handled.
+- categorization must be able to recognize when a given document does not match any category, or when it falls between two categories. This is because
+  category boundaries are almost never clearcut.
+
+N-gram is an N-character slice of a longer string. the term can include the notion of any co-occurring set of characters in a string (e.g., an N-gram made up of the first and third character of a word), 
+but in this paper they use the term for contiguous slices only. Their system use N-grams of several different lengths simultaneously. Appends space to beginning/end of string (_ = space):
+bi-grams: _T, TE, EX, XT, T_
+tri-grams: _TE, TEX, EXT, XT_, T_ _
+quad-grams: _TEX, TEXT, EXT_, XT_ _, T_ _ _
+---> a string of length k, padded with blanks, will have k+1 bi-grams, k+1tri-grams, k+1 quad-grams, etc.
+
+Re-statement of Zipf's Law: The n'th most common word in a human language text occurs with a frequency inversely proportional to n.
+This means that there is always a set of words which dominates most of the other words of the language in terms of usage frequency.
+smooth continuum of dominance from most frequent to least. implies that classifying documents with N-gram frequency statistics will 
+not be very sensitive to cutting off the distributions at a particular rank. if we are comparing documents from the same category they 
+should have similar N-gram frequency distributions.
+
+determined the true classification for each test sample semi-automatically.
+
+- classification procedure works a little better for longer articles
+- classification procedure works better the longer the category profile it has to use for matching. there were some interesting anomalies (using more N-gram
+frequencies actually decreased classification performance). caused by some articles having multiple languages even though mixed types were removed
+
+also used the classification system to identify the appropriate newsgroup for newsgroup articles (collected article samples from five Usenet newsgroups).
+Chose these five because they were all subfields of computer science, and wanted to test how the system could confuse newsgroups that were somewhat closely related
+removed the usual header information, such as subject and keyword identification, leaving only the body of the article (to prevent influental matches). 
+
+primary advantage of this approach is that it is ideally suited for text coming from noisy sources such as email or OCR systems.
+Possible to achieve similar results using whole word statistics (using frequency statistics for whole words), but several issues exists;
+
+1. The system would be much more sensitive to OCR problems (one wrong character, and the word is counted separately). 
+2. Certain articles could be too short to get representative word statistics. there are simply more N-grams in a given
+   passage than there are words, and there are consequently greater opportunities to collect enough N-grams to be significant for matching.
+3. By using N-gram analysis, you get word stemming for free, since the plurals will all contain the base form. To get the same results 
+   with whole words, the system has to do word stemming, requiring knowledge about the language the documents were written in. 
+   Whereas N-gram frequency approach provides language independence for free.
+4. Other advantages of this approach are the ability to work equally well with short and long documents, and the minimal storage and computational requirements.
+
+
+
+
+
+
+
 
 
 
