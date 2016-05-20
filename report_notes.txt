@@ -918,6 +918,7 @@ Stochastic gradient descent (SGD), also referred to as stochastic approximation 
 Paper is mostly equations and mathematical proofs of proposed theory; not applicable for thesis.
 
 
+
 Latent Semantic Analysis for Question Classification with Neural Networks
 (Babak Loni, Seyedeh Halleh Khoshnevis, Pascal Wiggers)
 
@@ -932,39 +933,73 @@ qa is about getting an answer to a question, not a list of documents. qc maps a 
 Focus is on fact based questions. Class determination can reduce feature space, in addition to specify the search strategy. A problem with qc learning systems 
 is the high dimensional feature space (typically caused by the n-grams over all the vocabulary words).
 
+SVMs are very successful on high dimensional data since they are timely efficient especially when the feature vectors are sparse, but they still suffer from the redundant features. 
+Question classification has also been done by Maximum Entropy models [7], [10], Sparse Network of Winnows (SNOW) [11] and language modeling [12].
+
+Back-propagation neural networks are multi-layer feed forward neural networks which are trained with the backpropagation
+learning rule [15]. They consist of an input layer, an output layer and one or more hidden layers. Each neuron
+has a forward connection to all neurons in the subsequent layer and the importance of connections are reflected by weight
+parameters. The input of each neuron is weighted sum of its input signals and the output is calculated as a function of input
+signals and an optional threshold parameter.
+
+In qc, question is represented using vector space model, the question is a vector which is described by the words inside it. Therefore, a question
+x is represented by vector x = (x1, ..., xd) in which xi is the frequency of term i in x and d is the total number of terms. This representation is also referred as bag-of-words or
+unigrams which is the simplest type of features that can be extracted from a question and is the most widely used feature space in document classification
+
+Bigrams
+If any two consecutive words in a question is considered as a feature, the resulting feature space is called bigrams. It is
+an special case of n-grams in which any n-consecutive words are considered as a single feature. Very high dimensional, since it uses word-pairs (2 words) as feature set, 
+which can cause a lot of redundant data to be included. Found that using the first words in the question as bigram feature performed as good as using all bigrams (and it reduced feature space).
+
+the combination of wh-word and the immediate word next to it, is an informative feature in most cases. For example most of the questions which starts with “what is/are” are asking for a definition.
+adopted 8 wh-words; what, which, when, where, who, how, why and rest.
+
+word shapes (e.g. numeric, case, etc). defined shape of all the words in the question and added them to feature vector.
+
+headwords; e.g. "What is the oldest city in Canada?" the headword is "city".
+
+hypernyms; words with equal meaning -  a child category. hypernyms allow one to abstract over specific words
+since adding the hypernyms of all the words can introduce noisy information, we only add the hypernyms of the question’s headword to the feature vector.
+
+Tested all 4 kernels of SVM, linear had the best results. Error penalty was set to 1.
 
 
 
+Learning Question Classifiers: The Role of Semantic Informationyz
+(Xin Li and Dan Roth)
 
+Purpose of qa is to get a factual answer from a large collection of text, instead of a list of documents.
+Getting answer based on type (e.g. city) or getting answer based on what the question asks for (context, definition, reasoning).
+Reformulations and syntactic structure can make it hard to create a manual classifier.
+The goal of the paper is to categorize questions into different semantic classes based on the possible semantic types of the answers.
+They developed a hierarchical classifier guided by a layered semantic hierarchy of answer types that makes use of a sequential model for multi-class classification and the SNoW learning architecture.
+qc can be seen as a text classification task, but some characteristics make it different. Questions are short, therefore contains less text. However, having short text improves accuracy and analysis.
 
+Many important natural language inferences can be viewed as problems of resolving ambiguity, either syntactic or semantic, based on properties of the surrounding context.
+E.g. POS-tags, context-sensitive spelling correction, word-sense disambiguation, word choice selection in machine translation and identifying discourse markers, etc.
 
+Two layered taxonomy, where the hiearchy contains 6 coarse classes (ABBREVIATION, DESCRIPTION, ENTITY, HUMAN, LOCATION and NUMERIC VALUE) and 50 fine classes.
+Ambiguity issue, no clear boundary between classes. Uses multi-class labels to avoid this problem. During evaluation, only top-ranked coarse and fine class were counted as correct.
 
+- If a query starts with Who or Whom: type Person.
+- If a query starts with Where: type Location.
+- If a query contains Which or What, the head noun phrase determines the class, as for What X questions.
 
+Developed a hierarchical learning classifier based on the sequential model of multi-class classification. The goal of the model is to reduce the set of candidate labels for a given question by concatenating 
+a sequence of simple classifiers. The output of the classifier (class labels) is used as input for the next. Classifier output activation is normalized into a density over the class labels and is thresholded 
+so that it can output more than one class label. qc is built by combining sequence of two simple classifiers; first=coarse class, second=fine class. 
 
+In addition to words, the syntactic features for each question include POS tags, chunks (non-overlapping phrases in a sentence as defined in (Abney1991)), head
+chunks (e.g., the first noun chunk and the first verb chunk after the question word in a sentence).
 
+Lexical semantic information sources: 
+(1) named entities, 
+(2) word senses in WordNet (Fellbaum 1998), 
+(3) manually constructed word lists related to specific answer types 
+(4) automatically-generated semantically similar words for every common English word based on distributional similarity
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if a word w occurs in a question, the question representation is augmented with the semantic category(ies) of the word.
+10/21
 
 
 
