@@ -1390,64 +1390,130 @@ Syntactic structures; proposed using a special kernel function called tree kerne
 Random Search for Hyper-Parameter Optimization
 (James Bergstra, Yoshua Bengio)
 
+Comparison of grid vs randomized search. 
+The problem of identifying a good value for hyper-parameters lambda is called the problem of hyper-parameter optimization.
+Cross-validation is the technique of replacing the expectation with a mean
+over a 'validation set X^(valid)' (X=chi) whose elements are drawn i.i.d x ~ G_x. Cross-validation is unbiased
+as long as X^(valid) is independent of any data used by A_lambda (A is a learning algorithm that maps a data set X^(train) (a finite set of samples from G_x) to a function f).
+
+In grid search the set of trials is formed by assembling every possible combination of values, so the number of trials in a grid search is 'S = product^(K)_(k=1) |L(k)|' elements. 
+This product over K sets makes grid search suffer from the curse of dimensionality because the number of joint values grows exponentially with the number of hyper-parameters
+Manual search is used to identify regions in L that are promising and to develop the intuition necessary to choose the sets L(k). A major drawback of manual search is the difficulty in reproducing results.
+
+Proposes random search as a substitute and baseline that is  reasonably efficient and keeping the advantages of implementation simplicity and reproducibility of pure grid search.
+Random search is more practical than grid search because it can be applied even when using a cluster of computers that can fail, and allows the experimenter to change the "resolution" 
+on the fly: adding new trials to the set or ignoring failed trials are both feasible because the trials are i.i.d., which is not the case for a grid search. Of course,
+random search can probably be improved by automating what manual search does, i.e., a sequential optimization.
+
+Tested on neural networks and deep bayesian belief networks.
+
+
+Scikit-learn: Machine Learning in Python
+(Fabian Pedregosa, Gael Varoquaux, Alexandre Gramfort, Vincent Michel, Bertrand Thirion, Olivier Grisel, Mathieu Blondel, Peter Prettenhofer, Ron Weiss, Vincent Dubourg, Jake Vanderplas, 
+Alexandre Passos, David Cournapeau, Matthieu Brucher, Matthieu Perrot and Edouard Duchesnay)
+
+Scikit-learn differs from other machine learning toolboxes in Python for various reasons: 
+i) it is distributed under the BSD license 
+ii) it incorporates compiled code for efficiency, unlike MDP and pybrain
+iii) it depends only on numpy and scipy to facilitate easy distribution, unlike pymvpa that has optional dependencies such as R and shogun
+iv) it focuses on imperative programming, unlike pybrain which uses a data-flow framework
+
+Incorporates the C++ libraries LibSVM and LibLinear.
+
+Project Vision
+- Code quality: provide solid implementations; unit-tests and coverage. strict adherence to the Python coding guidelines and numpy style documentation.
+- BSD licensing.
+- Bare-bone design and API: Avoid framework code, keeping number of different objects to a minimum. Numpy arrays for data containers.
+- Community-driven development: Development based on collaborative tools (git, github, public mailing lists).
+- Documentation: ~300 pages user guide (documentation, class references, installation instructions, tutorials and examples).
+
+SVM: bindings avoid memory copies and have up to 40% less overhead than the original libsvm Python bindings. patch libsvm to improve efficiency on dense data, use a smaller memory footprint, and better use 
+memory alignment and pipelining capabilities of modern processors. patched version also provides unique features, such as setting weights for individual samples.
 
 
 
 
+Scikit-learn: Machine Learning Without Learning the Machinery
+(G. Varoquaux, L. Buitinck, G. Louppe, O. Grisel, F. Pedregosa, A. Mueller)
+
+Scikit-learn started circa 2007 as code from David Cournapeau and Matthieu Brucher’s PhD work, but dwindled until 2010, when the Parietal team at INRIA adopted the project, 
+hiring a full-time engineer. The team defined basic APIs and the efficient binding of LibSVM [5] they developed gave the project a compelling advantage. In December 2011, the first
+international sprint was organized with generous funding from Google. 
+
+Learning algorithms in scikit-learn are embodied in estimators, objects instantiated with parameters that control learning. Training data is passed to the fit method, which accepts 
+an (n × p) data matrix X, represented as a NumPy array or SciPy sparse matrix, where n is the number of samples, and p the number of features. When there is a quantity or class label 
+to predict, a second argument y (usually a 1D n × 1 array) contains the desired outcomes for the rows in X.
+
+Model performance measures its ability to predict new data. To avoid overfitting, training data should not be used for model performance evaluation. Leave out test data during training 
+and use it for model evaluation only. Could also use cross-validation, which repeatedly splits data into train and test subsets. CV can be used to tune parameters for estimators, 
+and meta-estimators in GridSearchCV (using cross-validation internally to set its parameters).
+
+---> Potentially re-read at a later point to see if anything else would be relevant.
+
+
+
+Sparrows and Owls: Characterisation of Expert Behaviour in StackOverflow
+(Jie Yang, Ke Tao, Alessandro Bozzon, and Geert-Jan Houben)
 
 
 
 
+Support Vector Machine Active Learning with Applications to Text Classification
+(Simon Tong, Daphne Koller)
 
 
 
 
+Support Vector Machines and Kernel Functions for Text Processing
+(Celso A.A. Kaestner)
 
 
 
 
+Tag Recommendations in StackOverflow
+(Logan Short, Christopher Wong, and David Zeng)
 
 
 
 
+Text Categorization with Support Vector Machines: Learning with Many Relevant Features
+(Thorsten Joachims)
 
 
 
 
+The Most Influential Paper Gerard Salton Never Wrote
+(David Dubin)
 
 
 
 
+The Role of Semantic Information in Learning Question Classifiers
+(Xin Li, Dan Roth, Kevin Small)
 
 
 
 
+Using Semi-supervised Learning for Question Classification
+(Nguyen x2, shimazu)
 
 
 
 
+What Is It We Are Asking: Interpreting Problem-Solving Questions in Computer Science and Linguistics
+(Noa Ragonis, Gila Shilo)
 
 
 
 
+What makes a good code example? A Study of Programming Q&A in StackOverflow
+(Seyed Mehdi Nasehi, Jonathan Sillito , Frank Maurer, and Chris Burns)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Are Loss Functions All the Same?
+(L. Rosasco, E. De Vito, A. Caponnetto, M. Piana, A. Verri)
 
 
 
