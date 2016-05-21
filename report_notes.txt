@@ -99,7 +99,7 @@ to 85.60% for fine-grained and from 89.40% to 90.00% for coarse-grained). This p
 increases by combining both WordNet clusters and the related words (88.60%). Using approximately 3000 
 training questions, the question classifier achieves more than 82% accuracy. 
 
-The accuracy rates reach 84.4% and 85.6% of the accuracy rates without and with the ‘‘auto-derived’’ word 
+The accuracy rates reach 84.4% and 85.6% of the accuracy rates without and with the ''auto-derived'' word 
 clusters, respectively.
 
 
@@ -146,7 +146,8 @@ Many QA systems employ passage retrieval modules that split
 documents into fixed-size passages of 300 words or three sentences. 
 "
 
-Answer extraction separates based on the candidate it belongs to (e.g. Location, organization, school, hospital, etc). Suffixes are then used to indicate which candidate group it belongs to. 
+Answer extraction separates based on the candidate it belongs to (e.g. Location, organization, school, hospital, etc). 
+Suffixes are then used to indicate which candidate group it belongs to. 
 If it belongs to more than one, it is added in both. This is called suffix constraint rule. 
 Use of noun-phrases in combination with suffixes.
 
@@ -243,7 +244,7 @@ Framework input: question, asked_by, list_of{answer, answered_by}.
 
 Data processor generates three outputs:
 
-1. statistics: Number of times each developer answers questions, posts questions, proportion of a developer’s posts that are questions.
+1. statistics: Number of times each developer answers questions, posts questions, proportion of a developer's posts that are questions.
 2. Help/Directed Graph: Each node in the graph is a developer. A directed edge from developer D1 to D2 in the graph denotes that developer D1 helps developer D2.
 3. Question content: Normal text and code snippet.
 
@@ -363,7 +364,7 @@ correct answer may well be accepted.
 
 Feature list: 
 
-1. Questioner features (SA ), 4 features total: questioner reputation, # of questioner’s questions and answers, questioner’s percentage of 
+1. Questioner features (SA ), 4 features total: questioner reputation, # of questioner's questions and answers, questioner's percentage of 
 accepted answers on their previous questions.
 
 2. Activity and Q/A quality measures (SB ), 8 features total: # of favorites, # of page views, # positive and negative votes on question, 
@@ -414,7 +415,7 @@ collaboration technologies, including open editing (like Wikipedia), feedback dr
 distinctive format.
 
 Users are rewarded for responding and voting with Badges and Karma. This system encourages users to return and make positive contributions to the site, greatly increasing the quality 
-of responses posted. Stack Overflow immediately received positive reviews like "it's a Q&A site where the right answer isn’t buried on page fifty, it’s almost always at the top."
+of responses posted. Stack Overflow immediately received positive reviews like "it's a Q&A site where the right answer isn't buried on page fifty, it's almost always at the top."
 [http://blog.stackoverflow.com/2010/05/announcing-our-series-a/]
 
 SO was optimized with Search Engine Optimization (SEO) so that pages could be indexed by search engines.
@@ -479,7 +480,7 @@ how, what, whether and discrepancy. Fritz and Murphy
 [4] provide a list of questions that focus on issues that occur
 within a project. Sillito et al. [12] provide a similar list focusing
 on questions during evolution tasks. LaToza and Myers
-[7] found that the most difficult questions from a developer’s
+[7] found that the most difficult questions from a developer's
 perspective dealt with intent and rationale. In their study
 on information needs in software development, Ko et al. [6]
 found that the most frequently sought information included
@@ -702,7 +703,7 @@ predefined ontology ensuring that no problem of interpretation arises.
 To reduce the formal complexity of creating underlying grammars for different domains, (Minock et al., 2008), and most recently C-PHRASE (Minock et al., 2010) 
 present a state-of-the-art authoring system for NLIDB. The author builds the semantic grammar through a series of naming, tailoring and defining operations within a
 web-based GUI, as such the NLI can be configured by non-specialized, web based technical teams. In that system queries are represented as expressions in an extended 
-version of Codd’s Tuple Calculus, which may be directly mapped to SQL queries or first-order logic expressions. Higher-order predicates are also used to support 
+version of Codd's Tuple Calculus, which may be directly mapped to SQL queries or first-order logic expressions. Higher-order predicates are also used to support 
 ranking and superlatives.
 
 Work on qa different from querying structured data. IR perspective, processing text to find and retrieve the answer.
@@ -738,7 +739,7 @@ type, are considered among the other query keywords. Also, FALCON gives a cached
 is a reformulation of a previous one.
 
 DIMAP, extracts "semantic relation triples" after a document is parsed, converting a document into triples. The DIMAP triples are stored in a database in order to be used to answer the question. The semantic 
-relation triple described consists of a discourse entity, a semantic relation that characterizes the entity’s role in the sentence and a governing word to which the entity stands in the semantic relation. The 
+relation triple described consists of a discourse entity, a semantic relation that characterizes the entity's role in the sentence and a governing word to which the entity stands in the semantic relation. The 
 parsing process generates an average of 9.8 triples per sentence in a document. The same analysis was done for each question, generating on average 3.3 triples per sentence, with one triple for each question 
 containing an unbound variable, corresponding to the type of question (the system categorized questions in six types: time, location, who, what, size and number questions).
 
@@ -753,10 +754,10 @@ using WordNet to determine the type of the object of the verb in the question (n
 extracting the most important keywords, quoting partial sentences (detecting noun phrases), conjugating the verb, or performing query expansion with WordNet. In Mulder, an answer is extracted from the snippets or 
 summaries returned by Google, which is less expensive than extracting answers directly from a Web page. Then, to reduce the noise or incorrect information typically found on the Web and improve accuracy, Mulder clusters 
 similar answers together and picks the best answer with a voting procedure. Mulder takes advantage of Google ranking algorithms base on PageRank, the proximity or frequency of the words, and the wider coverage provided by 
-Google: "with a large collection there is a higher probability of finding target sentences". An evaluation using the TREC-8 questions, based on the Web, instead of the TREC document collection, showed that Mulder’s
+Google: "with a large collection there is a higher probability of finding target sentences". An evaluation using the TREC-8 questions, based on the Web, instead of the TREC document collection, showed that Mulder's
 recall is more than a factor of three higher than AskJeeves.
 
-AskJeeves looks up the user’s question in its database and returns a list of matching questions that it knows how to answer, the user selects the most appropriate entry in the list, and he is taken to the Web pages where the 
+AskJeeves looks up the user's question in its database and returns a list of matching questions that it knows how to answer, the user selects the most appropriate entry in the list, and he is taken to the Web pages where the 
 answer can be found. AskJeeves relies on human editors to match question templates with authoritative sites.
 
 mentions FAQFINDER
@@ -767,30 +768,32 @@ between queries such as "where Barack Obama was born" or "when Barack Obama was 
 Current trend is to use semantics to look for web pages based on query words meaning, instead of matching keywords and using page rank (popularity). 
 Also approaches focusing on obtaining structured answers to user queries from pre-compiled semantic information, used to understand and disambiguate intended meaning and relationship of query words.
 
-START (Katz et al., 2002) answers questions about geography and the MIT infolab, with a performance of 67% over 326 thousand queries. It uses highly edited KBs to retrieve tuples in the subject-relation-object form, as pointed out 
-by (Katz et al., 2002), although not all possible queries can be represented in the binary relational model, in practice these exceptions occur very infrequently. START compares the user query against the annotations derived from 
-the KB. However, START suffers from the knowledge acquisition bottleneck, as only trained individuals can add knowledge and expand the system’s coverage (by integrating new Web sources). 
+START (Katz et al., 2002) answers questions about geography and the MIT infolab, with a performance of 67% over 326 thousand queries. It uses highly edited KBs to retrieve tuples in the subject-relation-object form, 
+as pointed out by (Katz et al., 2002), although not all possible queries can be represented in the binary relational model, in practice these exceptions occur very infrequently. START compares the user query against 
+the annotations derived from the KB. However, START suffers from the knowledge acquisition bottleneck, as only trained individuals can add knowledge and expand the system's coverage (by integrating new Web sources). 
 
-Commercial systems include PowerSet, which tries to match the meaning of a query with the meaning of a sentence in Wikipedia. Powerset not only works on the query side of the search (converting the NL queries into database understandable queries, 
-and then highlighting the relevant passage of the document), but it also reads every word of every (Wikipedia) page to extract the semantic meaning. It does so by compiling factzs - similar to triples, from pages across Wikipedia, together with 
-the Wikipedia page locations and sentences that support each factz and using Freebase and its semantic resources to annotate them. The Wolfram Alpha knowledge inference engine builds a broad trusted KB about the world by ingesting massive amounts 
-of information (approx. 10TBs, still a tiny fraction of the Web), while True Knowledge relies on users to add and curate information.
+Commercial systems include PowerSet, which tries to match the meaning of a query with the meaning of a sentence in Wikipedia. Powerset not only works on the query side of the search (converting the NL queries into database 
+understandable queries, and then highlighting the relevant passage of the document), but it also reads every word of every (Wikipedia) page to extract the semantic meaning. It does so by compiling factzs - similar to triples, 
+from pages across Wikipedia, together with the Wikipedia page locations and sentences that support each factz and using Freebase and its semantic resources to annotate them. The Wolfram Alpha knowledge inference engine builds 
+a broad trusted KB about the world by ingesting massive amounts of information (approx. 10TBs, still a tiny fraction of the Web), while True Knowledge relies on users to add and curate information.
 
-Ontology-based semantic QA systems (also called semantic qa systems in paper), takes NL queries and ontology as input, and returns answers from KB (where KB is based on passed ontology). Allows user to have no prior knowledge to vocabulary or 
-onotology structure.
+Ontology-based semantic QA systems (also called semantic qa systems in paper), takes NL queries and ontology as input, and returns answers from KB (where KB is based on passed ontology). Allows user to have no prior knowledge 
+to vocabulary or onotology structure.
 
 Two different main aspects for ontology-based qa systems:
 
 (1) degree of domain customization required (correlates to retrieval performance)
 (2) subset of NL understanding  (full grammar-based NL, controlled or guided NL, pattern based). Needed to reduce omplexity and the habitability problem. Main issue hindering successful use of NLI.
 
-At one end of the spectrum, systems are tailored to a domain and most of the customization has to be performed or supervised by domain experts. For instance QACID (Fernandez et al., 2009) is based on a collection of queries from a given domain that 
-are analyzed and grouped into clusters, where each cluster, containing alternative formulations of the same query, is manually associated with SPARQL queries. In the middle of the spectrum, a system such as ORAKEL (Cimiano et al., 2007) requires a 
-significant domain-specific lexicon customization process, while for systems like the e-librarian (Linckels, 2005) performance is dependent on the manual creation of a domain dependent lexicon and dictionary. At the other end of the spectrum, in 
-systems like AquaLog (Lopez et al., 2007), the customization is done on the fly while the system is being used, by using interactivity to learn the jargon of the user over time. GINSENG (Bernstein and Kauffman et al., 2006) guides the user through 
-menus to specify NL queries, while systems such as PANTO (Wang, 2007), NLP-Reduce, Querix (Kaufmann et al., 2006) and QuestIO (Tablan et al., 2008), generate lexicons, or ontology annotations (FREya by Damljanovic et al.), on demand when a KB is loaded. 
+At one end of the spectrum, systems are tailored to a domain and most of the customization has to be performed or supervised by domain experts. For instance QACID (Fernandez et al., 2009) is based on a collection of queries 
+from a given domain that are analyzed and grouped into clusters, where each cluster, containing alternative formulations of the same query, is manually associated with SPARQL queries. In the middle of the spectrum, a system 
+such as ORAKEL (Cimiano et al., 2007) requires a significant domain-specific lexicon customization process, while for systems like the e-librarian (Linckels, 2005) performance is dependent on the manual creation of a 
+domain dependent lexicon and dictionary. At the other end of the spectrum, in systems like AquaLog (Lopez et al., 2007), the customization is done on the fly while the system is being used, by using interactivity to learn the 
+jargon of the user over time. GINSENG (Bernstein and Kauffman et al., 2006) guides the user through menus to specify NL queries, while systems such as PANTO (Wang, 2007), NLP-Reduce, Querix (Kaufmann et al., 2006) and QuestIO 
+(Tablan et al., 2008), generate lexicons, or ontology annotations (FREya by Damljanovic et al.), on demand when a KB is loaded. 
 
-see p. 9--13 for a summary of various Semantic ontology-based qa systems (listed in paragraph above); perhaps reference these as: "...various systems using different implementations are listed in \cite[p.~9--13]{XXX}. with a comparison of these on \cite[p.~12]{XXX}..."
+see p. 9--13 for a summary of various Semantic ontology-based qa systems (listed in paragraph above); perhaps reference these as: "...various systems using different implementations are listed in \cite[p.~9--13]{XXX}. 
+with a comparison of these on \cite[p.~12]{XXX}..."
 
 qa systems vary in portability, customization and ontology domain. Common for most ontology-aware systems is that they are domain restricted (either us of one at a domain or a large one covering limited sets). 
 User still has to tell the system which ontologies to use. Difficult to predict the feasibility of these models to scale up to open and heterogeneous environments, where an unlimited set of topics is covered. 
@@ -801,10 +804,10 @@ Difficult to devise grammars that are sufficiently expressive. Grammar is often 
 grammar does not need to be complete. Systems requiring users to provide domain-specific grammar is not suitable for a multi-ontology open scenario.
 
 Pattern-matching (pm) or bag-of-words (bow) approaches:
-Searches for patterns in the users query. "the more flexible and less controlled a query language is, the more complex a system’s question analyzing component needs to be to compensate for the freedom of the query language" (Kaufmann and Bernstein, 2007). 
-Naive and flexible pattern-matching systems work well in closed scenarios, where complexity is reduced to a minimum by only employing two basic NLP techniques: stemming and synonym expansion. The best feature is ontology independence, where even ungrammatical 
-and ill-formed questions can be processed. However, lack of semantics and disambiguation hinders scalability in regards to  a large open scenario. pm or bow combined with the freedom of NL can result in too any interpretations of the words relation. 
-This increases the risk of not finding correct translations and suffers from the habitability problem. (Hildebrand et al., 2007): 
+Searches for patterns in the users query. "the more flexible and less controlled a query language is, the more complex a system's question analyzing component needs to be to compensate for the freedom of the query language"
+ (Kaufmann and Bernstein, 2007). Naive and flexible pattern-matching systems work well in closed scenarios, where complexity is reduced to a minimum by only employing two basic NLP techniques: stemming and synonym expansion. 
+The best feature is ontology independence, where even ungrammatical and ill-formed questions can be processed. However, lack of semantics and disambiguation hinders scalability in regards to  a large open scenario. pm or bow 
+combined with the freedom of NL can result in too any interpretations of the words relation. This increases the risk of not finding correct translations and suffers from the habitability problem. (Hildebrand et al., 2007): 
 "Naïve approaches to semantic search are computationally too expensive and increase the number of results dramatically, systems thus need to find a way to reduce the search space". 
 
 Guided interfaces: 
@@ -959,7 +962,7 @@ word shapes (e.g. numeric, case, etc). defined shape of all the words in the que
 headwords; e.g. "What is the oldest city in Canada?" the headword is "city".
 
 hypernyms; words with equal meaning -  a child category. hypernyms allow one to abstract over specific words
-since adding the hypernyms of all the words can introduce noisy information, we only add the hypernyms of the question’s headword to the feature vector.
+since adding the hypernyms of all the words can introduce noisy information, we only add the hypernyms of the question's headword to the feature vector.
 
 Tested all 4 kernels of SVM, linear had the best results. Error penalty was set to 1.
 
@@ -1011,7 +1014,7 @@ Note to self: Map graph over feature impact (unprocessed, singular, all)
 Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)).
 
 observed that classifying questions just based on question words (1) does not correspond well to the desired taxonomy, and (2) is too crude
-since a large fraction of the questions are ‘What questions’.
+since a large fraction of the questions are 'What questions'.
 
 misclassifications: lack of context sensitivity in semantical analysis, necessity of identifying the question focus by analyzing syntactic
 structures and ambiguity (ambiguity causes the classifier not to output equivalent term as the first choice)
@@ -1096,7 +1099,7 @@ is there from the beginning, and those with bad answers/low scores are continous
 
 Stackexchange ranked 2nd among reference sites, 4th among computer science sites, and 97th overall among all websites.
 Jeff Atwood stated that the goal the community is not just to provide quality answers to the users, but also, when it pertains to software programmers,
-to trick them into becoming better communicators. Since programmers constitute most of its users, one of the original goals of Stack Exchange is to improve over time people’s
+to trick them into becoming better communicators. Since programmers constitute most of its users, one of the original goals of Stack Exchange is to improve over time people's
 abilities to provide better answers.
 
 "Linus' Law" - claiming that "with many eyeballs, all bugs are shallow"; suggesting that program bug-fixing efforts are facilitated by the participation of more users.
@@ -1175,6 +1178,230 @@ Possible to achieve similar results using whole word statistics (using frequency
    with whole words, the system has to do word stemming, requiring knowledge about the language the documents were written in. 
    Whereas N-gram frequency approach provides language independence for free.
 4. Other advantages of this approach are the ability to work equally well with short and long documents, and the minimal storage and computational requirements.
+
+
+
+
+One-Class SVMs for Document Classification
+(Larry M. Manevitz, Malik Yousef)
+
+One-class training uses only positive examples.  
+
+First, all the words in the training documents were stemmed (to avoid duplicates and remove basic "stop words") and then sorted by document-frequency (i.e. the number of documents it appears in).
+Thereafter, the top m words were selected based on "dictionary" frequency (called "keywords"). The following are the different represenations that were used for document classification:
+
+1. Binary representation: Choose the m dimensional binary vector where the i'th entry is 1 if the i'th keyword appears in the document and 0 if it does not.
+2. Frequency representation: Choose the m dimensional real valued vector, where the i'th entry is the normalized frequency of appearance of the it'h keyword in the specific document.
+3. Tf-idf representation: Choose the m dimensional real valued vector, where the i'th entry is given by the formula:
+
+	tf - idf(keyword) = frequency(keyword) * [log( n  /  N(keyword) ) + 1]
+	
+where n is the total number of words in the dictionary and N is a function giving the total number of documents the keyword appears in.
+4. Hadamard representation (discovered experimentally): Consists of the m dimensional vector where the i'th entry is the product of the frequency of the i'th keyword in the document and its frequency 
+over all documents (in the training set).
+
+Used Reuters dataset, which consists of preclassified, short articles. used 25% of the positive data from the training set to train; and then tested the filters on the remaining 75% of the data set.
+Used libsvm v2.0, with standard parameters. One-class SVM requires the number of features, a kernel and the necessary kernel parameters. Tried linear, sigmoid, polynomial and radial basis kernels 
+with standard parameters. Feature represenation used the 4 listed above, with the following feature count:  10, 20, 40, 60 and 100.
+
+Compared one-class svm against previous research done by the authors, where they proposed a one-class neural network classification scheme.
+Sch¨olkopf algorithm was sensitive to parameters, but could under proper choices give best results. Worked best under binary representation, extremely poor under the others.
+
+
+
+
+Predict Closed Questions on StackOverflow
+(Galina E. Lezina Artem M. Kuznetsov)
+
+goal of paper is to build a classifier that predicts whether or not a question will be closed given the question as submitted, along with the reason that the question was closed.
+Work was based on task posted on Kaggle (dataset was retrieved (and created?) by Kaggle). Their solution was submitted after deadline, and the best position was 5th place (0.31467 points).
+Questions on StackOverflow can be closed as off topic (OT), not constructive (NC), not a real question (NRQ), too localized (TL) or exact duplicate. Exact duplicate reason
+was excluded from competition because it depends on posts history (present in SO db dump, but size~=6GB requiring too many resources to analyze). 
+
+Posts are closed based on user votes (vote for close). User feedback = post quality. Link-analysis(https://en.wikipedia.org/wiki/Link_analysis); If answerers who write good answers, can the 
+same be said for questions? E.g. if a user never asked a bad question, would they ever ask one in the future? 
+
+Compared Random Forests, SVM and LibLinear. Used Vowpal Wabbit (VW), a modified stochastic gradient descend algorithm. VW streams examples to an online learning algorithm instead of using parallelization.
+
+Feature list (p. 3-4): 
+- Users: describes user parameters on StackOverflow server such as reputation, personal information completeness and interaction between all users.
+- Posts: information about the title and body contents. In addition to direct representation the text as a vector using tf-idf or LDA  .
+- Tags: information about the tags affixed to the posts by its owner.
+
+
+
+
+Predicting Tags for StackOverflow Posts
+(Clayton Stanley, Michael D. Byrne)
+
+Used the SO dataset to develop an ACT-R inspired Bayesian probabilistic model that could predict hashtags based on post author. 
+The model is 65% accurate when tasked to predict one tag per post on average. The model chooses the tag that has the highest log odds of being correct, 
+based on the tag's log odds of occurrence and adjusting for the log likelihood ratio of the words in the post being associated with the tag.
+
+Modeling tag creation accurately (as opposed to modeling tag growth and behavior after creation) could allow a system to predict the hashtag that a user should use, given the contextual clues available.
+Introudcing users to tags (and related communities) that could be of interest. Can be used in tag cleanup systems to correct mistags, or give suggestions. 
+Choose SO dataset because the tags are constrained. Used dataset from April 2011.
+
+Tag prediction model is a cognitively-inspired Bayesian probabilistic model based on ACT-R's declarative memory retrieval mechanisms. 
+Hypothesis: Tags used for posts are based on a tag's history of prior use and the strength of association between the tag and the content of words in the title and body of the post.
+
+
+
+
+Probabilistic Outputs for Support Vector Machines and Comparisons to Regularized Likelihood methods
+(John C. Platt)
+
+Modifications to SVM yielding posterior probabilities, while maintaining sparseness. Training SVM, then train parameters using sigmoid function to map SVM output into probabilities. 
+Comparison of classification error rate and likelihood score for SVM and sigmoid vs kernel method training with regularized likelihood error function. Tested on three data-mining-style 
+data sets. Experiment performed using model-trust minimization algorithm. Re-use of training data for SVM, but issues with bias. For linear SVM, bias is usually not severe. This is not 
+the case for non-linear SVM, since it can lead to disastrously biased fits. Therefore un-biased training set must be used for non-linear SVM. 
+Two experiments; Comparing SVM+Sigmoid against plain SVM misclassification rate and comparing SVM+Sigmoid against a kernel machine trained to explicitly maximize a log multinominal likelihood. 
+Found three interesting results; 1) Sigmoid sometimes improves error rate of raw SVM, 2) Sigmoid produces probabilities of roughly comparable quality to the regularized likelihood kernel method, 
+and 3) neither SVM+Sigmoid nor regularized kernel machine is completely dominant method for either error rate or log likelihood.
+
+
+
+Question Answering as Question-Biased Term Extraction: A New Approach toward Multilingual QA
+(Yutaka Sasaki)
+
+Question Answering (QA) architecture is a cascade of the following building blocks:
+- Question Analyzer: analyzes a question sentence and identifies the question types (or answer types).
+  Question types consist of named entities(e.g. PERSON, DATE, and ORGANIZATION), numerical expressions (e.g., LENGTH, WEIGHT, SPEED), and class names (e.g., FLOWER, BIRD, and FOOD).
+- Document Retriever: retrieves documents related to the question from a large-scale document set.
+- Answer Candidate Extractor: extracts answer candidates that match the question types from the retrieved documents.
+- Answer Selector: ranks the answer candidates according to the syntactic and semantic conformity of each answer with the question and its context in the document.
+
+question-type system restricts the range of questions that can be answered by the system, which makes it problematic for QA system developers to carefully
+design and build an answer candidate extractor that works well in conjunction with the question type system. This problem is particularly difficult
+when the task is to develop a multilingual QA system to handle languages that are unfamiliar to the developer.
+
+The paper regards qa as Question-Biased Term Extraction (QBTE). This new QBTE approach liberates QA systems from the heavy burden imposed by question types.
+employs the machine learning technique Maximum Entropy Models (MEMs) to extract answers to a question from documents based on question features, document features, and the combined features.
+
+Question analysis is a classification problem that classifies questions into different question types. Answer candidate extraction is also a classification problem that classifies words into answer types
+(i.e., question types), such as PERSON, DATE, and AWARD. Answer selection is an exactly classification that classifies answer candidates as positive or negative. 
+In the QBTE approach, these three components, i.e., question analysis, answer candidate extraction and answer selection, are integrated into one classifier.
+
+Three groups of features as features of input data:
+- Question Feature Set (QF): A set of features extracted only from a question sentence. This feature set is defined as belonging to a question sentence.
+- Document Feature Set (DF): Feature set extracted only from a document. Using only DF corresponds to unbiased Term Extraction (TE).
+- Combined Feature Set (CF): Contains features created by combining question features and document features.
+
+
+
+
+Question answering using statistical language modelling
+(Matthias H. Heie, Edward W.D. Whittaker, Sadaoki Furui)
+
+statistical approach to qa; building a robust systems for many languages without the need for highly tuned linguistic modules. 
+Word tokens and web data are used extensively but .neither explicit linguistic knowledge nor annotated data is incorporated.
+Focuses on factoid questions.
+
+The earliest qa system was developed in the 1960s (e.g. Baseball); these were usually narrow and relying on database queries to find answers.
+Database query front-ends, were typical for systems developed from the 1960s through the 1980s. NLP gave way to more empirically driven research 
+in the 1990s, open-domain QA systems were developed, which relied on more shallow linguistic processing and IR on unstructured data corpora. 
+An early example is Murax (Kupiec, 1993), an open-domain QA system which combined robust linguistic methods with an IR system in order to find answers in
+an online encyclopaedia. TREC classified questions into two types; Factoid and List. Factoid questions are questions that ask about a simple fact, and
+typically can be answered with only a few words (e.g. "How far is it from Earth to Mars?"). List questions require the system to return the set of entities 
+that satisfy a given criterion (e.g. "Name albums released by The Beatles"). NLP techniques employed by QA systems typically include part-of-speech (POS) 
+tagging, named entity (NE) extraction, parsing and query expansion.
+
+The authors takes a statistical, noisy-channel approach and treat QA as a whole classification problem, presenting a fully data-driven mathematical model for 
+estimating the probability of a candidate answer given a question. They only use word tokens in the system and do not employ NE extraction or any other linguistic 
+information, e.g. from semantic analysis or question parsing; nor hand-crafted or annotated lexical resources such as WordNet.
+
+Used the factoid questions from the TREC QA tracks between the years 2002 and 2006 in their experiments. 
+A mathematical model for Answer Extraction was derived, which estimates P(A|Q), the probability of an answer candidate A given a question Q, and is decoupled
+into two independent models: a retrieval model and a filter model. Results showed that best performance is achieved when using web data, implying the system's 
+ability to exploit data redundancy. Achieved what they call "data expansion", as opposed to query expansion; the answer occurs in the surroundings of several possible combinations of query terms.
+Analysis showed that the retrieval model is only able to get a correct answer for 52% of the questions when retrieving 100 answer candidates.
+QA model presented in this paper uses classes of q-and-a pairs for training.
+
+
+
+
+Question Classification using HeadWords and their Hypernyms
+(Zhiheng Huang, Marcus Thint, Zengchang Qin)
+
+Proposes head word feature and present two approaches to augment semantic features of such head words using WordNet. 
+Their linear SVM and Maximum Entropy (ME) models reaches an accuracy of 89.2% and 89.0% over a standard benchmark dataset. Used Libsvm.
+
+Question classification is not trivial; simply using question wh-words can not achieve satisfactory results. Difficult to classify "what" and "which" type questions.
+Even though multiple questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
+
+
+Due to the large number of features in question classification, one may not need to map data to a higher dimensional space. It has been commonly accepted that the linear kernel of
+	K(x_i, x_j ) = x_i^T*x_i 
+is good enough for question classification.
+
+
+Used five binary feature sets; 
+
+1. Question wh-words (eight types): what, which, when, where, who, how, why, and rest (rest being the type does not belong to any of the previous type).
+2. Head words: one single word specifying the object that the question seeks to avoid misclassification of entities. Requires syntactic parser.
+3. WordNet semantic feature for head words: Use of WordNet for word similarity distance, computing the similarity between the head word of such question and each description word in a question categorization.
+4. Word N-grams: Used to provide word sense disambiguation for questions
+5. Word shapes: Five word shape features; all upper case, all lower case, mixed case, all digits, and other.
+
+WordNet is a large English lexicon in which meaningfully related words are connected via cognitive synonyms (synsets). 
+The WordNet is a useful tool for word semantics analysis and has been widely used in question classification.
+Using WordNet for hypernyms; Y is a hypernym of X if every X is a (kind of) Y.
+
+For example, the hierarchies for a noun sense of domestic dog is described as: 
+dog -> domestic animal -> animal, 
+while another noun sense (a dull unattractive unpleasant girl or woman)  is organized as:
+dog -> unpleasant woman -> unpleasant person.
+
+Unigram forms the bag of words feature, and bigram forms the pairs of words feature, and so forth. Considered unigram, bigram, and trigram.
+
+Two experiments to test classifier accuracy; evaluation of individual contribution of different feature types to question classification accuracy and in the second feature sets were 
+incrementally fed to the SVM and ME (default parameter values for both).
+
+
+
+
+Question Classification using Support Vector Machines
+(Dell Zhang, Wee Sun Lee)
+
+Experimented with five machine learning algorithms: Nearest Neighbors (NN) (simplified version of kNN), Naive Bayes (NB), Decision Tree (DT), Sparse Network of Winnows (SNoW), and Support Vector Machines (SVM) 
+using two kinds of features: bag-of-words and bag-of ngrams.
+
+Using a search engine to retrieve list of documents vs getting the actual answer to the question. To answer a question, you need to understand what answer the question asks for. 
+Classifying the question into semantic categories to understand what answer type is expected.
+Common words like 'what', 'is', etc. should be neglected for document classification, but these "stop-words" are actually very important for question classification.
+Writing heuristic rules for question classification can take time, and easily become complicated.
+
+Considers only the surface text feature for each question, where two kinds of features are extracted; bag-of-words and bag-of-ngrams (all continuous word sequences in the question). 
+Every question is represented as binary feature vectors, because the term frequency (tf) of each word or ngram in a question usually is 0 or 1. Uses libsvm.
+
+NB is regarded as one of the top performing methods for document classification.
+Sparse Network of Winnows (SNoW) algorithm is specifically tailored for learning in the presence of a very large number of features and can be used as a general purpose multiclass
+classifier. The learned classifier is a sparse network of linear functions.
+Parameters for all algorithms was default values. 
+
+SVM: observed that the bag-of-ngrams features are not much better than the bag-of-words features. The SVM based on linear kernel turned out to be as good as the SVM based on polynomial kernel, 
+RBF kernel and sigmoid kernel.
+
+Syntactic structures; proposed using a special kernel function called tree kernel to enable the SVM to take advantage of the syntactic structures of questions.
+
+
+
+
+Random Search for Hyper-Parameter Optimization
+(James Bergstra, Yoshua Bengio)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
