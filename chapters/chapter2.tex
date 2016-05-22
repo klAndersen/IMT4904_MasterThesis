@@ -1,9 +1,214 @@
 %\chapter{State of the art}
 \label{chap:chapter2}
-The goal of this target is to document the current state of the art technologies, and research that has been done by others. 
-This is needed to both understand how to use text classification and classify questions. 
-Furthermore, some of the papers have also done comparisons on \gls{svm} and other types of \gls{ai} and \gls{ml} algorithms, 
-which concluded that for text classification, \gls{svm} had the highest accuracy.
+
+\section{\glsentrylong{so} and gamification}
+\label{sec:gamification}
+Gamification is defined as "the use of game design elements in non-game contexts" \cite{Deterding2011}, and is a part of Serious Games (e.g. educational, pedagogical, awareness, etc). 
+Furthermore, \gls{so} does indeed fulfil the needs for the four player types\footnote{The four player types are Achievers, Explorers, Socializers and Killers \cite[p.~3]{Maan2013}.}
+Achievers can farm reputation and badges through posting new and interesting questions, or offer answers to new questions. 
+Explorers can explore the site by searching for new and interesting questions (or answers) based on tags, votes, or other search parameters. 
+Socializers are able to share their knowledge and engage in discussions by either offering answers or comments.
+The only type left are Killers, who basically just are out to ruin the fun for others (e.g. Player-vs-Player in online games) \cite[p.~3]{Maan2013}. 
+The closest representation for this group would be trolls, or people who are simply ignorant of whether or not the information they share is correct.
+However, this is not a group that would be widely represented, due to the strict rules and desire for quality. 
+Voting also has a penalty, such that if you down-vote a post, you lose some of your reputation.
+
+One of the founders, Jeff Atwood said in an interview that he wanted users to not just give good answers, but also trick them into improving their communication skills \cite{Posnett2012}.
+
+\cite{Yang2014} researched user activity on \gls{so}, where they classified users into two groups; sparrows (achievers) and owls (socializers).
+
+
+
+
+"Linus' Law" - claiming that "with many eyeballs, all bugs are shallow"; suggesting that program bug-fixing efforts are facilitated by the participation of more users.
+Stack Exchange can be viewed as an instance of an online learning community, where individuals help each other gain expertise, both in terms of domain knowledge, and in answering questions well and to the point. It has long been argued that people learn better in co-operating groups than on their own. Important design goals of learning communities: help users find relevant content; help users find people with relevant knowledge and motivate people to learn.
+\cite{Posnett2012}
+
+
+Small subset of users is responsible for the majority of the contributions, and ultimately, for the success of the Q/A systems. Standard expert identification methods often misclassify very active users for knowledgeable ones, and misjudge activeness for expertise.
+Contributes a novel metric for expert identification, providing a better characterisation of users' expertise by focusing on the quality of their contributions. Identifies two classes for the users, sparrows and owls, and describe several behavioural properties in the context of the StackOverflow Q/A system.
+Reasons for signing up/using qa systems:
+1)	to look for existing solutions to their issues;
+2)	to post a new question to the platform community;
+3)	to contribute by providing new answers
+4)	to comment or vote existing questions and answers
+Q/A platforms employ effective gamification mechanisms that motivate users by showing a public reputation score (calculated by summing the number of preferences obtained by all the posted questions and answers), and by assigning badges after achieving pre-defined goals (e.g. complete at least one review task, achieve a score of 100 or more for an answer). Used the StackOverflow dataset.
+Sparrows:
+An important part of the qa system. Numerous, active and highly "social". However, that does not mean that they are knowledgeable. Can be driven by gamification, wanting to score votes and reputation instead of giving informative and long-lasting answers. Can have low average score, and minimization of effort by targeting non-relevant and simple questions. Can guarantee responsive and  constant feedback; helps in keeping the community alive.
+Owls:
+Active members that participate not for the achievements and gamification, but wants to share knowledge and information related to the platform. Experts in the related topic, providing useful answers and can show expertise by answering questions seen as difficult, complex or important to the users of the community.
+An expert can be defined as someone who is recognised to be skilful and/or knowledgeable in some specific field (based on judgment by the public or peers; e.g. academic peer-review). Expertise then refers to the characteristics, skills, and knowledge that distinguish experts from novices and less experienced people.
+In qa systems, social judgement is critical for expert identification. Question is answered by users, which are up or down-voted by other users. Answering questions can reflect how a user applies their knowledge to solve problems (actionable knowledge), and the votes for the answer can be seen as a cyber simulation of social judgement for the answerers' expertise level. Asking questions and posting comments can also say something about a users expertise level. 
+Considered two dimensions:
+1.	The debatableness of a question, measured according to the number of answers it generated;
+2.	The utility of an answer, measured according to its relative rank in the list of answers.
+Intuitively, difficult questions generate a lot of discussions, and several answers; also, the higher in the rank an answer has been voted, the more potentially useful it is to solve the related question, and the more it provides evidences about the expertise of the answerer in the topic.
+The ratio between answered and submitted questions is significantly higher for sparrows. Owls, on the other hand, show a behaviour more similar to average users,  thus further highlighting the distinctive "hunger" for answers of sparrows.
+Owls answer questions that are more difficult, and more popular. Question popularity, measured in terms of the number of times a question has been viewed in StackOverflow; and time to solution, measured in terms of the number of hours needed for the question creator to accept an answer as satisfactory. Time to solution can also be an indicator of the difficulty of a question: intuitively, the longer the time to accept an answer, the more difficult is the question.
+Sparrows appear focused in building their reputation, which they increase by consistently answering to a lot of easy and non-interesting questions. Their behaviour is however providing important contribution to the community, as they can guarantee fast answers to many questions. On the other hand, owls intervene when their expertise is needed the most, i.e. in difficult question.
+Owls post questions that are more difficult, and more popular; Questions submitted by sparrows are less popular than those posted by the owls. Completion time for such questions is comparable. These results also suggest a difference in the expertise level of the two groups of users, as more popular questions might be a sign of the better understanding that owls possess on the subject. However, the higher (on average) difficulty and popularity of sparrows’s answers w.r.t. the average of users, also suggests that sparrows are good contributors in terms of new problems to be addressed by the community.
+Gamification incentives can more effectively retain sparrows than owls. "Older" owls always contribute for the larger portions of the provided answers. However, owls consistently tend to decrease their activity in time, especially for more recently registered users. On the other hand, new sparrows significantly contribute to a share of answers produced by their group and, although in the long term a decrease in the overall activities of the older member can be seen, the effect is less important. These results suggest that the gamification incentives put in place by StackOverflow are really effective to retain the activity of sparrows.
+\cite{Yang2014}
+
+\section{What is the definition of a question?}
+\label{sec:question_definition}
+Question generation depends on the system to which it is embedded. Questions are intended to evaluate knowledge, understanding and skills. Socratic tutoring: Questions should help students understand something they did not understand before. Help system: System should learn what resulted in the request for help. Paper focuses on describing question taxonomy for tutoring systems (validated via human tutoring transcript analyses). Goal was to detail HCI design. Mapping from classification of learner interactions to tutor response. Revised the taxonomies considering redundancy, usefulness, and completeness. If two labels had the same meaning they were merged. When categories differed, the most generic was selected.-> Mostly primary taxonomy, p. 2, Figure 1 that is relevant for my thesis
+\cite{Nielsen2008}
+
+Hypothesis testing includes information selection (asking questions) and the use of information (answers to questions asked). Two experiments using different kinds of inferences (category membership of individuals and composition of sampled populations). Third experiment showed that certain information-gathering tendencies and insensitivity to answer diagnosticity can contribute to a tendency toward preservation of the initial hypothesis. 
+Critical elements in hypothesis testing is having a good question, and knowing what to do with the answer. Gives example of a fictional planet which contains only two creatures. These can only answer 'yes' or 'no', but they will answer truthfully. Based on a given feature list, what question would you ask to be able to classify the creature you encounter? 
+This problem can be re-formulated into a Hypothesis, where H0 and H1 is either 'yes' or 'no' (or more defined, the race is...). Selection of hypothesis based on percentage/probability distribution, e.g. choosing those features that stands most out/is highly separated. Also a question on what type of answers (and how many) one can expect from each individual. Easy to assume that a good question will get a good answer (e.g. overestimation of yes/no when deciding which race creature belongs to). Sensitivity in regards to the yes/no answer given (e.g. treating all cases as identical, etc).
+\cite{Slowiaczek1992}
+
+\section{\glsentrylong{qa} (\glsentryshort{qa})}
+\label{sec:question_answering}
+% In various papers, \gls{qc} is said to be equal to text classification.
+
+% not intended as actual content, just summary which can be used!
+Question-answering (qa) system which includes question analysis, information retrieval and answer extraction.  Question category is an important part of the question analysis, the same goes for follow-up process, since it affects the accuracy of the answer extraction. Challenging, since few language processing tools handle Chinese characters.  Better to classify based on the domain of the question characteristics. 
+Original method for question classification is usually rule-based approach, where the rules decide the category. Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts. Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results. Used RBF kernel in this experiment. Notes that the selection and organization of features is the main issue when working with classification. Features and feature space can have a significant impact on both accuracy and efficiency of the classifier. Compared with rule-based, question features for a specific domain can have greater benefits. To improve performance, the classification must improve the question characteristics. Their feature selection was based on semantic analysis and lexical analysis. They also needed to add a step for word segmentation and Part-Of-Speech (POS) tagging (since it was Chinese text processing). To improve classification efficiency, domain knowledge was added by using domain term concept hierarchy (basically if words had the same meaning or concept, then they were added to a feature vector). They used LIBSVM for coarse classification. The sub-classification was done by measuring the similarity between the users question and those in the sub-categories  (calculated by utilizing word similarity based on term concept hierarchy). For the SVM, they used cross-validation, where the training set was divided into five parts of equal size. After a classifier had been trained on the first four, the last was used to get the cross-validation accuracy (to ensure correct classification).
+\cite{Xu2012}
+
+QA is a method for finding the answer to a given question from an unknown amount of documents. The goal of most automatic qa systems is to find the exact answer to the question asked by the user. 
+Existing QA technology involves two main steps: information retrieval (IR) and information extraction (IE). IR is used to retrieve the relevant documents after completed analysis or classification. IE then processes  the retrieved documents to find the answers the user is looking for. High quality systems generally requires multiple external components.
+The purpose of question classification is to detect the answer type of the input question. 
+% could be used as argument for testing only on unprocessed vs. questions containing given feature
+Looking for answers in a small set is easier then searching all documents. By using a document retriever,  only documents related to the question is retrieved, where the passage retriever divides the documents into paragraphs and ranks them based on the given evaluation metric(s).
+\cite{Yen2013}
+
+Fine-grained answer taxonomy improves qa performance, but difficult to create accurate answer extraction because ML methods require a lot of training data and training rules. 
+They found that named entity/numerical expression recognition and word sense-based answer extraction contributed to system performance.
+The mainstream of the system is composed of four modules: Question Analysis, Document Retrieval, Answer-Extraction, and Answer Evaluation (AEv has several sub-modules).
+The question analysis module normalized question and determined answer types. Question normalization was used to simply the "answer-type determination rules". Useless expressions were removed from the question. Expressions with the same meaning were normalized into one. Abandoned use of TF-IDF based paragraph retrieval because the paragraphs were too short to cover all query terms. Same problem can occur when using  passage retrieval modules. If it is too short terms will not be covered, if it is too long, passage scores will not reflect the density distribution.Answer extraction separates based on the candidate it belongs to (e.g. Location, organization, school, hospital, etc).  Suffixes are then used to indicate which candidate group it belongs to.  If it belongs to more than one, it is added in both. This is called suffix constraint rule. Use of noun-phrases in combination with suffixes.\cite{Isozaki2005}
+
+qa sites provides a place where people can ask either general or domain specific questions. Domain specific qa sites requires users to be familiar with both the site, rules and questions that can be asked. qa sites also works as an archive of knowledge which can be accessed later on. Mostly expert users that answers questions.
+\cite{Movshovitz-Attias2013}
+
+qa is about getting an answer to a question, not a list of documents. qc maps a question to a category (pre-defined), which specifies the expected answer type. Focus is on fact based questions. Class determination can reduce feature space, in addition to specify the search strategy. A problem with qc learning systems is the high dimensional feature space (typically caused by the n-grams over all the vocabulary words).
+In qc, question is represented using vector space model, the question is a vector which is described by the words inside it. Therefore, a question x is represented by vector x = (x1, ..., xd) in which xi is the frequency of term i in x and d is the total number of terms. This representation is also referred as bag-of-words or unigrams which is the simplest type of features that can be extracted from a question and is the most widely used feature space in document classification
+\cite{Loni2011}
+
+
+% sentiment analysis
+Even though expressive content and descriptive semantic content are distinct, sentiment information can be lost. It can learn that two words are close (similar/equal meaning), but cannot understand that two other words are the complete opposite (negative) of those words.
+25,000 movie reviews from IMDB, including at most 30 reviews from any movie in the collection. built a fixed dictionary of the 5,000 most frequent tokens, but ignored the 50 most frequent terms from the original full vocabulary. Stemming was not applied because the model learned similar representations for words of the same stem when the data suggests it. Allowed non-word tokens (e.g. '!', ':-)'), since it could be sentiment relevant. Mapped ratings to [0,1]. Semantic component did not require labels.
+\cite{Maas2011}	
+
+\section{\glsentrylong{so} (\glsentryshort{so})}
+\label{sec:stackoverflow}
+
+Focus is on developing indicators for problems and experts. Examine how complex problems are handled and shared between experts. Answering questions should be parallel to the experts knowledge, e.g. complex problems are handled by (domain) expert users, and basics by those that know the answer. 
+Duration between the when a question was first posted and when an answer was accepted by the poster as a proxy for difficulty. Extracted events for the questions, to construct a language to describe a given questions activity. Used the following grammar: 
+-	Actor Type: Questioner (user posting the question), Accepted Answerer (user posting accepted answer), Unaccepted Answerer (users posting the other answers), and Someone (participants in the question (e.g. comments)). 
+-	Action: Posting, Commenting, Editing, Answering, Accepting, Voting Up, and Voting Down. 
+-	Object: Question or an Answer. 
+\cite{Hanrahan2012}
+
+
+Study of the user system on StackOverflow. Analysis of SO's reputation system. Although most of the questions are asked by low reputation users, the average shows that high reputation users asks more questions. 
+Active users are rewarded with reputation (rep. score depends on activity). Before, asking questions gave more reputation, now giving answers give more reputation. Expert users can be identified not only by reputation, but also by the badges they have. Showed that users are awarded more reputation for good answers than good questions. Users with high reputation is considered as expert users (since answers give more rep).  "System reputation can be considered as a measure of expertise".    
+\cite{Movshovitz-Attias2013}
+
+"The content pre-processing step takes in both normal text and code, performs tokenization, stop word removal, and stemming. Tokenization breaks a paragraph into word tokens. Stop word removal removes commonly used words like: is, are, I, you, etc. Stemming reduces a word to its root form, e.g., reading to read, etc. For the code, we remove reserved keywords such as: if, while, etc., curly brackets, etc, and extract identifiers and comments. These are then subjected to tokenization, stemming, and stop word removal too."
+\cite{Wang2013}
+
+Many Q\&A sites employ voting and reputation mechanisms as center pieces of their design to help users identify the trustworthiness and accuracy of the content. Since a lot of qa sites are focusing on having at least some domain experts, the questions and answers now have a lasting value. Since these are archived and quality measured by voting system, search engines can rank the answers. This way, users who have never been to the site can find questions similar to their problem, and in addition see suggestions to other solutions from the others who may have posted their answer.
+First principle:
+Generally expert users answers first. Latent "pyramid", where expert users are at the top. Question starts at the top, being looked at by expert users. Then it gets filtered down if unanswered.
+Second principle:
+Higher activity level signals not only question interest, but it is also beneficial to all answers given (evaluation and reputation). High activity can correspond to lasting value of a question. Subjective questions are frowned upon by SO community. Deep expertise and domain knowledge is thus often essential to providing a good answer. 
+The longer a question goes unanswered, the more likely it is that no satisfactory answer will be given (i.e. no answer will be accepted).  Expert users are more prone to be "answer-dominant", gaining reputation from answering questions. Users with over 100K reputation earn more from accepted and less from up-votes. Idiosyncrasy on SO, can only gain 200 rep points daily, after that you can only gain reputation by accepted answers or bounty. Only high-rep users hit the daily cap.
+Questions on Stack Overflow are supposed to be answerable factually and objectively (if not, they are marked as a "Community Wiki" question and actions on them do not count towards reputation score). This creates an incentive to answer quickly, since it is likely that the first correct answer may well be accepted.
+\cite{Anderson2012}
+
+Growing participation in online qa forums. Classify online communities on StackExchange into two genres; technical and non-technical. Examines the effect of contribution by comparing differences between technical and non-technical communities (user participation). Started with qa for computer programming (SO, started in 2008), which later expanded by using the SO model, which is today known as StackExchange (SE). Forums can be categorized into technical (largely professional or problem based) and non-technical (largely hobbyists or interest based). A few highly active users are responsible for the majority of participation and overall users can be characterized as lurkers, help-seekers (askers) and givers (responders)
+In (Anderson2012), authors found that, the probability of a response being chosen as the best one, depends on temporal characteristics of its arrivals, like response speed which could be applicable to predict long-term value of a post. Besides, the other work (Sinha2013) shows that, successfully of being answered about expert topic is not only because of the technical design, but also the regular involvement of design team of that community. Mentions reputation system (motivation factor). 
+Compared the forum for code-review forum (CR) as technical instance and bicycle forum (BC) as non-technical one. Found strong correlation between number of answers given and reputation score achieved by a user which is quite similar for both the forums.
+\cite{Ahmed2015}
+
+Spolsky and Atwood built Stack Overflow to provide high-quality, relevant information in a freely accessible way. They envisioned that Stack Overflow would be a combination of collaboration technologies, including open editing (like Wikipedia), feedback driven user ranking (like Reddit or Digg), moderated content (like blogs), and forums to create a distinctive format.
+Users are rewarded for responding and voting with Badges and Karma. This system encourages users to return and make positive contributions to the site, greatly increasing the quality of responses posted. Stack Overflow immediately received positive reviews like "it's a Q\&A site where the right answer isn't buried on page fifty, it's almost always at the top." [http://blog.stackoverflow.com/2010/05/announcing-our-series-a/]
+Building blocks:
+1.	Voting: To increase the quality of answers, visitors are encouraged to vote on answers they found useful. The answers are arranged by the number of votes received. This process ensures the best answers are displayed at the top, quickly showing the best solution in the presence of multiple possible answers. Users gain reputation points when others vote for their questions or answers.
+2.	Tags: To facilitate an easy retrieval of previous questions that have been answered, each question is associated with a variety of tags. Tags help direct questions to experts from a specific field, improving the quality and speed of responses. Users may also customize the Stack Overflow website by specifying tags of interest and filtering out uninteresting ones, making their search experience more efficient.
+3.	Badges: To encourage participation and improve the quality of discussion, StackOverflow introduced the concept of badges. These awards, shown on the user's profile, are given to users who consistently provide high quality answers or ask popular and relevant questions.
+4.	Karma and Bounties: Karma is a type of currency system that encourages and rewards participation. Users who earn enough karma enjoy special privileges. For example, only a user with sufficient karma can comment on answers and even modify questions. Users win karma by selecting the correct and most relevant answer to their questions.
+5.	Data Dump: Stack Overflow provides a "data dump", which stores all the site's user-generated content under a Creative Commons license.3.3 This license allows people to share and adapt content as long as it is correctly attributed to its author. Under the Creative Commons license, any derivative works must also be distributed under an "open" license. Monthly snapshots of the database are available for download via BitTorrent.
+6.	Pre-Search: Pre-Search provides a list of potentially related questions to a user before the user is allowed to post a new question. This prevents having multiple copies of the same question, enabling efficient retrieval of relevant answers. 
+7.	Search Engine Optimization: It is critical for Stack Overflow to score top results in searches to increase its user base and to build its reputation as the "one stop shop" for all programming related questions. Therefore, it uses various search engine optimization techniques to increase its visibility on search engines. For instance, the URL of a particular page on the site contains keywords from the corresponding topic.
+8.	Critical Mass: Atwood and Spolsky used their blogs to promote Stack Overflow and direct traffic to it, ensuring the presence of an initial community. Atwood answered questions so quality answers were available on the website from the outset. 
+9.	Performance: Built on a Microsoft software stack, Stack Overflow achieves high performance at a very low cost. Spolsky boasts that Stack Overflow's performance is comparable to websites with similar traffic, but only requires one-tenth of the hardware.
+\cite{Sewak2010}
+
+Analysis of data from SO to categorize questions that are asked. Exploration of answered/unanswered questions. Findings indicate qa websites are particularly effective at code reviews and conceptual questions.
+"Letovsky [8] identified five main question types: why, how, what, whether and discrepancy. Fritz and Murphy[4] provide a list of questions that focus on issues that occur within a project. Sillito et al. [12] provide a similar list focusingon questions during evolution tasks. LaToza and Myers [7] found that the most difficult questions from a developer's perspective dealt with intent and rationale. In their study on information needs in software development, Ko et al. [6] found that the most frequently sought information included awareness about artifacts and co-workers."
+9 SO design decisions:
+1.	Voting
+2.	Tags
+3.	Editing
+4.	Badges (karma)
+5.	Pre-search
+6.	Google UI
+7.	Performance (search engine optimization)
+8.	Critical mass: several programmers were explicitly asked to contribute in the early stages of Stack Overflow.
+Research questions:
+1.	What kinds of questions are asked on Q\&A websites for programmers?
+2.	Which questions are answered and which ones remain unanswered?
+3.	Who answers questions and why?
+4.	How are the best answers selected?
+5.	How does a Q\&A website contribute to the body of software development knowledge?
+qualitative coding of questions and tags; tags for topics, question coding for question nature. Defines successful and unsuccessful questions as follows: A successful question has an accepted answer, and an unsuccessful question has no answer.
+\cite{Treude2011}
+
+% Semantic web and Q/A
+Semantic web (sw); search and query has become difficult and challenging. Need user friendly UI for query and data exploration. qa ontology based on structured semantic information. New interest in search technologies, since we are close to reaching critical mass for large-scale distributed semantic web. Two most common uses of sw is interpretation of web queries/resources based on described background knowledge, and searching through large datasets/KB as alternative/complacent to current web. Difficult for end-users to understand the complexity of the logic-based sw. Challenging to process and querying content, hard to scale models to cope with available semantic data.
+of qa systems is to allow users to ask questions the way they want to by using natural language (NL) to receive a related answer to their problem. We can classify a QA system, and any semantic approach for searching and querying SW content, according to four interlinked dimensions: 
+(1)	the input or type of questions it is able to accept (facts, dialogs, etc); 
+(2)	the sources from which it can derive the answers (structured vs. un-structured data); 
+(3)	the scope (domain specific vs. domain independent), 
+(4)	how it copes with the traditional intrinsic problems that the search environment imposes in any non-trivial search system (e.g., adaptability and ambiguity).
+Most qa systems focuses on factoids, where you have 'WH-' queries (who, what, how many, etc.), commands (name all, give me, etc.) requiring an element or list of elements as an answer, or affirmation / negation questions. As pointed out in (Hunter, 2000) more difficult kinds of factual questions include those which ask for opinion, like Why or How questions, which require understanding of causality or instrumental relations, What questions which provide little constraint in the answer type, and definition questions. 
+Linguistic problems are common in most NL systems. Some use shallow keyword-based techniques to find interesting sentences (based on words that refers to entities that are the same as the answer type). Ranking is based on syntactic features such as word order or similarity to the query. Templates can be used to find answers that are just reformulations of the question. Most systems classify queries based on answer type (e.g. name, quantity, dates, etc). Question classes arranged hierarchically in taxonomies, requiring different strategies based on the question type. Utilize word knowledge through resources like WordNet or ontologies Suggested Upper Merged Ontology (SUMO) to get the qa type. Other options are also: named-entity (NE) recognition, relation extraction, co-reference resolution, syntactic alternations, word sense disambiguation (WSD), logical inferences and temporal-spatial reasoning.
+qa application with text has two steps:
+1.	identifying the semantic type of the entity sought by the question
+2.	determining additional constraints on the answer entity
+Ontology-based semantic QA systems (also called semantic qa systems in paper), takes NL queries and ontology as input, and returns answers from KB (where KB is based on passed ontology). Allows user to have no prior knowledge to vocabulary or ontology structure.
+Two different main aspects for ontology-based qa systems:
+(1)	degree of domain customization required (correlates to retrieval performance)
+(2)	subset of NL understanding  (full grammar-based NL, controlled or guided NL, pattern based). Needed to reduce omplexity and the habitability problem. Main issue hindering successful use of NLI.
+p.~24+ in report notes listing more methods.
+\cite{Lopez2011}
+
+
+Purpose of qa is to get a factual answer from a large collection of text, instead of a list of documents. Getting answer based on type (e.g. city) or getting answer based on what the question asks for (context, definition, reasoning). Reformulations and syntactic structure can make it hard to create a manual classifier. The goal of the paper is to categorize questions into different semantic classes based on the possible semantic types of the answers. They developed a hierarchical classifier guided by a layered semantic hierarchy of answer types that makes use of a sequential model for multi-class classification and the SNoW learning architecture. qc can be seen as a text classification task, but some characteristics make it different. Questions are short, therefore contains less text. However, having short text improves accuracy and analysis.
+Developed a hierarchical learning classifier based on the sequential model of multi-class classification. The goal of the model is to reduce the set of candidate labels for a given question by concatenating  a sequence of simple classifiers. The output of the classifier (class labels) is used as input for the next. Classifier output activation is normalized into a density over the class labels and is thresholded  so that it can output more than one class label. qc is built by combining sequence of two simple classifiers; first=coarse class, second=fine class. 
+\cite{Li}
+
+
+For Discussion chapter:
+--------------------
+In the Bag of Words (bow) model, only single words or word stems are used as features for representing document content. The issue is that learning algorithms are restricted to detecting patterns in the used terminology only, while ignoring conceptual patterns. List of weaknesses with using bow (1-3 addressed issues on a lexical level, and 4 conceptual level):
+1.	Multi-Word Expressions with an own meaning like "European Union" are chunked into pieces with possibly very different meanings like "union".
+2.	Synonymous Words like "tungsten" and "wolfram" are mapped into different features.
+3.	Polysemous Words are treated as one single feature while they may actually have multiple distinct meanings.
+4.	Lack of Generalization: there is no way to generalize similar terms like "beef" and "pork" to their common hypernym "meat".
+WordNet database organizes simple words and multi-word expressions of different syntactic categories into so called synonym sets (synsets), each of which represents an underlying concept and links these through semantic relations.
+-	Candidate Term Detection: Defined a Candidate Term Detection strategy built on the assumption that if you find the longest multi-word expressions appearing in the text, the lexicon will lead to a mapping to the most specific concept for that word (instead of querying single words, which may lead to wrong mapping).
+-	Syntactical Patterns:Analysis by using POS-tagging.
+-	Morphological Transformations: Entry form, base form reduction. Stemming if the first query for the inflected forms on the original lexicon turned out unsuccessful.
+-	Word Sense Disambiguation (WSD): A lexical entry for an expression does not necessarily imply a one-to-one mapping to a concept in the ontology. 
+-	Disambiguate an expression versus multiple possible concepts.
+-	Generalization: Going from specific concepts in the text to general concept representations. Mapping words based on generalization (up to a certain level).
+\cite{Bloehdorn2004}
+
+Question classification (qc): predict the entity type of the answer of a natural language question, mostly achieved by using machine learning. Used Latent Semantic Analysis (LSA) technique to reduce the large feature space of questions to a much smaller and efficient feature space. Two different classifiers: Back-Propagation Neural Networks (BPNN) and Support Vector Machines (SVM). Found that using LSA on question classification made it more time efficient and improved classification accuracy by removing redundant features. Discovered that when the original feature space is compact and efficient, its reduced space performs better than a large feature space with a rich set of features. They also found that in the reduced feature space, BPNN was better than SVM.  Competitive with state-of-the-art, even though they used smaller feature space.
+\cite{Loni2011}
+
+------------------------
+
+Note to self: Map graph over feature impact (unprocessed, singular, all)
+Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)). 
+
 
 \begin{comment}
 I can either use \verb|\cite{ChangLin2011}| and get: \cite{ChangLin2011}. \\
@@ -15,56 +220,56 @@ Unfortunately, you can't get the year, but at least you can now get in-text cita
 
 Citation list (content to come):
 \begin{itemize}
-	\item \cite{ChangLin2011}: Libsvm
-	\item \cite{XuZhouWang2012}: Question classification, SVM, semantics
-	\item \cite{HsuChangLinEtAl2003}: SVC
-	\item \cite{LinLin2003}: Sigmoid kernels SVM
-	\item \cite{YenWuYangEtAl2013}: SVM, QA, Context ranking
-	\item \cite{NielsenBuckinghamKnollEtAl2008}: Question taxonomy
+	\item \cite{Chang2011}: Libsvm
+	\item \cite{Xu2012}: Question classification, SVM, semantics
+	\item \cite{Hsu2003}: SVC
+	\item \cite{Lin2003}: Sigmoid kernels SVM
+	\item \cite{Yen2013}: SVM, QA, Context ranking
+	\item \cite{Nielsen2008}: Question taxonomy
 	\item \cite{Isozaki2005}: Japanese Q/A System
-	\item \cite{Movshovitz-AttiasMovshovitz-AttiasSteenkisteEtAl2013}: Reputation system SO
-	\item \cite{BloehdornHotho2004}: Text classification, semantics
-	\item \cite{HanDingLing-Feng2006}: fuzzy sigmoid svm
-	\item \cite{ZhangWuLan2015}: sentiment analysis, linguistics
-	\item \cite{ShahPomerantz2010}: Answer quality in qa community
-	\item \cite{TobaAdrianiManurung2011}: Answer type construction
-	\item \cite{TreudeBarzilayStorey2011}: QA on the web (programmers)
-	\item \cite{SlowiaczekKlaymanShermanEtAl1992}: What is a good Q/A?
-	\item \cite{LezinaKuznetsov2013}: predict closed questions on SO
-	\item \cite{StanleyByrne2013}: tag prediction on SO
-	\item \cite{HuangThintQin2008}: Question classification
-	\item \cite{ZhangLee2003}: Question classification, svm
-	\item \cite{BergstraBengio2012}: random search, hyperparameters
-	\item \cite{TongKoller2002}: SVM, text classification
-	\item \cite{HearstDumaisOsmanEtAl1998}: svm
+	\item \cite{Movshovitz-Attias2013}: Reputation system SO
+	\item \cite{Bloehdorn2004}: Text classification, semantics
+	\item \cite{Han2006}: fuzzy sigmoid svm
+	\item \cite{Zhang2015}: sentiment analysis, linguistics
+	\item \cite{Shah2010}: Answer quality in qa community
+	\item \cite{Toba2011}: Answer type construction
+	\item \cite{Treude2011}: QA on the web (programmers)
+	\item \cite{Slowiaczek1992}: What is a good Q/A?
+	\item \cite{Lezina2013}: predict closed questions on SO
+	\item \cite{\cite{Stanley2013}}: tag prediction on SO
+	\item \cite{Huang2008}: Question classification
+	\item \cite{Zhang2003}: Question classification, svm
+	\item \cite{Bergstra2012}: random search, hyperparameters
+	\item \cite{Tong2002}: SVM, text classification
+	\item \cite{Hearst1998}: svm
 	\item \cite{Kaestner2013}: svm, text processing
 	\item \cite{Dubin2004}: Salton	
-	\item \cite{NguyenNguyenShimazu2008}: semi-supervised, question classification
-	\item \cite{RagonisShilo2013}: problem solving question, cs
+	\item \cite{Nguyen2008}: semi-supervised, question classification
+	\item \cite{Ragonis2013}: problem solving question, cs
 	\item \cite{Miller1995}: wordnet	
-	\item \cite{NasehiSillitoMaurerEtAl2012}: good code example, SO
-	\item \cite{HanrahanConvertinoNelson2012}: SO expertise \& knowledge
-	\item \cite{WangLoJiang2013}: dev interaction SO
-	\item \cite{YangTaoBozzonEtAl2014}: expertise vs activity on SO
-	\item \cite{ChengSchiffWu2013}: question feature for answer attraction SO
-	\item \cite{ShortWongZeng2014}: tag recommendation SO
-	\item \cite{PosnettWarburgDevanbuEtAl2012}: questions, answers, activity and reputation on SO
-	\item \cite{AhmedYangJohri2015}: stackexchange, technical vs non-technical communities activity
-	\item \cite{FuJiaXu2008}: domain ontology, qa
-	\item \cite{LiRoth2002,LiRoth,LiRothSmall} qa classification, semantics
-	\item \cite{AndersonHuttenlocherKleinbergEtAl2012} so, qa, post quality	
-	\item \cite{SinhaManiGupta2013} qa, design, anwer response	
+	\item \cite{Nasehi2012}: good code example, SO
+	\item \cite{Hanrahan2012}: SO expertise \& knowledge
+	\item \cite{Wang2013}: dev interaction SO
+	\item \cite{Yang2014}: expertise vs activity on SO
+	\item \cite{Cheng2013}: question feature for answer attraction SO
+	\item \cite{Short2014}: tag recommendation SO
+	\item \cite{Posnett2012}: questions, answers, activity and reputation on SO
+	\item \cite{Ahmed2015}: stackexchange, technical vs non-technical communities activity
+	\item \cite{Fu2008}: domain ontology, qa
+	\item \cite{Li} qa classification, semantics
+	\item \cite{Anderson2012} so, qa, post quality	
+	\item \cite{Sinha2013} qa, design, anwer response	
 	\item \cite{Klein2016,SpaceMachine.net2016,Wissner-Gross2016} datasets
 %	\item \cite{AndersonHuttenlocherKleinbergEtAl2012}
 \end{itemize}
 
 % could be re-phrased into "in this paper, they define question analysis with two different approaches..."
-In the paper by \citet{TobaAdrianiManurung2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
+In the paper by \citet{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
 E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
 They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
 low precision\footnote{
 	Low precision can occur if the feature sets are not fitted well enough during classifier training 
-	\cite[p.~283]{TobaAdrianiManurung2011}.
+	\cite[p.~283]{Toba2011}.
 	}). 
 Pattern-based would match word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be based on the accuracy of the classifier 
 (e.g. lexical or linguistic feature sets). 
@@ -85,12 +290,12 @@ Then for each question, look for the appearance of the question word to create t
 Mapped named-entities; e.g. ORGANIZATION became NEorganization.
 \end{comment}
 
-\citet{XuZhouWang2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
+\citet{Xu2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
 The system included question analysis, \gls{ir} and answer extraction. 
 The question classification accuracy was important to the overall performance of the system. 
 The system was built using \gls{svm} and question semantic similarity, and the feature selection was based on lexical features and domain terms hierarchy. 
 The original method for question classification is mainly rule-based, where the rules decide the category (difficult to extract all the rules for the question category). 
-Another method is using statistics, as was done in \cite{ZhangLee2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
+Another method is using statistics, as was done in \cite{Zhang2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
 Questions were divided into 13 coarse categories and 150 sub-categories. 
 The difference between these were that the sub-categories was built on sentences.
 
@@ -100,6 +305,28 @@ Text classification can be done in many different ways, since the content and si
 The classification is also based on what you want to retrieve from the text. 
 Do you want an answer to a question, or do you want to see which documents are most relevant for the problem you are currently working on 
 (e.g. searching for research papers that are relevant to your work).
+
+Text categorization is a fundamental task in document processing, allowing the automated handling of enormous streams of documents in electronic form. Paper is about a N-gram-based system for text categorization that is tolerant of textual errors. The system worked well for language classification, in one test it got 99.8% classification rate on Usenet newsgroup articles (written in different languages). It also worked well for computer-oriented articles (subject)  where the highest classification rate was 80%.
+text categorization: an incoming document is assigned to some pre-existing category. characteristics:
+-	categorization must work reliably in spite of textual errors.
+-	categorization must be efficient, consuming as little storage and processing time as possible, because of the sheer volume of documents to be handled.
+-	- categorization must be able to recognize when a given document does not match any category, or when it falls between two categories. This is because   category boundaries are almost never clear cut.
+N-gram is an N-character slice of a longer string. the term can include the notion of any co-occurring set of characters in a string (e.g., an N-gram made up of the first and third character of a word), but in this paper they use the term for contiguous slices only. Their system use N-grams of several different lengths simultaneously. Appends space to beginning/end of string (\_ = space): 
+bi-grams: \_T, TE, EX, XT, T\_
+tri-grams: \_TE, TEX, EXT, XT\_, T\_ \_
+quad-grams: \_TEX, TEXT, EXT\_, XT\_ \_, T\_ \_ \_
+---> a string of length k, padded with blanks, will have k+1 bi-grams, k+1tri-grams, k+1 quad-grams, etc.
+Re-statement of Zipf's Law: The n'th most common word in a human language text occurs with a frequency inversely proportional to n. This means that there is always a set of words which dominates most of the other words of the language in terms of usage frequency. smooth continuum of dominance from most frequent to least. implies that classifying documents with N-gram frequency statistics will  not be very sensitive to cutting off the distributions at a particular rank. if we are comparing documents from the same category they  should have similar N-gram frequency distributions.
+determined the true classification for each test sample semi-automatically.
+-	classification procedure works a little better for longer articles
+-	classification procedure works better the longer the category profile it has to use for matching. there were some interesting anomalies (using more N-gram frequencies actually decreased classification performance). caused by some articles having multiple languages even though mixed types were removed
+also used the classification system to identify the appropriate newsgroup for newsgroup articles (collected article samples from five Usenet newsgroups). Chose these five because they were all subfields of computer science, and wanted to test how the system could confuse newsgroups that were somewhat closely related removed the usual header information, such as subject and keyword identification, leaving only the body of the article (to prevent influential matches). 
+primary advantage of this approach is that it is ideally suited for text coming from noisy sources such as email or OCR systems. Possible to achieve similar results using whole word statistics (using frequency statistics for whole words), but several issues exists;
+1.	The system would be much more sensitive to OCR problems (one wrong character, and the word is counted separately). 
+2.	2. Certain articles could be too short to get representative word statistics. there are simply more N-grams in a given    passage than there are words, and there are consequently greater opportunities to collect enough N-grams to be significant for matching.
+3.	By using N-gram analysis, you get word stemming for free, since the plurals will all contain the base form. To get the same results with whole words, the system has to do word stemming, requiring knowledge about the language the documents were written in.  Whereas N-gram frequency approach provides language independence for free.
+4.	Other advantages of this approach are the ability to work equally well with short and long documents, and the minimal storage and computational requirements.
+\cite{Cavnar1994}
 
 \section{Question classification}
 \label{sec:question_answering}

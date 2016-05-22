@@ -5,7 +5,7 @@ Today, many uses the Internet as a resource to find answers to their questions a
 In the past, one were often restricted to only use keywords and not being able to pose the problem as you would when asking another human being. 
 Most search engines today can handle natural language queries, which makes it easier to find the answer you are looking for. 
 The Internet offers a wide range of resources to acquire new knowledge, everything from encyclopaedias to blogs, forums and \gls{qa} communities.
-One well known \gls{qa} community is the \gls{se} community, which is built upon the same model as \gls{so}.
+One well known \gls{qa} community is the \gls{se} community, which is built upon the same model as \gls{so} \cite{Ahmed2015}.
 \gls{se} has grown large since its release in 2009\todo[size=\small]{check year/ \\ date}, and now contains 154 different communities.
 \vspace{0.5em}\newline
 As a developer, one often find oneself in the situation that a part of the code does not work, you get weird error messages, or you are simply stuck. 
@@ -13,7 +13,7 @@ This is were \gls{so} comes in. \gls{so} is a part of the \gls{se} community, al
 Jeff Atwood and Joel Spolsky wanted to offer programmers a \gls{qa} site where they could get the answer they wanted without having to read through a lot of text, 
 see others posting "I also have the same issue" or having to subscribe and pay to see the solution \cite{Spolsky2008}. 
 Question (and answer) quality is maintained through the use of a peer-reviewed gamification system, where users are awarded with votes, reputation and badges for their 
-participation\todo[size=\small]{add cites here} \cite{Spolsky2008}. One of the requirements is that the questions should be of good quality 
+participation\todo[size=\small]{add cites here} \cite{Spolsky2008}\cite{Sewak2010}. One of the requirements is that the questions should be of good quality 
 \cite{Stackoverflow.com2016a, Stackoverflow.com2016d, Stackoverflow.com2016e}.
 If a question is bad, users can vote to close or delete it (in which the question will be put on hold). 
 A question can be put on hold or closed if they meet any of the following criterias: 
@@ -88,8 +88,8 @@ What has been the focus of other researchers, and in what way did they proceed t
 The analysis of the questions are done by using the publicly available database dump, which is available via \gls{se} 
 archive\footnote{StackExchange dataset: \url{https://archive.org/details/stackexchange} \\ (Downloaded 30. March 2016).} \cite{StackExchange2016} . 
 There are several others who have used the same dataset \todo[size=\small]{add cites here}.
-Taking into consideration that \gls{so} was released in 2008, it means that it now contains approximately 8 years of peer-revied data.
-Because of the size of the data set, and the total amount of posted questions, going through all questions manually would be too timeconsuming.
+Taking into consideration that \gls{so} was released in 2008, it means that it now contains approximately 8 years of peer-reviewed data.
+Because of the size of the data set, and the total amount of posted questions, going through all questions manually would be too time-consumings.
 Therefore only a select few were studied too see if it was possible to identify what separated the highly up and down-voted questions.
 \vspace{0.5em}\newline
 The goal was to develop a \gls{ml} learning system which was based on \gls{svm}, since many papers document that this has the best classification accuracy for text classification. 
@@ -114,7 +114,9 @@ This means that new research possibilities could be opened up in relation to res
 Since all the communities within \gls{se} is based on the same model, few modifications would be needed to scale the program to be used within the other communities.
 As noted in several papers\todo[size=\small]{add cites here}~, question quality is measured based on the amount of votes given. 
 Which can also be compared against the peer-review process in academia, and given that \gls{so} targets professionals and experts, 
-using \gls{so} as a scientific reference is not that far-fetched (in CITE, XX\% used \gls{so} as a reference). 
+using \gls{so} as a scientific reference is not that far-fetched\footnote{
+	 \citet[p.~1]{Posnett2012} noted that \gls{so} "ranked 2$^{nd}$ among reference sites, 4$^{th}$ among computer science sites, and 97$^{th}$ overall among all websites".
+	 }.
 \gls{se} has also been the focus of various researchers these past years \cite{Vasilescu2012}.
 Improving ones own ability to ask better questions can also have a pedagogical effect, which means that this system could be implemented in education. 
 
