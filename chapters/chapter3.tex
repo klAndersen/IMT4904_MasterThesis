@@ -5,12 +5,12 @@
 \label{sec:dataset_db}
 
 \subsection{Dataset}
-The dataset contains all information that is currently available in the StackExchange community (at the time the dataset was created). 
+The dataset contains all information that is currently available in the \gls{se} community (at the time the dataset was created). 
 The following is a list of the tables found in the dataset:
 \begin{itemize}
 	\item Badges: Badges awarded to users.
 	\item Comments: Comments given either to a question or an answer.
-	\item Posts: Posts on StackExchange, this contains both questions and answers.
+	\item Posts: Posts on \gls{se}, this contains both questions and answers.
 	\item Posthistory: The history of a given post (e.g. edits, reason for closing, etc.).
 	\item Postlinks: Link to other Posts (e.g. duplicates).
 	\item Users: Information about the given user registered at the given community.
@@ -133,7 +133,7 @@ Why do we need callbacks in ASP.NET or any server side technology?
 \noindent
 To process the questions, CountVectorizer from scikit-learn was used. 
 CountVectorizer uses the vocabulary found in the text and counts the frequency of each word \cite{Scikitlearn.org2016b} \cite[4.2.3]{Scikitlearn.org2016}. 
-When looking at this vocabulary, a lot of of un-important words was found (a lot which came from the code samples) provided in some of the questions. 
+When looking at this vocabulary, a lot of of un-important words was found (a lot which came from the code samples) in some of the questions. 
 At first all code samples were removed from the text, but later on they were replaced with the value 'has\_codeblock', indicating that this question contained one or more code samples. 
 This was achieved by using a combination of lxml\footnote{lxml: \url{http://lxml.de/}} and bs4\footnote{BeatifulSoup: \url{https://www.crummy.com/software/BeautifulSoup/}} (BeatifulSoup). 
 lxml was used to construct an XML tree containing all the tags (to be able to retrieve the content by searching for a given tag), and bs4 was used for beautifying the HTML 
@@ -171,17 +171,43 @@ The non-English words were a bit more troublesome to handle, since these were ma
 Attempts were made to filter them out by using corpus.words.words() and corpus.wordnet.synset() 
 from \gls{nltk}\footnote{\url{http://www.nltk.org/}}, and PyEnchant\footnote{\url{http://pythonhosted.org/pyenchant/}}. 
 However, WordNet does not have a complete database of all English words, and they all claimed some words were not English even though they were.
-\vspace{0.5em}\newline
 The solution turned out to be a lot simpler. 
 Instead of creating filters, the CountVectorizer already had one built in. 
-By adjusting the minimum document frequency (min\_df) and set it to 0.01, it would ignore words that did not appear in less then 1\% of all documents.
-
-~\\
-To write: \\
-Tutorials that I went through \\
-Using SGD (based on tutorials from scikit-learn) \\
-Testing out different text classification algorithms (SVC, SGD and LinearSVC) \\
-Attempting to make program runnable from command line; e.g. started with opt/argparse, ended with while loop
+By adjusting the minimum document frequency (min\_df) and setting it to 0.01, words that appeared in less 1\% of all documents were ignored.
+\vspace{0.5em}\newline
+To be able to run the system without relying on an \gls{ide}, making it run from the Terminal using basic command setup seemed like a good idea. 
+At first optparse was used, which ironically turned out to be deprecated and replaced by argparse. 
+However, the problem was that you could only run one command at a time, whereas I wanted the program to be able to run until exited.
+The reason for this was because it needs to load a model before it can make a prediction, in addition the user might want to predict multiple questions. 
+This was therefore replaced with a basic while loop that runs until the users enters the exit command. 
+The setup used for argparse was kept, so users from *nix system might be more familiar with similar commands (shown in Listing \ref{lst:system_menu}).
+At the end, there were some commands that were not added to the menu, since these were mostly used for testing. 
+% listing with the available menu commands
+\begin{lstlisting}[caption={System menu}, 
+label={lst:system_menu}, basicstyle=\small] 
+Menu: 
+d: Loads default model (if exists) from ./pickle_models
+e: Exit the program
+h: Displays this help menu
+l: Load user created model. Arguments: 
+	path: Path to directory with model(s) (e.g. /home/user/my_models/) 
+	filename: The models filename 
+	suffix: File type - Optional (default: '.pkl')
+p: Predict the quality of the entered question. Arguments: 
+	question: Question to predict quality of 
+t: Train a new model based on an existing (or new) data set. Arguments: 
+	path: Path to directory with training data (e.g. /home/user/my_data/) 
+	filename: Filename for data set (model name will be the same as this) 
+	db_load: Load from database (Enter 0: No, 1: Yes) 
+	limit: Limit for database row retrieval (integer) - Optional unless 'db_load' is '1'
+u: Create an unprocessed data set based on database content (from database set in dbconfig.py). 
+Arguments: 
+	filename: Filename for data set (model name will be the same as this) 
+	limit: Limit for database row retrieval (integer) 
+	feature_detectors: Create singular feature detectors based on data set? (Enter 0: No, 1: Yes) 
+	create_model: Create classifier model(s) based on data set? 
+	0: No, 1: Unprocessed model, 2: Feature detector model(s) 3: Both (1 and 2)
+\end{lstlisting}
 
 \begin{comment}
 	Timeline:
@@ -253,9 +279,9 @@ Attempting to make program runnable from command line; e.g. started with opt/arg
 \label{sec:feature_sets}
 When retrieving the questions from the database, the vote score was set to less than -10 for bad question and greater than 50 for good questions (retrieval limit set to 10,000; 20,000 total). 
 However, the vote score was set too low for the bad questions, since only 683 rows was returned. 
-The score was then set to less than -5. 
-When using pandas.Categorical to get an statistical overview (code snippet in Listing \ref{lst:pandas_categorical} and result in Table \ref{tab:pandas_categorical}), 
-one can see that for 10,000 samples, the average vote score was -7. This could be an indicator that when a question has a vote score below -5, they are ignored.
+Therefore, the score was then set to less than -5. 
+What was also found when using pandas.Categorical to get an overview (code snippet in Listing \ref{lst:pandas_categorical} and result in Table \ref{tab:pandas_categorical}), 
+one can see that for the 10,000 bad questions, the average vote score was -7. This could be an indicator that when a question has a vote score below -5, they are ignored.
 
 \newpage
 \begin{lstlisting}[caption={Getting Categorical data from pandas.DataFrame}, 
@@ -323,17 +349,47 @@ print(temp_df.groupby("label").describe(include='all'))
 	\label{tab:feature_reduction}
 \end{table}
 
-what features were selected and why? \\
-how was data processed (e.g. retrieved from db, converted to scikit-learn format, and so forth) \\
-attributes: length, symbols, question sentence only, code snippet, votes, closed, etc.
+To be able to develop some theories on what the difference between good and bad questions was, a total of 200 questions were reviewed (by sorting questions based on 
+ votes\footnote{\url{http://stackoverflow.com/questions?sort=votes}}). 
+It was easier to see certain patterns in down-voted questions rather than those that were up-voted. 
+A repetitive pattern was that many had either no code example, or poorly written code. 
+These questions could also show indications of not having tried anything, or that they were based on either homework or school assignments. 
+This in turn lead to a hypothesis that if a question contains indicator of word synonyms for homework\footnote{\url{http://www.thesaurus.com/browse/homework}}, 
+it would be considered a bad question. 
+In addition, some code examples had syntax errors, which made the minimum working example (MWE) not executable. 
+Some questions also contained links, either to external resources or indicators of potential duplicates. 
+Therefore links was also considered a potentially useful feature. 
+Tags was also considered as a feature, which was divided into two: Attached and External tag. 
+Attached tags are tags which the user has linked to the question, whereas external tags are all the tags available on \gls{so}.
+Version numbering was also considered, but this was not included due to the complexity of writing a proper filtering method to account for all possible variations.
+\vspace{0.5em}\newline
+Features were added in the same manner as was done for code samples, numerical and hexadecimal values. 
+However, there were some issues when attempting to replace the tags and the synonyms for homework.
+At first, WordNet was used for synonyms (using wordnet.synset()). 
+The only problem was that for the word 'homework', wordnet.synset() only returns ['homework', 'prep', 'preparation'].
+Whereas Thesaurus\footnote{\url{http://www.thesaurus.com/browse/homework}} had a lot more suggestions, and was therefore used instead.
+Words were selected based on whether or not it was plausible that they could be used in programming related question setting.
+A new problem now arose, namely the issue that the word "assignment" did not necessarily need to occur in a homework setting, since it could also be used as a programming word
+(e.g. assignment operator\footnote{\url{http://stackoverflow.com/questions/5368258/the-copy-constructor-and-assignment-operator}}).
+Therefore features for homework were split into two types: 'has\_homework' and 'has\_assignment'.
+\vspace{0.5em}\newline
+Tags were without a doubt one of the most annoying features to detect and replace. 
+Site tags (or external) are single text values in the database, whereas the question can have up to five tags attached. 
+Those attached tags are then separated in the following format: "<c><multi-threading>", which had to be processed by removing the '<' and the '>'.
+After the removal, each tag value was added to a list, so that all attached tags was indexed based on the question they belonged to. 
+Furthermore, a combination of string replacement and regular expression was needed. 
+The regular expression was used for single character tags (e.g. 'C'), and word replacement for longer words.
+The reason for this was that when using string replacement, single character tags replaced occurrences even if they appeared in the middle of a word.
+If the tags contained characters that could be interpreted as a regular expression (e.g. C++), it would give error about multiple repetitions.
+In addition, the tags needed to be sorted based on their length, since for questions that contained tags which included both <C> and <C++>, 
+if <C> came first, it replaced the <C++> with 'has\_*\_tag'++. The text also had to be converted to lower-case to ensure proper tag matching. 
 
-\newpage
-Hypotheses drafts (need to be re-written)
-\begin{itemize}
-	\item Does the use of stemming increase the \gls{svm}s accuracy?
-	\item Does the use of tags increase the \gls{svm}s accuracy?
-	\item If a question has version numbering, does this increase \gls{svm}s accuracy?
-	\item Does syntax errors have an impact on the question (may not be tested due to LINT check)?
-	\item If question contains links to sources (e.g. repository, StackOverflow question, etc), does it have any effect?
-	\item What about questions containing homework description (e.g. homework, assignment, textbook, etc)?
-\end{itemize}
+\begin{lstlisting}[caption={Replacing tags in the question}, 
+label={lst:pandas_categorical}, basicstyle=\small] 
+for word in word_set:
+	if len(word) == 1:
+		# if its only one character (e.g. 'C'), ensure that it is a singular word by using regex
+		text = re.sub(r"\b%s\b" % word, replacement_text, text, flags=re.IGNORECASE)
+	else:
+		text = text.replace(word, replacement_text)
+\end{lstlisting}
