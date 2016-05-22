@@ -216,7 +216,29 @@ the results from coarse search
 A Study on Sigmoid Kernels for SVM and the Training of non-PSD Kernels by SMO-type 
 Methods (Hsuan-Tien Lin and Chih-Jen Lin) 
 
--> Skipped for now; 32 pages...
+Karash-Kunh-Tucker (KKT)
+
+Sigmoid kernel was quite popular for support vector machines due to its origin from neural networks. It is known that the kernel matrix may not be positive semi-definite (PSD).
+Discusses non-PSD kernels through the viewpoint of separability and how to solve the non-convex dual problems by SMO-type decomposition methods. Validates use of non-PSD kernels with results. 
+Shows in one example that sigmoid kernel matrix is conditionally positive definite (CPD) for certain parameters (valid kernel). They also show that sigmoid is not better than RBF.
+
+Since sigmoid can in some cases not be PSD for given parameters, it is unclear what classification problem we are solving. 
+Found that 'a > 0' and 'r < 0' is more suitable for the sigmoid kernel (---> K is CPD after r is small; similar to RBF for small a).
+Used LIBSVM for solving Equation 2 (p. 2), and a modification of BSVM for solving Equation 19 (p. 15); compared with 5-fold CV.
+
+Four different datasets, the first three are linearly scaled (values within [-1, 1]). The last is binary (0 or 1), so it is not scaled.
+Used two-level CV for comparison, where the first level separates into 5-folds.
+Tried all parameters (log_2(C), log_2(a), r) in the region [-3, 0, ..., 12] * [-12, -9, ..., 3] * [-2.4, -1.8, ..., 2.4].
+For parameter selection, the RBF kernel 
+	e ^(-a (|| x_i - x_j ||)^2)
+does not involve with r.
+
+Accuracy was similar for the three approaches. Sigmoid worked well, but not better than RBF. RBF is more useful than Sigmoid, since it 
+has less parameters and properties of being positive definite (PD). 
+
+Kernel logistic regression (KLR) + Sigmoid is competitive with SVM and can solve convex problems. But without sparsity, both training and testing time is long.
+Hard to select suitable parameters for the sigmoid kernel. For certain parameters the sigmoid kernel behaves like the RBF kernel.
+
 
 
 
@@ -284,7 +306,29 @@ If two labels had the same meaning they were merged. When categories differed, t
 Boosting for Text Classification with Semantic Features
 (Stephan Bloehdorn, Andreas Hotho)
 
--> Skipped for now; 18 pages...
+In the Bag of Words (bow) model, only single words or word stems are used as features for representing document content.
+The issue is that learning algorithms are restricted to detecting patterns in the used terminology only, while ignoring conceptual patterns. 
+List of weaknesses with using bow (1-3 addressed issues on a lexical level, and 4 conceptual level):
+
+1. Multi-Word Expressions with an own meaning like "European Union" are chunked into pieces with possibly very different meanings like "union".
+2. Synonymous Words like "tungsten" and "wolfram" are mapped into different features.
+3. Polysemous Words are treated as one single feature while they may actually have multiple distinct meanings.
+4. Lack of Generalization: there is no way to generalize similar terms like "beef" and "pork" to their common hypernym "meat".
+
+WordNet database organizes simple words and multi-word expressions of different syntactic categories into so called synonym sets
+(synsets), each of which represents an underlying concept and links these through semantic relations.
+
+- Candidate Term Detection: Defined a Candidate Term Detection strategy built on the assumption that if you find the longest multi-word expressions appearing in the text, 
+the lexicon will lead to a mapping to the most specific concept for that word (instead of querying single words, which may lead to wrong mapping).
+- Syntactical Patterns:Analysis by using POS-tagging.
+- Morphological Transformations: Entry form, base form reduction. Stemming if the first query for the inflected forms on the original lexicon turned out unsuccessful.
+- Word Sense Disambiguation (WSD): A lexical entry for an expression does not necessarily imply a one-to-one mapping to a concept in the ontology. 
+Disambiguate an expression versus multiple possible concepts.
+- Generalization: Going from specific concepts in the text to general concept representations. Mapping words based on generalization (up to a certain level).
+However, by climbing up too far in the taxonomy you run the risk of  obfuscating the concept representation.
+
+Main idea behind boosting algorithms is to combine multiple weak learners - classification algorithms that perform only slightly better than random guessing - into a powerful
+composite classifier.
 
 
 
@@ -1455,11 +1499,69 @@ and meta-estimators in GridSearchCV (using cross-validation internally to set it
 Sparrows and Owls: Characterisation of Expert Behaviour in StackOverflow
 (Jie Yang, Ke Tao, Alessandro Bozzon, and Geert-Jan Houben)
 
+Small subset of users is responsible for the majority of the contributions, and ultimately, for the success of the Q/A systems.
+Standard expert identification methods often misclassify very active users for knowledgable ones, and misjudge activeness for expertise.
+
+Contributes a novel metric for expert identification, providing a better characterisation of users' expertise by focusing on the quality of their contributions. 
+Identifies two classes for the users, sparrows and owls, and describe several behavioural properties in the context of the StackOverflow Q/A system.
+
+Reasons for signing up/using qa systems:
+1) to look for existing solutions to their issues;
+2) to post a new question to the platform community;
+3) to contribute by providing new answers
+4) to comment or vote existing questions and answers
+
+Q/A platforms employ effective gamification mechanisms that motivate users by showing a public reputation score (calculated by summing the number of preferences obtained by all the posted questions and answers),
+and by assigning badges after achieving pre-defined goals (e.g. complete at least one review task, achieve a score of 100 or more for an answer). Used the StackOverflow dataset.
+
+Sparrows:
+An important part of the qa system. Numerous, active and highly "social". However, that does not mean that they are knowledgeable.
+Can be driven by gamification, wanting to score votes and reputation instead of giving informative and long-lasting answers.
+Can have low average score, and minimization of effort by targeting non-relevant and simple questions. Can guarantee responsive and 
+constant feedback; helps in keeping the community alive.
+
+Owls:
+Active members that participate not for the achievments and gamification, but wants to share knowledge and information related to the platform. 
+Experts in the related topic, providing useful answers and can show expertise by answering questions seen as difficult, complex or important to the users of the community.
+
+An expert can be defined as someone who is recognised to be skilful and/or knowledgable in some specific field (based on judgment by the public or peers; e.g. academic peer-review).
+Expertise then refers to the characteristics, skills, and knowledge that distinguish experts from novices and less experienced people.
+In qa systems, social judgement is critical for expert identification. Question is answered by users, which are up or down-voted by other users.
+Answering questions can reflect how a user applies their knowledge to solve problems (actionable knowledge), and the votes for the answer can be seen as a cyber simulation of social judgement 
+for the answerers' expertise level. Asking questions and posting comments can also say something about a users expertise level. 
+
+Considered two dimensions:
+1. The debatableness of a question, measured according to the number of answers it generated;
+2. The utility of an answer, measured according to its relative rank in the list of answers.
+
+Intuitively, difficult questions generate a lot of discussions, and several answers; also, the higher in the rank an answer has been voted, the more potentially
+useful it is to solve the related question, and the more it provides evidences about the expertise of the answerer in the topic.
+
+The ratio between answered and submitted questions is significantly higher for sparrows. Owls, on the other hand, show a behaviour more similar to average users, 
+thus further highlighting the distinctive "hunger" for answers of sparrows.
+
+Owls answer questions that are more difficult, and more popular. Question popularity, measured in terms of the number of times a question has been viewed in StackOverflow;
+and time to solution, measured in terms of the number of hours needed for the question creator to accept an answer as satisfactory. Time to solution can also be an indicator 
+of the difficulty of a question: intuitively, the longer the time to accept an answer, the more difficult is the question.
+Sparrows appear focused in building their reputation, which they increase by consistently answering to a lot of easy and non-interesting questions. Their behaviour is however providing
+important contribution to the community, as they can guarantee fast answers to many questions. On the other hand, owls intervene when their expertise is needed the most, i.e. in difficult question.
+
+Owls post questions that are more difficult, and more popular; Questions submitted by sparrows are less popular than those posted by the owls. Completion time for such questions is comparable.
+These results also suggest a difference in the expertise level of the two groups of users, as more popular questions might be a sign of the better understanding that owls possess
+on the subject. However, the higher (on average) difficulty and popularity of sparrows’s answers w.r.t. the average of users, also suggests that sparrows are good contributors in terms of new problems 
+to be addressed by the community.
+
+Gamification incentives can more effectively retain sparrows than owls. "Older" owls always contribute for the larger portions of the provided answers. However, owls consistently tend to decrease their activity
+in time, especially for more recently registered users. On the other hand, new sparrows significantly contribute to a share of answers produced by their group and, although in the long term a decrease in the overall 
+activities of the older member can be seen, the effect is less important. These results suggest that the gamification incentives put in place by StackOverflow are really effective to retain the activity of sparrows.
+
 
 
 
 Support Vector Machine Active Learning with Applications to Text Classification
 (Simon Tong, Daphne Koller)
+
+---> Skipped for now; questionable relevance
 
 
 
@@ -1467,11 +1569,60 @@ Support Vector Machine Active Learning with Applications to Text Classification
 Support Vector Machines and Kernel Functions for Text Processing
 (Celso A.A. Kaestner)
 
+Paper is about using SVM to solve automatic text classification task.
+
+Text classification, also known as text categorization or topic spotting, is the activity
+of labeling natural language texts with thematic categories from a predefined set.
+
+Examples of automatic document classification:
+(a) spam filtering - separate spam email messages from legitimate emails; 
+(b) email routing - routing email to address or mailbox based on topic;
+(c) language identification - automatically determine the language of a text; 
+(d) genre classification - automatically determine the genre of a text; 
+(e) readability assessment - automatically determine the degree of readability of a text 
+(f) the classical task of document indexing and filing - filing documents according to their content or other specific information.
+
+The first issue in text classification is to find an adequate representation of the documents. The largely employed model in Information Retrieval is the Vector Space Model - VSM (aka. "bag-of-words" model).
+
+Term extraction and dimensional reduction steps:
+
+1. Tokenization: Separating text based on delimiters, e.g. space, EOF and tabs, where these text units are processed in the below steps.
+2. Case standardization: Convert all characters to the same case
+3. Tag filtering: if the document is an Internet page or a similar hyper document, the corresponding tags are eliminated;
+4. Stop word removal: "Stop words" are common natural language entities that do not carry strong semantics. 
+They are therfore considered irrelevant for information retrieval and for text classification purposes. 
+5. Stemming (or lemmatization): text elements with small variations in their lexicon but with the same semantics must be associated in order to produce the same dimension
+in the VSM; some examples are singular and plural variations of the same word and person and time variations of a verb. Linguistic experts produce specific procedures
+that convert a word into its "stem" (radix), which is the element employed to represent the corresponding dimension
+6. Other term associations: it is possible to associate terms of identical semantics using external dictionaries such as the WordNet, or by computing successive terms that
+always occur together in the text like, for example, "triple heart bypass", which is considered a triple compound term.
+
+In Wong et al. [33] the "term-to-term" similarity is deeply analyzed. Their work indicates that:
+1. the words can be analyzed from the linguistic (semantic) point-of-view, to obtain synonyms, antonyms, hyponyms, hypernyms, meronyms, etc.; these relations nowadays
+are included in large linguistic repositories such as the WordNet;
+2. statistical term co-occurrence computation in a corpus is a practical way to compute term similarity;
+3. a more abstract element than the terms, called a “concept”, can be used to represent document dimensions;
+4. a concept is characterized by a set of documents, or, more specifically, corresponds to the maximal subset of documents in the corpus that contains the concept;
+5. two concepts are uncorrelated if the intersection between the corresponding sets of relevant terms of each document is empty; the greater the overlap between the sets of
+documents related to two concepts, the more related theses concepts are.
+
+Perhaps the most important idea that can be extracted from this analysis is the relation between concepts and vectors: 
+(a) concepts are represented by vectors; 
+(b) the determination of a vector basis in the term-space involves the identification of the "fundamental concepts" in the collection, whose corresponding representative vectors are orthogonal; 
+(c) documents and queries are linear combinations of the fundamental concepts.
+
 
 
 
 Tag Recommendations in StackOverflow
 (Logan Short, Christopher Wong, and David Zeng)
+
+Content organization by use of "tags". Tag-misplacement can disrupt structure and sorting of information. Tag recommendation can reduce chance of tag synonyms.
+The goal of their algorithm is to see whether or not the underlying network structure of StackOverflow can be used for tag-recommendation for user-produced content
+
+Used dataset from StackOverflow, 50k questions. Preprocessed the text of each post using snowballstemmer for stemming word tokens.
+Removed stop words and any word tokens from the set that did not appear at least 20 times, since rare were not very helpful in generating accurate models.
+Considered only the tags that appeared more than 50 times. Refer to two tags as tag synonyms if their names are different but they refer to the same concept.
 
 
 
@@ -1479,17 +1630,111 @@ Tag Recommendations in StackOverflow
 Text Categorization with Support Vector Machines: Learning with Many Relevant Features
 (Thorsten Joachims)
 
+Text categorization has become one of the key techniques for handling and organizing text data. Text categorization techniques are used to classify news stories, to find interesting information on
+the WWW, and to guide a user's search through hypertext. Since building text classifiers by hand is difficult and time-consuming, it is advantageous to learn classifiers from example. 
+Goal of text categorization is to classify documents into a number of pre-defined categories, where each document can be in one, multiple or none.
+Since categories may overlap, each category is treated as a separate binary classification problem.
+
+The first step in text categorization is to transform documents, which typiclly are strings of characters, into a representation suitable for the learning
+algorithm and the classification task. Information Retrieval research suggests that word stems work well as representation units and that their ordering in a
+document is of minor importance for many tasks. This leads to an attribute-value representation of text. Each distinct word w_i corresponds to a feature,
+with the number of times word w_i occurs in the document as its value. To avoid unnecessarily large feature vectors, words are considered as features only if they
+occur in the training data at least 3 times and if they are not "stop-words" (like "and", "or", etc.).
+
+This representation scheme leads to very high-dimensional feature spaces containing 10000 dimensions and more. Need for feature selection to improve generalization accuracy and avoid "overfitting".
+From IR it is known that scaling the dimensions of the feature vector with their inverse document frequency (IDF) improves performance.
+
+SVM is based on the Structural Risk Minimization principle from computational learning theory. The idea of structural risk minimization is to find a hypothesis h for which we can guarantee the lowest true error. 
+The true error of h is the probability that h will make an error on an unseen and randomly selected test example. An upper bound can be used to connect the true error of a hypothesis h with the error of h on the 
+training set and the complexity of H (measured by VC-Dimension), the hypothesis space containing h. Support vector machines find the hypothesis h which (approximately) minimizes this bound on the true error by 
+effectively and efficiently controlling the VC-Dimension of H.
+
+One remarkable property of SVMs is that their ability to learn can be independent of the dimensionality of the feature space. SVMs measure the complexity of hypotheses based on the margin with which they separate the
+data, not the number of features. This means that we can generalize even in the presence of very many features, if our data is separable with a wide margin using functions from the hypothesis space.
+The same margin argument also suggest a heuristic for selecting good parameter settings for the learner (like the kernel width in all RBF network). The best parameter setting is the one which produces the hypothesis with
+the lowest VC-Dimension. This allows fully automatic parameter tuning without expensive cross-validation.
+
+Theoretical analysis concludes that SVMs acknowledge the particular properties of text: 
+(a) high dimensional feature spaces, 
+(b) few irrelevant features (dense concept vector), 
+(c) sparse instance vectors.
+
+Experimental results show that SVMs consistently achieve good performance on text categorization tasks, outperforming existing methods substantially and significantly. With their ability to generalize well in high dimensional
+feature spaces, SVMs eliminate the need for feature selection, making the application of text categorization considerably easier. Another advantage of SVMs over the conventional methods is their robustness. SVMs show good performance
+in all experiments, avoiding catastrophic failure, as observed with the conventional methods on some tasks. Furthermore, SVMs do not require any parameter tuning, since they can lind good parameter settings automatically. All this 
+makes SVMs a very promising and easy-to-use method for learning text classifiers from examples.
+
 
 
 
 The Most Influential Paper Gerard Salton Never Wrote
 (David Dubin)
 
+N/A
+
 
 
 
 The Role of Semantic Information in Learning Question Classifiers
 (Xin Li, Dan Roth, Kevin Small)
+
+This is included in: "Learning Question Classifiers: The Role of Semantic Information"
+
+
+
+
+What Is It We Are Asking: Interpreting Problem-Solving Questions in Computer Science and Linguistics
+(Noa Ragonis, Gila Shilo)
+
+N/A
+
+
+
+
+What makes a good code example? A Study of Programming Q&A in StackOverflow
+(Seyed Mehdi Nasehi, Jonathan Sillito , Frank Maurer, and Chris Burns)
+
+What makes an effective code example? Conducted qualitative analysis of questions and answers on SO. Voting & reputation system. Code explanation is equally important as the code examples.
+Known in educational psychology that examples that work/are solved are easier to learn from, than attempting to solve the problem from scratch.
+Asking a question in natural language (e.g. asking another human) or query form (e.g. asking a machine, search engine, etc).
+Even if you find an example to the problem you are facing, you are still restricted by the quality of that example. 
+
+SO has three properties of social learning techniques:
+1. Support for finding answers based on natural language (does not have to rely on keywords)
+2. Support for connecting to the right people (question tags for domain experts)
+3. Engagement in qa by use of gamification; by use of votes and reputation
+
+Paper contributions: 
+- Characteristics of good code examples
+- Attributes of code explanation
+- Relationship between attributes and question types
+- Implications of examples enhancement and development process documentation, as well as tools that can be used
+
+Choose questions with score of +4, and focused only on Java programming questions. Looked for answers with score of +7, 
+which contained the <java> tag and <code> tag. Ended up with 163 samples, and categorized questions into two dimensions:
+
+1. Dimension (did not find any meaningful relationships and recognized answer attributes):
+------------------------------------------------------------------------------------------
+- API related questions
+- OOP/Design questions
+- Language basics questions
+- Migrating to a new language
+- Comparison of constructs for two different languages
+
+2. Dimension:
+------------
+- Debug/Corrective: Runtime/development errors, design/structure issues
+- Need-to-know: Possibility and uncertainity in relation to being able to achieve something (e.g. is it possible to...?)
+- How-to-do-it: Scenario settings, how to achieve something, implementation suggestions
+- Seeking-different-solution: Changes to working code; how can this be done differently
+
+Attributes of recognized answers:
+1. Consise code: Code size/length, simplification/complexity reduction. Use of comments for left-out details/implementations. Code length is distinguishing factor.
+2. Using question context: For flawed/non-working code, answers usually includes improvement suggestions. Best practices, improved readability in addition to working solution suggestion.
+Pedagogical benefit, since those asking questions learn to write better code.
+3. Highlighting important elements: "Straight to the point", clearing up misunderstandings, pointing to relevant resources, etc.
+4. Step-by-step solution: Splitting code into chunks, and explaining each chunk. Explanation on how things work. Comparison of languages; e.g. "How can I do X in C#, when I'm used to Java?"
+5. Providing links to extra resources: Keeping answer short by adding external links. A summary of said link should still be included (e.g. if site goes down, is un-available, etc).
 
 
 
@@ -1500,14 +1745,52 @@ Using Semi-supervised Learning for Question Classification
 
 
 
-What Is It We Are Asking: Interpreting Problem-Solving Questions in Computer Science and Linguistics
-(Noa Ragonis, Gila Shilo)
 
 
 
 
-What makes a good code example? A Study of Programming Q&A in StackOverflow
-(Seyed Mehdi Nasehi, Jonathan Sillito , Frank Maurer, and Chris Burns)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Synonym Suggestion for Tags on Stack Overflow
+(Stefanie Beyer, Martin Pinzger)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1515,5 +1798,5 @@ What makes a good code example? A Study of Programming Q&A in StackOverflow
 Are Loss Functions All the Same?
 (L. Rosasco, E. De Vito, A. Caponnetto, M. Piana, A. Verri)
 
-
+---> Skipped for now
 
