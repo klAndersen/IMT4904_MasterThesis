@@ -1,61 +1,17 @@
 %\chapter{State of the art}
 \label{chap:chapter2}
-The goal of this target is to document the current state of the art technologies, and research 
-that has been done by others. This is needed to both understand how to use text classification and 
-classify questions. Furthermore, some of the papers have also done comparisons on \gls{svm} and 
-other types of \gls{ai} and \gls{ml} algorithms, which concluded that for text classification, 
-\gls{svm} had the highest accuracy.
+The goal of this target is to document the current state of the art technologies, and research that has been done by others. 
+This is needed to both understand how to use text classification and classify questions. 
+Furthermore, some of the papers have also done comparisons on \gls{svm} and other types of \gls{ai} and \gls{ml} algorithms, 
+which concluded that for text classification, \gls{svm} had the highest accuracy.
 
 \begin{comment}
-For Harvard style referencing, you use the \texttt{citep} and \texttt{citet} style of citation. 
-These give parentheses around the citation or the name of the author as text with the year in parentheses.  
-If you want the citation to be read in a sentence then you use  \texttt{citet}. 
-If you want it to be just parenthetical to the sentence at the end, then use \texttt{citep}.
-
-
-\end{comment}
-~\\
-\textbf{Example for Simon:} \\\\
 I can either use \verb|\cite{ChangLin2011}| and get: \cite{ChangLin2011}. \\
 Or I can use \verb|\citet{ChangLin2011}| and get: \citet{ChangLin2011}. \\
 \verb|\cite| is based on \verb|\renewcommand*{\cite}{\autocite}|, \\
 and \verb|\citet| is based on \verb|\newcommand{\citet}{\textcite}|. \\
-Unfortunately, you can't get the year, but at least you can now get in-text citation. \\\\
-The listing below shows the whole command:
-
-\begin{lstlisting}
-	# HEADER/BEFORE \begin{document}
-
-	\usepackage{csquotes}% Recommended
-	%bibliograhpy
-	\usepackage[style=authoryear, % harvard style (author, year)
-	bibstyle=numeric, % lists bibliography as numeric [1] ..., [2] ..., etc.
-	citestyle=numeric, % numeric citing; where \cite gives numeric, 
-	but \textcite gives authoryear
-	backend=biber, % backend
-	%% backref takes you back from bibliography to the page you clicked reference
-	%% example: (cit. on p. 7), where 7 would take you back to that page
-	% backref=true,  
-	maxcitenames=2, % max number of names to list when using author names (et al.)
-	doi=true]{biblatex}
-	
-	%% loads the bibliography for biblatex and for texniccenter
-	%% this is to enable auto-complete and being able to search through all entries
-	\makeatletter
-	\@ifpackageloaded{biblatex}{\addbibresource{bibfile.bib}}{\bibliography{bibfile}}
-	\makeatother
-	
-	%% changes the cite command into autocite
-	\renewcommand*{\cite}{\autocite}
-	%% adds comma between author--year; (author, year)
-	\renewcommand*{\nameyeardelim}{\addcomma\space}
-	\newcommand{\citet}{\textcite}
-	
-	# ADD AT THE END, WHEREVER YOU WANT BIBLIOGRAPHY PRINTED
-	% Start the references on a new page
-	\clearpage
-	\printbibliography
-\end{lstlisting}
+Unfortunately, you can't get the year, but at least you can now get in-text citation. 
+\end{comment}
 
 Citation list (content to come):
 \begin{itemize}
@@ -103,60 +59,53 @@ Citation list (content to come):
 \end{itemize}
 
 % could be re-phrased into "in this paper, they define question analysis with two different approaches..."
-In the paper by \citet{TobaAdrianiManurung2011}, they experiment with the use of statistical 
-learning to find the expected answer pattern for factoid \gls{qa} pairs. E.g. if you ask 
-someone where a certain event took place, the answer pattern would be a location. They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} 
-(high recall, low precision\footnote{Low precision can occur if the feature sets are not fitted 
-	well enough during 
-	classifier training \cite[p.~283]{TobaAdrianiManurung2011}.}). Pattern-based would match 
-word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be 
-based on the accuracy of the classifier (e.g. lexical or linguistic feature sets). 
+In the paper by \citet{TobaAdrianiManurung2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
+E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
+They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
+low precision\footnote{
+	Low precision can occur if the feature sets are not fitted well enough during classifier training 
+	\cite[p.~283]{TobaAdrianiManurung2011}.
+	}). 
+Pattern-based would match word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be based on the accuracy of the classifier 
+(e.g. lexical or linguistic feature sets). 
 \begin{comment}
 % this paragraph may not be relevant for this report
-The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian 
-Analogical Reasoning (BAR). Features sets are then extracted from the training set by use of binary 
-values checking if the question contains a given question word. The BAR framework then learns the 
-related features and computes the estimation for them. Thereafter \gls{qa} pairs are retrieved from 
-the testing set and compared against the training set. Afterwards, the \gls{qa} pairs that have 
-identical question words are identified, and overlapping pairs are grouped according their named 
-entity group.
+The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian Analogical Reasoning (BAR). 
+Features sets are then extracted from the training set by use of binary values checking if the question contains a given question word. 
+The BAR framework then learns the related features and computes the estimation for them. 
+Thereafter \gls{qa} pairs are retrieved from the testing set and compared against the training set. 
+Afterwards, the \gls{qa} pairs that have identical question words are identified, and overlapping pairs are grouped according their named entity group.
 
-To retrieve named entities, they used two different recognizers. The first was Stanford (extracts the
-person, organization and location), and the second was dictionary based (extract number
-entities and fine-grained noun-based entities). 
+To retrieve named entities, they used two different recognizers. 
+The first was Stanford (extracts the person, organization and location), and the second was dictionary based (extract number entities and fine-grained noun-based entities). 
 
-Question words were extracted by building a question word list from the training set (achieved 
-by using Stanford Part-of-Speech (POS) tagger). Then for each question, look for the appearance 
-of the question word to create the feature set.
+Question words were extracted by building a question word list from the training set (achieved by using Stanford Part-of-Speech (POS) tagger). 
+Then for each question, look for the appearance of the question word to create the feature set.
 
 Mapped named-entities; e.g. ORGANIZATION became NEorganization.
-
 \end{comment}
 
-\citet{XuZhouWang2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. The 
-system included question analysis, \gls{ir} and answer extraction. The question classification 
-accuracy was important to the overall performance of the system. The system was built using 
-\gls{svm} and question semantic similarity, and the feature selection was based on lexical features 
-and domain terms hierarchy. The original method for question classification is mainly rule-based, 
-where the rules decide the category (difficult to extract all the rules for the question category). 
+\citet{XuZhouWang2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
+The system included question analysis, \gls{ir} and answer extraction. 
+The question classification accuracy was important to the overall performance of the system. 
+The system was built using \gls{svm} and question semantic similarity, and the feature selection was based on lexical features and domain terms hierarchy. 
+The original method for question classification is mainly rule-based, where the rules decide the category (difficult to extract all the rules for the question category). 
 Another method is using statistics, as was done in \cite{ZhangLee2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
-Questions were divided into 13 coarse categories and 150 sub-categories. The difference between 
-these were that the sub-categories was built on sentences.
-
-
+Questions were divided into 13 coarse categories and 150 sub-categories. 
+The difference between these were that the sub-categories was built on sentences.
 
 \section{Text classification}
 \label{sec:text_classification}
-Text classification can be done in many different ways, since the content and size rarely will be 
-equal. The classification is also based on what you want to retrieve from the text. Do you want 
-an answer to a question, or do you want to see which documents are most relevant for the problem 
-you are currently working on (e.g. searching for research papers that are relevant to your work).
+Text classification can be done in many different ways, since the content and size rarely will be equal. 
+The classification is also based on what you want to retrieve from the text. 
+Do you want an answer to a question, or do you want to see which documents are most relevant for the problem you are currently working on 
+(e.g. searching for research papers that are relevant to your work).
 
 \section{Question classification}
 \label{sec:question_answering}
-Question classification and analysis can be seen as a sub-topic of text classification. In most 
-papers, the basis is that the user has a question they need an answer to. What is the best way 
-to find that answer, and in some cases what is the quickest way to display said answer?
+Question classification and analysis can be seen as a sub-topic of text classification. 
+In most papers, the basis is that the user has a question they need an answer to. 
+What is the best way to find that answer, and in some cases what is the quickest way to display said answer?
  
 \begin{itemize}
 	\item question-answering techniques and analyses
@@ -166,9 +115,9 @@ to find that answer, and in some cases what is the quickest way to display said 
 
 \section{\glsentrylong{svm} (\glsentryshort{svm})}
 \label{sec:svm}
-\gls{svm} is the chosen \gls{ml} algorithm that was chosen to use for the question analysis. This 
-section is mainly intended as a light introduction to what \gls{svm} is, and what the most common 
-uses are. Furthermore, in what way can this be utilized for text and question classification?
+\gls{svm} is the chosen \gls{ml} algorithm that was chosen to use for the question analysis. 
+This section is mainly intended as a light introduction to what \gls{svm} is, and what the most common uses are. 
+Furthermore, in what way can this be utilized for text and question classification?
 
 \section{Dataset}
 \label{sec:dataset}
