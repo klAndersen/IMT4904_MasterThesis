@@ -8,166 +8,127 @@
 %\section[Stack Overflow]{\glsentrylong{so} (\glsentryshort{so})}
 %\label{sec:stackoverflow}
 
-\section[Stack Overflow and Gamification]{\glsentrylong{so} (\glsentryshort{so}) and Gamification}
-\label{sec:gamification}
+\section[Stack Overflow]{\glsentrylong{so} (\glsentryshort{so})}
+\label{sec:stackoverflow}
+
+\subsection[Stack Overflows design]{\glsentrylong{so}s (\glsentryshort{so}) Design}
+\label{sec:stackoverflow_design}
+The following list shows the design used in \gls{so} (based on \cite[p.~6-7]{Sewak2010} and \cite[p.~805]{Treude2011}):
+\begin{enumerate}
+	\item Votes: Questions and answers which are considered good (or bad) by the community can be given a score. 
+	This gives a filtering mechanisms, which allows users to ignore answers that are bad or wrong. 
+	Furthermore, answers are sorted by votes, and you can also sort questions on \gls{so} by vote score. 
+	\item Accepted answer: If the user asking a question gets an answer that they find satisfactory, they can select it as the "accepted answer". 
+	This answer will be the first displayed of the answers, and is also viewable when searching for questions (see Figure \ref{fig:question_list_acc_answ}).
+	\item Tags: Each question is associated with a tag\footnote{
+		A full list can be seen here: \url{http://stackoverflow.com/tags/}
+	}, which can be a topic, a programming language, a methodology, etc.
+	\item Badges: Similar to achievements in games, Badges are used to reward the user for their participation.
+	\item Reputation and Bounty: Currency system for user participation. E.g. voting for questions, giving good answers, etc.
+	\item Data dump: Available data dump containing all content available within the \gls{se} community \cite{StackExchange2016}. 
+	You can either download single files, or everything by using a Torrent client.
+	\item Pre-Search: Encouraging users to check that their question is not already posted by presenting a search bar when asking a new question. 
+	\item URL keywords and Google: The questions title is included in the URL, allowing it to be processed by search engines. 
+	In addition, Google uses their crawlers every 10 second to have the latest updates from \glossary{so} in their search engine \cite{Gobry2011}.
+	\item Critical mass: Before Atwood and Spoolsky launched \gls{so}, they invited developers and programmers to participate to have some domain experts available. 
+\end{enumerate}
+
+% figure showing questions, where one question has an accepted answer
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{question_list_acc_answ}
+	\caption{List of questions, where one can see those with an accepted answers are marked with a green background.}
+	\label{fig:question_list_acc_answ}
+\end{figure}
+
+\subsection[Stack Overflow and Gamification]{\glsentrylong{so} (\glsentryshort{so}) and Gamification}
+\label{sec:stackoverflow_gamification}
 \citet{Deterding2011} defines Gamification as "the use of game design elements in non-game contexts", and is the definition this section will be based on. 
 Several papers make notes of the pedagogical and educational aspect of \gls{so} \cite{Nasehi2012, Posnett2012, Yang2014}, and \cite{Nasehi2012, Yang2014} actually use the term gamification in their paper.
 One of the founders, Jeff Atwood said in an interview that he wanted users to not just give good answers, but also trick them into improving their communication skills \cite{Posnett2012}\footnote{
-	Based on the interview found here: \url{http://www.wired.com/2012/07/stackoverflow-jeff-atwood/2012}.
+	Based on the interview found here: \\ 
+	\url{http://www.wired.com/2012/07/stackoverflow-jeff-atwood/2012}.
 	}.
 In the course IMT4007 Serious Games Simon McCallum and Marius Nowostawski, presented their game GoRad, which was based on us students reading articles and posting questions which were voted on. 
 The \gls{so} system awards users based their activity by using votes, reputation and badges \cite{Sewak2010, Movshovitz-Attias2013, Treude2011, Stackoverflow.com2016, Stackoverflow.com2016c}.
 In relation to gaming, there are four player types: Achievers, Explorers, Socializers and Killers \cite[p.~3]{Maan2013}.
 \vspace{0.5em}\newline
-These player types can also be used as a representation for the various users of \gls{so}. 
-Achievers are there for the reputation and badges, and socializers are to interact and share knowledge. 
-\citet{Yang2014} characterised users into "Sparrows" and "Owls". Sparrows are users who have a basic knowledge, but grind reputation by answering a lot of questions. 
-Owls are the domain experts, who care little about reputation and the gamification element, but are rather more interested in sharing knowledge and answering complex problems. 
-\citet{Movshovitz-Attias2013} analysed the reputation system on \gls{so}, and found that reputation was an indicator of expertise level.
+These player types can also be used as a representation\footnote{	
+	\citet{Yang2014} characterised users into "Sparrows" and "Owls", where sparrows are those that answers question for reputation and owls are domain experts answering difficult questions. 
+	\citet[p.~2]{Ahmed2015} defined users as lurkers, help-seekers (askers) and givers (responders).	
+	} for the various users of \gls{so}. 
+Achievers are there for the reputation and badges, socializers are to interact, discuss and share knowledge. 
+Explorers might find joy in looking at various topics, or searching for unanswered questions.
+The only exception would be the "Killer" type. 
+Killers are those "\ldots who always want to create trouble/problems for other participants" \cite[p.~3]{Maan2013}. 
+In an online \gls{qa} system (or Internet in general), these are what are commonly referred to as "Trolls" \cite{Fosdick2012, Atwood2015}. 
+However, due to the system used in \gls{so}, Trolls would not be able to survive, simply because the reputation controls what you have access to \cite{Stackoverflow.com2016f}. 
+If you down-vote a post, you lose reputation. 
+If your post gets down-voted, you also lose reputation. 
+Users can also be locked out of \gls{so} \cite{Atwood2009}.
+Although, there are a lot of blog posts claiming that a lot of moderators on \gls{so} are 
+trolls\footnote{\url{https://www.reddit.com/r/programming/comments/3cafkp/is\_stack_overflow\_overrun\_by\_trolls/}. \\	
+	\url{https://medium.com/@johnslegers/the-decline-of-stack-overflow-7cb69faa575d} \\ 
+	Last accessed 23.05.2016. 
+}.
 
 
 
-These have used either (or both) \gls{so} and \gls{se}: \\
-\cite{Ahmed2015, Hanrahan2012, Anderson2012, Nasehi2012, Posnett2012, Yang2014, Sewak2010, Movshovitz-Attias2013, Treude2011, Lezina2013, Stanley2013, Short2014} \\
+\subsection[Research on Stack Overflow]{Research on \glsentrylong{so} (\glsentryshort{so})}
+\label{sec:research_on_so}
+In \cite{Posnett2012} views \gls{se} as an online learning community, since users help each gain new knowledge, and motivate learning. 
+\citet{Posnett2012} wanted to find out if the quality of the users answers improved over time. 
+By constructing a posting history for each user, they found that the overall answer score decreased, and that the answer quality was static.
 
-These used the query engine on SO: \\
-\cite{Nasehi2012, Treude2011}
-
-These had an adjusted data set: \\
-\cite{Lezina2013}
-
-These have used the data set: \\
-\cite{Ahmed2015, Hanrahan2012, Anderson2012, Posnett2012, Stanley2013, Yang2014, Short2014, Movshovitz-Attias2013}
-~\\
-
-% my own paragraph, to be removed
-Explorers can explore the site by searching for new and interesting questions (or answers) based on tags, votes, or other search parameters. 
-The only type left are Killers, who basically just are out to ruin the fun for others (e.g. Player-vs-Player in online games) \cite[p.~3]{Maan2013}. 
-The closest representation for this group would be trolls, or people who are simply ignorant of whether or not the information they share is correct.
-However, this is not a group that would be widely represented, due to the strict rules and desire for quality. 
-Voting also has a penalty, such that if you down-vote a post, you lose some of your reputation.
-
-
-% re-write and combine this with above paragraph
-"Linus' Law" - claiming that "with many eyeballs, all bugs are shallow"; suggesting that program bug-fixing efforts are facilitated by the participation of more users.
-\gls{se} can be viewed as an instance of an online learning community, where individuals help each other gain expertise, both in terms of domain knowledge and giving better answers.
-It has long been argued that people learn better in co-operating groups than on their own. 
-Important design goals of learning communities: help users find relevant content; help users find people with relevant knowledge and motivate people to learn.
-\cite{Posnett2012}
+\citet{Movshovitz-Attias2013} looked at the reputation system in \gls{so}, and found that users earn more reputation by providing good answers rather than good 
+questions\footnote{
+	However, as stated in \citet[p.~3]{Movshovitz-Attias2013}, the reputation system was changed at one point. 
+	Originally, up-votes on questions and answers gave users a +10, but this was later changed into up-votes on questions only giving +5. 
+	It should be noted that the reputation score system was changed, since initially up-votes for questions and answers gave +10.
+	}.
+Most questions was asked by the users with a low reputation, but on average users with high reputation asked more questions. 
+This indicates that reputation could be used as a measurement for expertise. 
+Similar results were found in \cite{Ahmed2015}, who found a strong correlation between amount of answers given and the users reputation.
 
 
 
-% Re-write and use what ever fits
-Qualitative code example analysis. 
-Code explanation is equally important as the code examples. 
-Known in educational psychology that examples that work/are solved are easier to learn from, than attempting to solve the problem from scratch. 
-Asking a question in natural language (e.g. asking another human) or query form (e.g. asking a machine, search engine, etc). 
-Even if you find an example to the problem you are facing, you are still restricted by the quality of that example. 
-\gls{so} has three properties of social learning techniques:
+
+\citet{Nasehi2012} did a qualitative analysis of code examples posted on \gls{so}. 
+Their focus was on questions related to Java programming, with the requirements that the question should at least have a score of +4 and the answer +7. 
+In addition, a code example should be included (by checking for <code> in the post).
+They found that the code explanation was just as important as the code examples (but you are still restricted to the quality of that example).
+For the code to be considered good, they listed the following attributes: 
 \begin{enumerate}
-	\item Support for finding answers based on natural language (does not have to rely on keywords)
-	\item Support for connecting to the right people (question tags for domain experts)
-	\item Engagement in qa by use of gamification; by use of votes and reputation
-\end{enumerate}
-They chose questions that had a score > 4, focusing on Java programming questions. Selected answers with score > 7, which included code examples (by looking for the <code> in the post).
-Categorised questions into two dimensions: 
-\begin{itemize}
-	\item 1. Dimension (did not find any meaningful relationships and recognized answer attributes):
-	\begin{itemize}
-		\item API related questions
-		\item OOP/Design questions
-		\item Language basics questions
-		\item Migrating to a new language
-		\item Comparison of constructs for two different languages
-	\end{itemize}
-	\item 2. Dimension:
-	\begin{itemize}
-		\item Debug/Corrective: Runtime/development errors, design/structure issues
-		\item Need-to-know: Possibility and uncertainity in relation to being able to achieve something (e.g. is it possible to...?)
-		\item How-to-do-it: Scenario settings, how to achieve something, implementation suggestions
-		\item Seeking-different-solution: Changes to working code; how can this be done differently
-	\end{itemize}
-\end{itemize}
-Attributes of recognized answers:
-\begin{enumerate}
-	\item Consise code: 
-	Code size/length, simplification/complexity reduction. 
-	Use of comments for left-out details/implementations. 
-	Code length is distinguishing factor.
-	\item Using question context: 
-	For flawed/non-working code, answers usually includes improvement suggestions. 
-	Best practices, improved readability in addition to working solution suggestion.
-	\item Pedagogical benefit, since those asking questions learn to write better code.
+	\item Consise code: Code samples should not be too long. 
+	They should be simple, and only focus on the parts that are relevant to the topic.
+	Additional or non-relevant parts should instead be documented by using descriptive comments.
+	\item Question context: 
+	If the code is not working properly, suggestions for improvement should be added. 
+	One could also explain best practices and suggestions for improved readability.
+	This will also have a pedagogical benefit, since the user asking the questions will learn to write better code.
 	\item Highlighting important elements: 
 	"Straight to the point", clearing up misunderstandings, pointing to relevant resources, etc.
 	\item Step-by-step solution: 
-	Splitting code into chunks, and explaining each chunk. 
-	Explanation on how things work. 
+	Splitting code into chunks, and explaining each chunk and its functionality.
 	Comparison of languages; e.g. "How can I do X in C\#, when I'm used to Java?"
 	\item Providing links to extra resources: 
-	Keeping answer short by adding external links. 
-	A summary of said link should still be included (e.g. if site goes down, is un-available, etc).
+	Answers can be kept short by adding links to external resources, but a short summary should still be added for availability.
 \end{enumerate}
-\cite{Nasehi2012}
 
 
 
-% Re-write and use what ever fits
-Only a small subset of users are major contributors to the success of \gls{qa} systems. 
-Standard expert identification methods often misclassify very active users for knowledgeable ones, and misjudge activeness for expertise. 
-Characterization of user expertise based on contribution quality.  \\
-Reasons for signing up/using qa systems:  \\
-\begin{enumerate}
-	\item to look for existing solutions to their issues;
-	\item to post a new question to the platform community;
-	\item to contribute by providing new answers
-	\item to comment or vote existing questions and answers
-\end{enumerate}
-Using gamification mechanisms in \gls{qa} platforms to motivate users, e.g. by use of public reputations scores, badges or achievements. 
-Two user types/groups: Sparrows and Owls. \\
-Sparrows are an important part of the \gls{qa} system weigh up for a large part of the user base. 
-Even though they are very sociable and answer a lot of questions, it does not mean they are knowledgeable or experts.
-Sparrows are driven by the gamification element, wanting to achieve score votes, get a high reputation and earn a lot of badges. 
-Their focus is not on quality, or providing useful information with long-lasting answers. Usually have a low average score and usually only answers easy and non-relevant questions. 
-However, this user group keeps the community alive by quickly giving answers and feedback.  \\
-% editor space
-Owls are active members that participates not for the glory or gamification element, but because they want to share their knowledge and information for their domain. 
-These users show their expertise by answering difficult and complex questions, or questions that are important for users of the community. 
-Owls also answers questions that are more popular (where popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted).
-The question popularity can thus also be used as measurement for the questions difficulty; the longer it takes to answer, the more difficult the question is. \\
-% editor space
-Questions posted by the owls are also more difficult and popular, whereas questions posted by sparrows are less popular than the owls. 
-This can also be an indicator for the expertise level between the two user groups, since question popularity indicates the understanding the answerer has on the subject.
-The definition of an expert is someone that is recognised to be skilful or knowledgeable in a specific field (e.g. based on judgement by public, peers, etc). 
-Expertise then refers to the characteristics, skills, and knowledge that distinguish experts from novices and less experienced people.
-For \gls{qa} systems, social judgement is critical for expert identification. Questions are answered, and their quality is measured by the amount of votes.
-Answers to questions can reflect how a user applies their knowledge to solve problems. 
-Difficult questions generate a lot of discussions and answers, where the answer vote can be useful in providing evidence on answer expertise. \\
-Gamification is more interesting for sparrows than owls, suggesting that gamification used in \gls{so} is effective in keeping sparrows active within the community.
-\cite{Yang2014}
 
-% Re-write and use what ever fits
-Development of indicator of problems and experts. Examination of how experts share complex problems.
-Is \gls{qa} parallel to the experts knowledge (e.g. complex problems are handled by (domain) expert users, and basics by those that know the answer)?
-Using time as proxy for the questions difficulty. Extracted question events to construct a language for describing the questions activity. 
-Used the following grammar: 
-\begin{itemize}
-	\item Actor Type: Questioner (user posting the question), 	Accepted Answerer (user posting accepted answer), 
-	Unaccepted Answerer (users posting the other answers), and Someone (participants in the question (e.g. comments)).
-	\item Action: Posting, Commenting, Editing, Answering, Accepting, Voting Up, and Voting Down. 
-	\item Object: Question or an Answer. 
-\end{itemize}
-\cite{Hanrahan2012}
 
-% Re-write and use what ever fits
-Study of the user system on \gls{so} and its reputation system. 
-Found that most questions were asked by users with low reputation, but the average showed that high reputation users asked more questions. 
-Reputation score is based on activity.
-In the past, one could gain more reputation by asking questions, however today answering them gives more reputation (+5 questions, +10 answers).
-Identifying expert users by looking at both reputation and badges.
-Found that users are awarded with more reputation for good answers rather than good questions. 
-Reputation as a measurement for expertise (since answers give more reputation); "System reputation can be considered as a measure of expertise".    
-\cite{Movshovitz-Attias2013}
+\citet{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
+
+\citet{Lezina2013} - Predict Closed Questions on StackOverflow
+
+\citet{Stanley2013} - Predicting Tags for StackOverflow Posts
+
+\citet{Short2014} - Tag Recommendations in StackOverflow
+
+
+
 
 Use of voting and reputation mechanisms in \gls{qa} sites to identify trustworthiness and accuracy of the content.
 A lot sites focus on having domain experts, so that questions and answers has a lasting value. 
@@ -192,73 +153,121 @@ This creates an incentive to answer quickly, since it is likely that the first c
 
 
 
-% Re-write and use what ever fits
-Classifies the communities in \gls{se} into two genres: technical (largely professional or problem based) and non-technical (largely hobbyists or interest based).
-Comparison of differences between technical and non-technical communities (user participation).
-\gls{so} started with \gls{qa} for computer programming in 2008, and later this model was expanded into becoming \gls{se}.
-Defines users as lurkers, help-seekers (askers) and givers (responders).
-Based on \cite{Anderson2012}, they state that the probability of an answer being accepted depends on temporal characteristics of its arrival (e.g. response speed).
-Answer quality is not only related to the technical design, but also the involvement of community members (so poorly formulated in article that this will most likely not be used). 
-Reputation system (motivation factor). 
-Compared forum for code-review as a technical instance and a bicycle forum as a non-technical one. 
-Found strong correlation between amount of answers given and the users reputation.
-\cite{Ahmed2015}
+
 
 
 
 
 % Re-write and use what ever fits
-Spolsky and Atwood built \gls{so} to provide high-quality, relevant information in a freely accessible way.
-Envisioned \gls{so} as combination of various collaboration technologies (e.g. Wikipedia, Reddit, Blogs and forums).
-Rewarding users with Badges and Karma for giving answers and votes; encouragement to participate and make contributions (which in turn increases quality). \\
-Building blocks: 
-\begin{enumerate}
-	\item Voting: Vote for helpful and useful answers. Answers arranged by number of votes. 
-	Ensures good answers are at the top. Users gain reputation points when others vote for their questions or answers.
-	\item Tags: Questions are associated with a tags. Tags are related to the field(s) which the questions belong in. 
-	Can also add your own tags.
-	\item Badges: Given to users based on interactions with \gls{so}, mostly based on reputation gain from posting questions and answers.
-	\item Reputation and Bounty: Currency system for user participation. E.g. voting for questions, giving good answers, etc.
-	\item Data dump: Available data set containing all content available within the \gls{se} community. 
-	Monthly snapshots which can be downloaded by using torrents.
-	\item Pre-search: Display of related questions before allowing user to post a new question. 
-	Avoids duplicates, and increases chance of getting an answer.
-	\item Search Engine Optimization: \gls{so} uses various search engine optimization techniques to increase its visibility on search engines 
-	(e.g. topic keywords in URL).
-	\item Critical mass: Atwood and Spolsky invited developers through their blogs to participate in beta of \gls{so}.
-	\item Performance: Built using Microsoft software 
-	(\url{http://meta.\gls{se}.com/questions/10369/which-tools-and-technologies-are-used-to-build-the-stack-exchange-network}). 
-	\gls{so} is fast and responsive.
-\end{enumerate}
-\cite{Sewak2010}
-
-
-
-
-% Re-write and use what ever fits
-Categorization of questions posted on \gls{so}. Exploration of answered/unanswered questions. 
+Categorization of questions posted on \gls{so}. 
+Exploration of answered/unanswered questions. 
 Findings indicate that \gls{qa} sites are particularly effective at code reviews and conceptual questions.
 Five main question types: why, how, what, whether and discrepancy. 
-Questions focusing on issues occuring within a project.
+Questions focusing on issues occurring within a project.
 Questions during evolution tasks. 
 Questions in relation to dealing with intent and rationale.
-Most frequently information looked for included awareness about artifacts and co-workers. \\
-Design descisions on \gls{so}:
-\begin{enumerate}
-	\item Voting
-	\item Tags
-	\item Editing
-	\item Badges (karma)
-	\item Pre-search
-	\item Google UI
-	\item Performance (search engine optimization)
-	\item Critical mass: several programmers were explicitly asked to contribute in the early stages of Stack Overflow.
-\end{enumerate}
+Most frequently information looked for included awareness about artefacts and co-workers. \\
 Qualitative coding of questions and tags, where tags were for topics, and question coding for question nature. 
 Definition of successful and unsuccessful questions: "A successful question has an accepted answer, and an unsuccessful question has no answer".
 \cite{Treude2011}
 
 
+
+
+% written by me:
+\citet{Yang2014} characterised users into "Sparrows" and "Owls". Sparrows are users who have a basic knowledge, but grind reputation by answering a lot of questions. 
+Owls are the domain experts, who care little about reputation and the gamification element, but are rather more interested in sharing knowledge and answering complex problems. 
+% Re-write and use what ever fits
+Only a small subset of users are major contributors to the success of \gls{qa} systems. 
+Standard expert identification methods often misclassified very active users for knowledgeable ones, and misjudge activeness for expertise. 
+Characterization of user expertise based on contribution quality.  \\
+Reasons for signing up/using qa systems:  \\
+\begin{enumerate}
+	\item to look for existing solutions to their issues;
+	\item to post a new question to the platform community;
+	\item to contribute by providing new answers
+	\item to comment or vote existing questions and answers
+\end{enumerate}
+%editor space
+Two user types/groups: Sparrows and Owls. \\
+Sparrows are an important part of the \gls{qa} system weigh up for a large part of the user base. 
+Even though they are very sociable and answer a lot of questions, it does not mean they are knowledgeable or experts.
+Sparrows are driven by the gamification element, wanting to achieve score votes, get a high reputation and earn a lot of badges. 
+Their focus is not on quality, or providing useful information with long-lasting answers. Usually have a low average score and usually only answers easy and non-relevant questions. 
+However, this user group keeps the community alive by quickly giving answers and feedback.  \\
+% editor space
+Owls are active members that participates not for the glory or gamification element, but because they want to share their knowledge and information for their domain. 
+These users show their expertise by answering difficult and complex questions, or questions that are important for users of the community. 
+Owls also answers questions that are more popular (where popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted).
+The question popularity can thus also be used as measurement for the questions difficulty; the longer it takes to answer, the more difficult the question is. \\
+% editor space
+Questions posted by the owls are also more difficult and popular, whereas questions posted by sparrows are less popular than the owls. 
+This can also be an indicator for the expertise level between the two user groups, since question popularity indicates the understanding the answerer has on the subject.
+The definition of an expert is someone that is recognised to be skilful or knowledgeable in a specific field (e.g. based on judgement by public, peers, etc). 
+Expertise then refers to the characteristics, skills, and knowledge that distinguish experts from novices and less experienced people.
+For \gls{qa} systems, social judgement is critical for expert identification. Questions are answered, and their quality is measured by the amount of votes.
+Answers to questions can reflect how a user applies their knowledge to solve problems. 
+Difficult questions generate a lot of discussions and answers, where the answer vote can be useful in providing evidence on answer expertise. \\
+Gamification is more interesting for sparrows than owls, suggesting that gamification used in \gls{so} is effective in keeping sparrows active within the community.
+\cite{Yang2014}
+
+
+\begin{comment}
+
+Reasons for signing up/using qa systems \cite{Yang2014}:  \\
+\begin{enumerate}
+\item to look for existing solutions to their issues;
+\item to post a new question to the platform community;
+\item to contribute by providing new answers
+\item to comment or vote existing questions and answers
+\end{enumerate}
+
+\gls{so} has three properties of social learning techniques \cite{Nasehi2012}:
+\begin{enumerate}
+\item Support for finding answers based on natural language (does not have to rely on keywords)
+\item Support for connecting to the right people (question tags for domain experts)
+\item Engagement in qa by use of gamification; by use of votes and reputation
+\end{enumerate}
+They chose questions that had a score > 4, focusing on Java programming questions. Selected answers with score > 7, which included code examples (by looking for the <code> in the post).
+Categorised questions into two dimensions: 
+\begin{itemize}
+\item 1. Dimension (did not find any meaningful relationships and recognized answer attributes):
+\begin{itemize}
+\item API related questions
+\item OOP/Design questions
+\item Language basics questions
+\item Migrating to a new language
+\item Comparison of constructs for two different languages
+\end{itemize}
+\item 2. Dimension:
+\begin{itemize}
+\item Debug/Corrective: Runtime/development errors, design/structure issues
+\item Need-to-know: Possibility and uncertainty in relation to being able to achieve something (e.g. is it possible to...?)
+\item How-to-do-it: Scenario settings, how to achieve something, implementation suggestions
+\item Seeking-different-solution: Changes to working code; how can this be done differently
+\end{itemize}
+\end{itemize}
+Attributes of recognized answers:
+\begin{enumerate}
+\item Consise code: 
+Code size/length, simplification/complexity reduction. 
+Use of comments for left-out details/implementations. 
+Code length is distinguishing factor.
+\item Using question context: 
+For flawed/non-working code, answers usually includes improvement suggestions. 
+Best practices, improved readability in addition to working solution suggestion.
+\item Pedagogical benefit, since those asking questions learn to write better code.
+\item Highlighting important elements: 
+"Straight to the point", clearing up misunderstandings, pointing to relevant resources, etc.
+\item Step-by-step solution: 
+Splitting code into chunks, and explaining each chunk. 
+Explanation on how things work. 
+Comparison of languages; e.g. "How can I do X in C\#, when I'm used to Java?"
+\item Providing links to extra resources: 
+Keeping answer short by adding external links. 
+A summary of said link should still be included (e.g. if site goes down, is un-available, etc).
+\end{enumerate}
+\end{comment} 
 
 \section{What is the definition of a question?}
 \label{sec:question_definition}
@@ -441,13 +450,13 @@ Needed to reduce complexity and the habitability problem, the main issues hinder
 % Re-write and use what ever fits
 % Semantic web and Q/A
 Purpose of \gls{qa} is to get a factual answer from a large collection of text, instead of a list of documents.
- Getting answer based on type (e.g. city) or getting answer based on what the question asks for (context, definition, reasoning). 
- Reformulations and syntactic structure can make it hard to create a manual classifier. 
- The goal of the paper is to categorize questions into different semantic classes based on the possible semantic types of the answers. 
- They developed a hierarchical classifier guided by a layered semantic hierarchy of answer types that makes use of a sequential model for multi-class classification and the SNoW learning architecture. 
- \gls{qc} can be seen as a text classification task, but some characteristics make it different. 
- Questions are short, therefore contains less text. 
- However, having short text improves accuracy and analysis.
+Getting answer based on type (e.g. city) or getting answer based on what the question asks for (context, definition, reasoning). 
+Reformulations and syntactic structure can make it hard to create a manual classifier. 
+The goal of the paper is to categorize questions into different semantic classes based on the possible semantic types of the answers. 
+They developed a hierarchical classifier guided by a layered semantic hierarchy of answer types that makes use of a sequential model for multi-class classification and the SNoW learning architecture. 
+\gls{qc} can be seen as a text classification task, but some characteristics make it different. 
+Questions are short, therefore contains less text. 
+However, having short text improves accuracy and analysis.
 Developed a hierarchical learning classifier based on the sequential model of multi-class classification. 
 The goal of the model is to reduce the set of candidate labels for a given question by concatenating  a sequence of simple classifiers. 
 The output of the classifier (class labels) is used as input for the next. 
