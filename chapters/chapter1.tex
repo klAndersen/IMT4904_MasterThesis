@@ -6,19 +6,20 @@ In the past, one were often restricted to only use keywords and not being able t
 Most search engines today can handle natural language queries, which makes it easier to find the answer you are looking for. 
 The Internet offers a wide range of resources to acquire new knowledge, everything from encyclopaedias to blogs, forums and \gls{qa} communities.
 One well known \gls{qa} community is the \gls{se} community, which is built upon the same model as \gls{so} \cite{Ahmed2015}.
-\gls{se} has grown large since its release in 2009\todo[size=\small]{check year/ \\ date}, and now contains 154 different communities.
+\gls{se} has grown large since its release in 2009, and now contains 154 different communities.
 \vspace{0.5em}\newline
 As a developer, one often find oneself in the situation that a part of the code does not work, you get weird error messages, or you are simply stuck. 
 This is were \gls{so} comes in. \gls{so} is a part of the \gls{se} community, although \gls{so} was actually released before \gls{se}. 
 Jeff Atwood and Joel Spolsky wanted to offer programmers a \gls{qa} site where they could get the answer they wanted without having to read through a lot of text, 
 see others posting "I also have the same issue" or having to subscribe and pay to see the solution \cite{Spolsky2008}. 
 Question (and answer) quality is maintained through the use of a peer-reviewed gamification system, where users are awarded with votes, reputation and badges for their 
-participation\todo[size=\small]{add cites here} \cite{Spolsky2008}\cite{Sewak2010}. One of the requirements is that the questions should be of good quality 
+participation \cite{Movshovitz-Attias2013,  Sewak2010, Spolsky2008, Treude2011}. 
+One of the requirements is that the questions should be of good quality 
 \cite{Stackoverflow.com2016a, Stackoverflow.com2016d, Stackoverflow.com2016e}.
 If a question is bad, users can vote to close or delete it (in which the question will be put on hold). 
 A question can be put on hold or closed if they meet any of the following criterias: 
 Exact duplicate (same question has been asked before), off-topic (not related to \gls{so}), unclear what is being asked, too broad (e.g. could write a book about question being asked) 
-or primarily opinion-based \cite{Stackoverflow.com2016b, CommunityWiki2016b}.
+or primarily opinion-based \cite{CommunityWiki2016b, Stackoverflow.com2016b}.
 
 
 \begin{comment}
@@ -87,7 +88,7 @@ The theoretical background in this thesis is mainly focused on \gls{qc} and simi
 What has been the focus of other researchers, and in what way did they proceed to solve their questions?
 The analysis of the questions are done by using the publicly available database dump, which is available via \gls{se} 
 archive\footnote{StackExchange dataset: \url{https://archive.org/details/stackexchange} \\ (Downloaded 30. March 2016).} \cite{StackExchange2016} . 
-There are several others who have used the same dataset \todo[size=\small]{add cites here}.
+There are several others who have used the same dataset \cite{Ahmed2015, Anderson2012, Hanrahan2012, Movshovitz-Attias2013, Posnett2012, Short2014, Stanley2013, Yang2014}.
 Taking into consideration that \gls{so} was released in 2008, it means that it now contains approximately 8 years of peer-reviewed data.
 Because of the size of the data set, and the total amount of posted questions, going through all questions manually would be too time-consumings.
 Therefore only a select few were studied too see if it was possible to identify what separated the highly up and down-voted questions.
@@ -97,7 +98,7 @@ The methodology therefore also includes a documentation on the development proce
 \vspace{0.5em}\newline
 For the sake of replicability, and also be able to undo potential errors, the system is available in a a GitHub repository\footnote{
 	GitHub repository: 
-	\url{https://github.com/klAndersen/IMT4904_MasterThesis_Code}
+	\url{https://github.com/klAndersen/IMT4904\_MasterThesis\_Code}
 }. 
 In addition to the source code, the repository also contains both the samples that was used (stored in CSV files), and the models that was created. 
 
@@ -108,11 +109,11 @@ In addition to the source code, the repository also contains both the samples th
 Many systems focuses only on finding a good answer, and does not ask if it is a good question.
 As a famous Norwegian saying goes\footnote{
 	Although its origin comes from a Danish word collection from 1682: 
-	\url{https://snl.no/En\_d\%C3\%A5re_kan_sp\%C3\%B8rre_mer_enn_ti_vise_kan_svare}.
+	\url{https://snl.no/En\_d\%C3\%A5re\_kan\_sp\%C3\%B8rre\_mer\_enn\_ti\_vise\_kan\_svare}.
 }: "A fool may ask more than ten wise men can answer".
 This means that new research possibilities could be opened up in relation to researching question quality by expanding the system. 
 Since all the communities within \gls{se} is based on the same model, few modifications would be needed to scale the program to be used within the other communities.
-As noted in several papers\todo[size=\small]{add cites here}~, question quality is measured based on the amount of votes given. 
+As noted in several papers \cite{Movshovitz-Attias2013, Nasehi2012, Posnett2012, Sewak2010, Treude2011, Yang2014}, question quality is measured based on the amount of votes given. 
 Which can also be compared against the peer-review process in academia, and given that \gls{so} targets professionals and experts, 
 using \gls{so} as a scientific reference is not that far-fetched\footnote{
 	 \citet[p.~1]{Posnett2012} noted that \gls{so} "ranked 2$^{nd}$ among reference sites, 4$^{th}$ among computer science sites, and 97$^{th}$ overall among all websites".
