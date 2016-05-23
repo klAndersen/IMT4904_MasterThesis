@@ -132,7 +132,7 @@ Why do we need callbacks in ASP.NET or any server side technology?
 
 \noindent
 To process the questions, CountVectorizer from scikit-learn was used. 
-CountVectorizer uses the vocabulary found in the text and counts the frequency of each word \cite{Scikitlearn.org2016b} \cite[4.2.3]{Scikitlearn.org2016}. 
+CountVectorizer uses the vocabulary found in the text and counts the frequency of each word \cite{Scikitlearn.org2016b} \cite[see~4.2.3]{Scikitlearn.org2016}. 
 When looking at this vocabulary, a lot of of un-important words was found (a lot which came from the code samples) in some of the questions. 
 At first all code samples were removed from the text, but later on they were replaced with the value 'has\_codeblock', indicating that this question contained one or more code samples. 
 This was achieved by using a combination of lxml\footnote{lxml: \url{http://lxml.de/}} and bs4\footnote{BeatifulSoup: \url{https://www.crummy.com/software/BeautifulSoup/}} (BeatifulSoup). 

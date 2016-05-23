@@ -13,7 +13,7 @@
 
 \subsection[Stack Overflows design]{\glsentrylong{so}s (\glsentryshort{so}) Design}
 \label{sec:stackoverflow_design}
-The following list shows the design used in \gls{so} (based on \cite[p.~6-7]{Sewak2010} and \cite[p.~805]{Treude2011}):
+The following list shows the design used in \gls{so} (based on \textcite[p.~6-7]{M.Sewak2010} and \textcite[p.~805]{Treude2011}):
 \begin{enumerate}
 	\item Votes: Questions and answers which are considered good (or bad) by the community can be given a score. 
 	This gives a filtering mechanisms, which allows users to ignore answers that are bad or wrong. 
@@ -24,7 +24,9 @@ The following list shows the design used in \gls{so} (based on \cite[p.~6-7]{Sew
 		A full list can be seen here: \url{http://stackoverflow.com/tags/}
 	}, which can be a topic, a programming language, a methodology, etc.
 	\item Badges: Similar to achievements in games, Badges are used to reward the user for their participation.
-	\item Reputation and Bounty: Currency system for user participation. E.g. voting for questions, giving good answers, etc.
+	\item Reputation and Bounty: Currency system for user participation. 
+	E.g. voting for questions, getting your answer selected as the accepted one, etc.
+	Bounty is a trade, where if your question goes unanswered for too long, you offer up parts of your reputation to receive an answer.
 	\item Data dump: Available data dump containing all content available within the \gls{se} community \cite{StackExchange2016}. 
 	You can either download single files, or everything by using a Torrent client.
 	\item Pre-Search: Encouraging users to check that their question is not already posted by presenting a search bar when asking a new question. 
@@ -43,57 +45,72 @@ The following list shows the design used in \gls{so} (based on \cite[p.~6-7]{Sew
 
 \subsection[Stack Overflow and Gamification]{\glsentrylong{so} (\glsentryshort{so}) and Gamification}
 \label{sec:stackoverflow_gamification}
-\citet{Deterding2011} defines Gamification as "the use of game design elements in non-game contexts", and is the definition this section will be based on. 
+\textcite{Deterding2011} defines Gamification as "the use of game design elements in non-game contexts", and is the definition this section will be based on. 
 Several papers make notes of the pedagogical and educational aspect of \gls{so} \cite{Nasehi2012, Posnett2012, Yang2014}, and \cite{Nasehi2012, Yang2014} actually use the term gamification in their paper.
 One of the founders, Jeff Atwood said in an interview that he wanted users to not just give good answers, but also trick them into improving their communication skills \cite{Posnett2012}\footnote{
 	Based on the interview found here: \\ 
 	\url{http://www.wired.com/2012/07/stackoverflow-jeff-atwood/2012}.
 	}.
 In the course IMT4007 Serious Games Simon McCallum and Marius Nowostawski, presented their game GoRad, which was based on us students reading articles and posting questions which were voted on. 
-The \gls{so} system awards users based their activity by using votes, reputation and badges \cite{Sewak2010, Movshovitz-Attias2013, Treude2011, Stackoverflow.com2016, Stackoverflow.com2016c}.
+The \gls{so} system awards users based their activity by using votes, reputation and badges \cite{M.Sewak2010, Movshovitz-Attias2013, Treude2011, StackOverflow.com2016, StackOverflow.com2016d}.
 In relation to gaming, there are four player types: Achievers, Explorers, Socializers and Killers \cite[p.~3]{Maan2013}.
 \vspace{0.5em}\newline
 These player types can also be used as a representation\footnote{	
-	\citet{Yang2014} characterised users into "Sparrows" and "Owls", where sparrows are those that answers question for reputation and owls are domain experts answering difficult questions. 
-	\citet[p.~2]{Ahmed2015} defined users as lurkers, help-seekers (askers) and givers (responders).	
+	\textcite{Yang2014} characterised users into "Sparrows" and "Owls", where sparrows are those that answers question for reputation and owls are domain experts answering difficult questions. 
+	\textcite[p.~2]{Ahmed2015} defined users as lurkers, help-seekers (askers) and givers (responders).	
 	} for the various users of \gls{so}. 
 Achievers are there for the reputation and badges, socializers are to interact, discuss and share knowledge. 
 Explorers might find joy in looking at various topics, or searching for unanswered questions.
 The only exception would be the "Killer" type. 
 Killers are those "\ldots who always want to create trouble/problems for other participants" \cite[p.~3]{Maan2013}. 
 In an online \gls{qa} system (or Internet in general), these are what are commonly referred to as "Trolls" \cite{Fosdick2012, Atwood2015}. 
-However, due to the system used in \gls{so}, Trolls would not be able to survive, simply because the reputation controls what you have access to \cite{Stackoverflow.com2016f}. 
+However, due to the system used in \gls{so}, Trolls would not be able to survive, simply because the reputation controls what you have access to \cite{StackOverflow.com2016g}. 
 If you down-vote a post, you lose reputation. 
 If your post gets down-voted, you also lose reputation. 
 Users can also be locked out of \gls{so} \cite{Atwood2009}.
 Although, there are a lot of blog posts claiming that a lot of moderators on \gls{so} are 
-trolls\footnote{\url{https://www.reddit.com/r/programming/comments/3cafkp/is\_stack_overflow\_overrun\_by\_trolls/}. \\	
+trolls\footnote{\url{https://www.reddit.com/r/programming/comments/3cafkp/is_stack_overflow_overrun_by_trolls/}. \\	
 	\url{https://medium.com/@johnslegers/the-decline-of-stack-overflow-7cb69faa575d} \\ 
 	Last accessed 23.05.2016. 
 }.
 
-
-
-\subsection[Research on Stack Overflow]{Research on \glsentrylong{so} (\glsentryshort{so})}
+\subsection[Stack Overflow and reputation]{\glsentrylong{so} (\glsentryshort{so}) and reputation}
 \label{sec:research_on_so}
-In \cite{Posnett2012} views \gls{se} as an online learning community, since users help each gain new knowledge, and motivate learning. 
-\citet{Posnett2012} wanted to find out if the quality of the users answers improved over time. 
+
+
+\gls{se} and \gls{so} can be seen as an online learning community, since users help each gain new knowledge, and motivate learning \cite{Posnett2012}. 
+\textcite{Posnett2012} wanted to find out if the quality of the users answers improved over time. 
 By constructing a posting history for each user, they found that the overall answer score decreased, and that the answer quality was static.
 
-\citet{Movshovitz-Attias2013} looked at the reputation system in \gls{so}, and found that users earn more reputation by providing good answers rather than good 
+
+\textcite{Movshovitz-Attias2013} looked at the reputation system in \gls{so}, and found that users earn more reputation by providing good answers rather than good 
 questions\footnote{
-	However, as stated in \citet[p.~3]{Movshovitz-Attias2013}, the reputation system was changed at one point. 
+	However, as stated in \textcite[p.~3]{Movshovitz-Attias2013}, the reputation system was changed at one point. 
 	Originally, up-votes on questions and answers gave users a +10, but this was later changed into up-votes on questions only giving +5. 
 	It should be noted that the reputation score system was changed, since initially up-votes for questions and answers gave +10.
 	}.
 Most questions was asked by the users with a low reputation, but on average users with high reputation asked more questions. 
 This indicates that reputation could be used as a measurement for expertise. 
-Similar results were found in \cite{Ahmed2015}, who found a strong correlation between amount of answers given and the users reputation.
+\textcite{Ahmed2015} also found that there was a correlation between amount of answers given and the users reputation.
+
+
+Many \gls{qa} sites includes domain experts to ensure some quality is upheld, and uses voting and reputation as a quality measurement \cite{Anderson2012}.
+Furthermore, questions topics, page views and votes can be used by search engines as a ranking mechanism, and it helps users to find the answers they are looking for. 
+\textcite{Anderson2012} identifies two principles for the answer process. 
+This process starts with the question being filtered down through the users, starting with domain experts. 
+If the domain experts does not answer, it goes further down the chain, until it in the end either gets an answer, or is not answered at all.
+Both \textcite{Anderson2012} and \textcite{Treude2011} defines an unanswered question to be a question where no accepted answer is chosen\footnote{
+	However, they do not take into considerations users who find a solution on their own, or simply forget or neglect to mark a an answer as accepted.
+}. 
+The second principle is that a questions activity level does not just indicate the interest for the question, but could also be an indicator for quality 
+(because a question can have multiple answers). 
+Since users can only gain 200 reputation points daily, the only way to earn more is by having your answer marked as accepted or through bounties \cite{StackOverflow.com2016d}.
 
 
 
 
-\citet{Nasehi2012} did a qualitative analysis of code examples posted on \gls{so}. 
+
+\textcite{Nasehi2012} did a qualitative analysis of code examples posted on \gls{so}. 
 Their focus was on questions related to Java programming, with the requirements that the question should at least have a score of +4 and the answer +7. 
 In addition, a code example should be included (by checking for <code> in the post).
 They found that the code explanation was just as important as the code examples (but you are still restricted to the quality of that example).
@@ -112,70 +129,52 @@ For the code to be considered good, they listed the following attributes:
 	Splitting code into chunks, and explaining each chunk and its functionality.
 	Comparison of languages; e.g. "How can I do X in C\#, when I'm used to Java?"
 	\item Providing links to extra resources: 
-	Answers can be kept short by adding links to external resources, but a short summary should still be added for availability.
+	Answers can be kept short by adding links to external resources, but a short summary should still be added.
 \end{enumerate}
 
 
-
-
-
-\citet{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
-
-\citet{Lezina2013} - Predict Closed Questions on StackOverflow
-
-\citet{Stanley2013} - Predicting Tags for StackOverflow Posts
-
-\citet{Short2014} - Tag Recommendations in StackOverflow
-
-
-
-
-Use of voting and reputation mechanisms in \gls{qa} sites to identify trustworthiness and accuracy of the content.
-A lot sites focus on having domain experts, so that questions and answers has a lasting value. 
-Post votes can be used by search engines to rank answers, which allows users who are new to the site to quickly find content related to their problem.
-In addition, they can also see alternatives to solving their problems based on the posted answers.
-Identifies two principles for answers to questions. First, the expert users answers. Can be seen as a "pyramid", where experts are on top and basic users at the bottom. 
-The question then starts at the top, and gets filtered down through users if unanswered. 
-Secondly, activity level for a question not only is relative to the interest for this question, but it is also beneficial to all answers given (evaluation and reputation).
-The activity can correspond to the lasting value of a question, and for good answers expertise and domain knowledge is essential. 
-Subjective questions are frowned upon by SO community. \\
-% editor space
-The longer a question goes without being answered, the less likely it is ever will be (i.e. no accepted answer selected)\footnote{
-	However, they don't account for users who simply sign up, get their answer and never returns.
-}. 
-% editor space
-Expert users are often those that answers the most questions, since they get their reputation from answering questions (and getting their answer selected as accepted). 
-Can only gain 200 reputation points daily (is this still the case?), after that the only way to earn reputation is through bounty or getting answer selected as the accepted answer.
-Questions who are not answered in an objective and factual, are marked as a "Community Wiki" question, and gives no reputation.
-This creates an incentive to answer quickly, since it is likely that the first correct answer may well be accepted.
-\cite{Anderson2012}
+Activity level is not the same as being a domain expert \cite{Yang2014}. 
+\textcite{Yang2014} divided users into two groups; "Sparrows" and "Owls".
+The sparrows are the basic users who earns reputation and badges by answering the easy questions, and has a greater interest in the gamification element. 
+They found that the sparrows usually has a low average score and targets questions that are easy, or non-relevant. 
+Nonetheless, they are still important since they are able to provide quick feedback.
+As for the owls, they are considered to be the domain experts.
+The owls earn reputation by asking more advanced questions, providing better answers (i.e. getting their answer accepted) and answering popular and difficult\footnote{
+	Popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted.
+	The popularity can also therefore be seen as a measurement for difficulty.
+	The longer it takes to answer, the more difficult the question is. 
+	 \cite[p.~273]{Yang2014}.
+} questions.
 
 
 
 
 
+\textcite{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
+
+\textcite{Lezina2013} - Predict Closed Questions on StackOverflow
+
+\textcite{Stanley2013} - Predicting Tags for StackOverflow Posts
+
+\textcite{Short2014} - Tag Recommendations in StackOverflow
 
 
+% figure showing page with question and answer
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{so_question_example}
+	\caption[Example of a question on Stack Overflow]{Example of a question on Stack Overflow\footnotemark}
+	\label{fig:so_question_example}
+\end{figure}
+\footnotetext{Source: \url{http://stackoverflow.com/questions/178325/checking-if-an-element-is-hidden}}
 
 
-% Re-write and use what ever fits
-Categorization of questions posted on \gls{so}. 
-Exploration of answered/unanswered questions. 
-Findings indicate that \gls{qa} sites are particularly effective at code reviews and conceptual questions.
-Five main question types: why, how, what, whether and discrepancy. 
-Questions focusing on issues occurring within a project.
-Questions during evolution tasks. 
-Questions in relation to dealing with intent and rationale.
-Most frequently information looked for included awareness about artefacts and co-workers. \\
-Qualitative coding of questions and tags, where tags were for topics, and question coding for question nature. 
-Definition of successful and unsuccessful questions: "A successful question has an accepted answer, and an unsuccessful question has no answer".
-\cite{Treude2011}
+\begin{comment}
 
-
-
+Five main question types: why, how, what, whether and discrepancy \cite{Treude2011}.
 
 % written by me:
-\citet{Yang2014} characterised users into "Sparrows" and "Owls". Sparrows are users who have a basic knowledge, but grind reputation by answering a lot of questions. 
+\textcite{Yang2014} characterised users into "Sparrows" and "Owls". Sparrows are users who have a basic knowledge, but grind reputation by answering a lot of questions. 
 Owls are the domain experts, who care little about reputation and the gamification element, but are rather more interested in sharing knowledge and answering complex problems. 
 % Re-write and use what ever fits
 Only a small subset of users are major contributors to the success of \gls{qa} systems. 
@@ -183,10 +182,10 @@ Standard expert identification methods often misclassified very active users for
 Characterization of user expertise based on contribution quality.  \\
 Reasons for signing up/using qa systems:  \\
 \begin{enumerate}
-	\item to look for existing solutions to their issues;
-	\item to post a new question to the platform community;
-	\item to contribute by providing new answers
-	\item to comment or vote existing questions and answers
+\item to look for existing solutions to their issues;
+\item to post a new question to the platform community;
+\item to contribute by providing new answers
+\item to comment or vote existing questions and answers
 \end{enumerate}
 %editor space
 Two user types/groups: Sparrows and Owls. \\
@@ -210,17 +209,6 @@ Answers to questions can reflect how a user applies their knowledge to solve pro
 Difficult questions generate a lot of discussions and answers, where the answer vote can be useful in providing evidence on answer expertise. \\
 Gamification is more interesting for sparrows than owls, suggesting that gamification used in \gls{so} is effective in keeping sparrows active within the community.
 \cite{Yang2014}
-
-
-\begin{comment}
-
-Reasons for signing up/using qa systems \cite{Yang2014}:  \\
-\begin{enumerate}
-\item to look for existing solutions to their issues;
-\item to post a new question to the platform community;
-\item to contribute by providing new answers
-\item to comment or vote existing questions and answers
-\end{enumerate}
 
 \gls{so} has three properties of social learning techniques \cite{Nasehi2012}:
 \begin{enumerate}
@@ -523,16 +511,16 @@ Also add in estimated training time for exhaustive search (e.g. ~120 minutes for
 
 \begin{comment}
 I can either use \verb|\cite{ChangLin2011}| and get: \cite{ChangLin2011}. \\
-Or I can use \verb|\citet{ChangLin2011}| and get: \citet{ChangLin2011}. \\
+Or I can use \verb|\textcite{ChangLin2011}| and get: \textcite{ChangLin2011}. \\
 \verb|\cite| is based on \verb|\renewcommand*{\cite}{\autocite}|, \\
-and \verb|\citet| is based on \verb|\newcommand{\citet}{\textcite}|. \\
+and \verb|\textcite| is based on \verb|\newcommand{\textcite}{\textcite}|. \\
 Unfortunately, you can't get the year, but at least you can now get in-text citation. 
 \end{comment}
 
 
 
 % could be re-phrased into "in this paper, they define question analysis with two different approaches..."
-In the paper by \citet{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
+In the paper by \textcite{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
 E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
 They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
 low precision\footnote{
@@ -556,7 +544,7 @@ Mapped named-entities.
 
 
 
-\citet{Xu2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
+\textcite{Xu2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
 The system included question analysis, \gls{ir} and answer extraction. 
 The question classification accuracy was important to the overall performance of the system. 
 The system was built using \gls{svm} and question semantic similarity, and the feature selection was based on lexical features and domain terms hierarchy. 
@@ -564,7 +552,7 @@ The original method for question classification is mainly rule-based, where the 
 Another method is using statistics, as was done in \cite{Zhang2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
 Questions were divided into 13 coarse categories and 150 sub-categories. 
 The difference between these were that the sub-categories was built on sentences.
-\citet{Xu2012}
+\textcite{Xu2012}
 
 
 \section{Text classification}
@@ -639,7 +627,7 @@ Difficult to classify "what" and "which" type questions.
 Even though multiple questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
 Due to the large number of features in question classification, one may not need to map data to a higher dimensional space. 
 It has been commonly accepted that the linear kernel of
-	K(x\_i, x\_j ) = x\_i$^{T}$*x\_i 
+	K(x$_{i}$, x$_{j}$ ) = x$_{i}^{T}$*x$_{i}$
 is good enough for question classification. \\
 Used five binary feature sets; 
 % perhaps add as a summary list, a suggestion over common categorizations of various question types/classes
