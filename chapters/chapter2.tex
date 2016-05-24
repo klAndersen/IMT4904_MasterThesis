@@ -1,13 +1,6 @@
 %\chapter{State of the art}
 \label{chap:chapter2}
 
-% potentially make subsections;
-% gamification
-% stackoverflow as a platform
-%etc
-%\section[Stack Overflow]{\glsentrylong{so} (\glsentryshort{so})}
-%\label{sec:stackoverflow}
-
 \section[Stack Overflow]{\glsentrylong{so} (\glsentryshort{so})}
 \label{sec:stackoverflow}
 
@@ -172,8 +165,16 @@ One can therefore assume that if you ask a good question, you will get a good an
 \label{sec:question_classification}
 \gls{qc} is the process of categorizing a question into a class or category based on its structure, usually to decide what the expected answer type is \cite{Li, Loni2011, Lopez2011}. 
 To classify a question, it is important to select only those features that helps you identify the class it belongs to.
-Depending on the question type, and the information you want to extract, various methods exists.
+To get a classification results, you use what is known as a classifier. 
+The quality of a classifier can be measured by its accuracy and precision (see Equation \ref{eq:accuracy} and \ref{eq:accuracy}; taken from \cite[p.~13]{Li}).
 
+\begin{equation}\label{eq:accuracy}
+Accuracy = \frac{\#~of~correct~predictions}{\#~of~predictions}
+\end{equation}
+
+\begin{equation}\label{eq:precision}
+Precison[c] = \frac{\#~of~correct~predictions~of~class~c}{\#~of~prediction~of~class~c}
+\end{equation}
 
 \paragraph{WH-words}
 \label{sec:wh_words}
@@ -222,401 +223,71 @@ Grammatical properties can be extracted by using \gls{pos}, e.g. by using \gls{n
 \textcite{Li} uses the word head chunks to identify what the question is asking for when multiple types are introduced (avoid ambiguity). 
 The same concept is used in \cite{Huang2008} and \cite{Loni2011}, but there it is referred to as headwords.
 
+\subsection{Text classification}
+\label{sec:text_classification}
+The goal of text classification (or text categorization) is to be able to process multiple documents or large amounts of text into categories. 
+It shares similarities with question classification, although an obvious difference would be the size of the text that is processed. 
+Some examples are spam filtering \cite{Russell2013, Kaestner2013}, to identify languages, or filing documents based on content \cite{Kaestner2013}.
+Documents can belong in more then category, and since categories can overlap they must be treated as a binary classification problem \cite{Joachims1998} .
+Text classification starts with retrieval of the documents, usually by using \gls{ir} methods, and then transforming the text into features for the classification. 
+When you have a large amount of text, you can easily get a feature space that is very high dimensional, and that is why feature selection is important. 
+Feature selection is the selection of features (or attributes) that are important for the classification. 
+E.g. if you were classifying documents based on colour description, then hypernyms for colour would be an important feature.
+
 
 \subsection[Question-Answering]{\glsentrylong{qa} (\glsentryshort{qa})}
 \label{sec:question_answering}
-% In various papers, \gls{qc} is said to be equal to text classification.
+\gls{qa} is mostly used as a method for finding the answer to a question from an unknown amount of documents.
+When using a search engine, one can accept that there are several results that are listed because at least one of the search terms exists. 
+However, when using a \gls{qa} system, users wants the answer straight away instead of having to read through several documents. 
+In addition, \gls{qa} sites allows users to search for questions in the same way they would ask another human (natural language\footnote{
+	However, there is a problem with linguistics in natural language systems \cite{Lopez2011}.
+	}), 
+and there are also different types of \gls{qa} sites.
+Domain specific \gls{qa} focuses on a specific topic (e.g. \gls{so}) and open domain where everything goes. 
+\gls{qa} sites can also function as an archive or a knowledge base, since all the posts are available even years after they were posted.
+\vspace{0.5em}\newline
+\textcite{Yen2013} found that it was more efficient searching for answers in a small dataset, then the document as a whole. 
+By using a passage retriever, the documents were split into paragraphs and ranked by using evaluation metrics. 
+\textcite{Isozaki2005} could not use TF-IDF based paragraph retrieval, because the paragraphs were too short to cover all query terms. 
+If the terms that were used were too short or too long, the passage scores would not reflect the density distribution. 
+\textcite{Xu2012} built an online \gls{qa} system for tourism, which consisted of question analysis, information retrieval and answer extraction.
+Since rule-based approach requires expert knowledge, creating features that are domain specific can improve accuracy (what they called "domain term concept hierarchy").
+To validate the classification, they tested the results by using 5-fold cross-validation.
+\vspace{0.5em}\newline
+\textcite{Li} used semantics to categorize questions based on the possible semantic answer type. 
+One issue with questions are that since they can be very short, they contain little text. 
+However, the lack of long text improves both the accuracy and analysis. 
+\vspace{0.5em}\newline
+\textcite{Zhang2003} says that \gls{qc} is important, and simply looking for WH-words is not enough. 
+By using WH-words, headwords, WordNet semantics, N-grams and word shapes as features, and a linear \gls{svm} and Maximum Entropy model, 
+they reached an 89.2\% and 89.0\% over a standard benchmark dataset. 
+They also experimented with four other algorithms, Nearest Neighbours (simplified version of k-NN),  Naive Bayes and Decision Tree and Sparse Network of Winnows (SNoW).
+However, these were outperformed by the \gls{svm}.
 
 
-% Re-write and use what ever fits
-Better to classify based on the domain of the question characteristics. 
-Original method for question classification is usually rule-based approach, where the rules decide the category. 
-Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts. 
-Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results. 
-Used RBF kernel in this experiment. 
-Notes that the selection and organization of features is the main issue when working with classification. 
-Features and feature space can have a significant impact on both accuracy and efficiency of the classifier. 
-Compared with rule-based, question features for a specific domain can have greater benefits. 
-To improve performance, the classification must improve the question characteristics. 
-\cite{Xu2012}
-
-% Re-write and use what ever fits
-\textcite{Xu2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
-The system included question analysis, \gls{ir} and answer extraction. 
-The question classification accuracy was important to the overall performance of the system. 
-The system was built using \gls{svm} and question semantic similarity, and the feature selection was based on lexical features and domain terms hierarchy. 
-The original method for question classification is mainly rule-based, where the rules decide the category (difficult to extract all the rules for the question category). 
-Another method is using statistics, as was done in \cite{Zhang2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
-Questions were divided into 13 coarse categories and 150 sub-categories. 
-The difference between these were that the sub-categories was built on sentences.
-\textcite{Xu2012}
-
-% Re-write and use what ever fits
-\gls{qa} system that includes question analysis, information retrieval and answer extraction.
-Categorizing questions is an important part of the question analysis (the same goes for follow-up process, since it affects the accuracy of the answer extraction).
-Better to classify based on the domain of the question characteristics. 
-Original method for question classification is usually rule-based approach, where the rules decide the category. 
-Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts. 
-Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results. 
-Used RBF kernel in this experiment. 
-Notes that the selection and organization of features is the main issue when working with classification. 
-Features and feature space can have a significant impact on both accuracy and efficiency of the classifier. 
-Compared with rule-based, question features for a specific domain can have greater benefits. 
-To improve performance, the classification must improve the question characteristics. 
-Feature selection was based on semantic analysis and lexical analysis. 
-They also needed to add a step for word segmentation and Part-Of-Speech (POS) tagging (since it was Chinese text processing). 
-To improve classification efficiency, domain knowledge was added by using domain term concept hierarchy (basically if words had the same meaning or concept, then they were added to a feature vector). 
-They used LIBSVM for coarse classification. 
-The sub-classification was done by measuring the similarity between the users question and those in the sub-categories  (calculated by utilizing word similarity based on term concept hierarchy). 
-For the \gls{svm}, they used cross-validation, where the training set was divided into five parts of equal size. 
-After a classifier had been trained on the first four, the last was used to get the cross-validation accuracy (to ensure correct classification).
-\cite{Xu2012}
-
+\section[SVM]{\glsentrylong{svm} (\glsentryshort{svm})}
+\label{sec:svm}
+\gls{svm} is the chosen \gls{ml} algorithm that was chosen to use for the question analysis. 
+This section is mainly intended as a light introduction to what \gls{svm} is, and what the most common uses are. 
+Furthermore, in what way can this be utilized for text and question classification?
 
 % Re-write and use what ever fits
-\gls{qa} is a method for finding the answer to a given question from an unknown amount of documents. 
-The goal for most automatic \gls{qa} systems is to find the exact answer to the question asked by the user. 
-Existing \gls{qa} technology involves two main steps: \gls{ir} and \gls{ie}.
-\gls{ir} retrieves the  relevant documents after completed analysis or classification.
-\gls{ie} processed the retrieved documents to find the answer to the users question.
-The purpose of question classification is to detect the answer type of the input question. 
-% could be used as argument for testing only on unprocessed vs. questions containing given feature
-Looking for answers in a small set is easier then searching all documents. 
-Document retriever: for only retrieving documents that are related to the question.
-Passage retriever: divides the documents into paragraphs and ranks them based on the given evaluation metric(s)
-\cite{Yen2013}
-
-
-% Re-write and use what ever fits
-Developed a system composed of four modules: Question Analysis, Document Retrieval, Answer-Extraction, and Answer Evaluation.
-Fine-grained answer taxonomy improves \gls{qa} performance, but difficult to create accurate answer extraction 
-(because \gls{ml} methods require a lot of training data and training rules). 
-Found that named entity/numerical expression recognition and word sense-based answer extraction contributed to system performance.
-The question analysis module normalized question and determined answer types. 
-Question normalization was used to simply the "answer-type determination rules". 
-Useless expressions were removed from the question. 
-Expressions with the same meaning were normalized into one. 
-Abandoned use of TF-IDF based paragraph retrieval because the paragraphs were too short to cover all query terms. 
-Same problem can occur when using  passage retrieval modules. 
-If it is too short terms will not be covered, if it is too long, passage scores will not reflect the density distribution.
-Answer extraction separates based on the candidate it belongs to (e.g. Location, organization, school, hospital, etc).  
-Used suffixes to indicate candidate group. If it belongs to more than one, it is added in both. 
-This is called suffix constraint rule. 
-Use of noun-phrases in combination with suffixes.
-\cite{Isozaki2005}
-
-
-
-% Re-write and use what ever fits
-\gls{qa} sites provides a place where people can ask either general or domain specific questions. 
-Domain specific \gls{qa} sites requires users to be familiar with both the site, rules and questions that can be asked. 
-\gls{qa} sites also works as an archive of knowledge which can be accessed later on. Mostly expert users that answers questions.
-\cite{Movshovitz-Attias2013}
-
-
-
-
-
-% Re-write and use what ever fits
-\gls{qa} is about getting an answer to a question, not a list of documents.
-\gls{qc} maps a question to a category (pre-defined), which specifies the expected answer type.
-Paper focuses on factoid questions. 
-A problem with \gls{qc} learning systems is the high dimensional feature space (typically caused by the n-grams over all the vocabulary words).
 In \gls{qc}, question is represented using vector space model, the question is a vector which is described by the words inside it. 
-Representing a question as a vector (this is aka. \gls{bow} or unigram): \\
-x = (x$_{1}$, ..., x$_{d}$) in which x$_{i}$ is the frequency of term i in x and d is the total number of terms. \\
-\gls{bow} is the most widely used feature space in document classification.
 \cite{Loni2011}
 
-
-
-
-% Re-write and use what ever fits
-% sentiment analysis
-Even though expressive content and descriptive semantic content are distinct, sentiment information can be lost. 
-It can learn that two words are close (similar/equal meaning), but cannot learn that two other words means the complete opposite (negative version).
-Ran sentiment analysis on 25,000 movie reviews from IMDB, including at most 30 reviews from any movie in the collection. 
-Built a fixed dictionary of the 5,000 most frequent tokens, but ignored the 50 most frequent terms from the original full vocabulary. 
-Did not use stemming, since the model learned similar representations for words of the same stem.
-Allowed non-word tokens (e.g. '!', ':-)'), since it could be sentiment relevant. 
-Mapped ratings to [0,1], and the semantic component did not require labels.
-\cite{Maas2011}	
-
-
-% Re-write and use what ever fits
-% Semantic web and Q/A
-Search and queries have become difficult and challenging for the semantic web. 
-Need user friendly UI for query and data exploration. 
-\gls{qa} ontology based on structured semantic information.
-New interest in search technologies, since we are close to reaching critical mass for large-scale distributed semantic web.
-Semantic web is often used for interpreting web queries based on described background knowledge and for searches through large datasets/KBs.
-Difficult for end-users to understand the complexity of the logic-based semantic web. 
-Challenging to process and querying content, hard to scale models to cope with available semantic data.
-The goal of \gls{qa} is for users to ask questions as they would ask another human (natural language), rather then use keywords queries. \\
-Classifies \gls{qa} system and semantic approach for search and query based on four interlinked dimensions: 
-\begin{enumerate}
-	\item the input or type of questions it is able to accept (facts, dialogues, etc);
-	\item the sources from which it can derive the answers (structured vs. un-structured data)
-	\item the scope (domain specific vs. domain independent)
-	\item ability to cope with problems that the search environment imposes in any non-trivial search system (e.g., adaptability and ambiguity).
-\end{enumerate}
-Most \gls{qa} systems focuses on factoid questions, which are usually based on 'WH-' (who, what, how many, etc.), commands (name all, give me, etc.), or affirmation/negation questions. 
-Examples of more difficult questions are factoid questions asking for opinion (Why or How), What (lack of constraint) and definition questions. 
-A common problem in natural language systems is linguistics.
-Some systems use shallow keyword-based techniques to find interesting sentences (based on words that refers to entities that are the same as the answer type). 
-Ranking is based on syntactic features such as word order or similarity to the query.
-Templates can be used to find answers that are just reformulations of the question.
-Classification based on expected answer type (e.g. name, quantity, dates, etc).
-Classes of questions are arranged hierarchically in taxonomies and different types of questions re-quire different strategies.
-Utilization of word knowledge by using resources like WordNet or ontologies to find the \gls{qa} type. 
-Could also use named-entity (NE) recognition, relation extraction, co-reference resolution, syntactic alternations, word sense disambiguation (WSD), logical inferences and temporal-spatial reasoning. \\
-\gls{qa} application with text has two steps:
-\begin{enumerate}
-	\item identifying the semantic type of the entity sought by the question
-	\item determining additional constraints on the answer entity
-\end{enumerate}
-% space
-Ontology-based semantic \gls{qa} systems (also called semantic \gls{qa} systems in paper), takes NL queries and ontology as input, and returns answers from KB (where KB is based on passed ontology). 
-Allows user to have no prior knowledge to vocabulary or ontology structure. \\
-% space
-Two different main aspects for ontology-based \gls{qa} systems:
-\begin{enumerate}
-	\item degree of domain customization required (correlates to retrieval performance)
-	\item subset of NL understanding  (full grammar-based NL, controlled or guided NL, pattern based). 
-\end{enumerate}
-Needed to reduce complexity and the habitability problem, the main issues hindering successful use of Natural Language Interfaces (NLI).
-\cite{Lopez2011}
-
-
-% Re-write and use what ever fits
-% Semantic web and Q/A
-Purpose of \gls{qa} is to get a factual answer from a large collection of text, instead of a list of documents.
-Getting answer based on type (e.g. city) or getting answer based on what the question asks for (context, definition, reasoning). 
-Reformulations and syntactic structure can make it hard to create a manual classifier. 
-The goal of the paper is to categorize questions into different semantic classes based on the possible semantic types of the answers. 
-They developed a hierarchical classifier guided by a layered semantic hierarchy of answer types that makes use of a sequential model for multi-class classification and the SNoW learning architecture. 
-\gls{qc} can be seen as a text classification task, but some characteristics make it different. 
-Questions are short, therefore contains less text. 
-However, having short text improves accuracy and analysis.
-Developed a hierarchical learning classifier based on the sequential model of multi-class classification. 
-The goal of the model is to reduce the set of candidate labels for a given question by concatenating  a sequence of simple classifiers. 
-The output of the classifier (class labels) is used as input for the next. 
-Classifier output activation is normalized into a density over the class labels and is thresholded  so that it can output more than one class label. 
-\gls{qc} is built by combining sequence of two simple classifiers: first=coarse class, second=fine class. 
-\cite{Li}
-
-
-
-
-% Re-write and use what ever fits
-"The content pre-processing step takes in both normal text and code, performs tokenization, stop word removal, and stemming. 
-Tokenization breaks a paragraph into word tokens. 
-Stop word removal removes commonly used words like: is, are, I, you, etc. 
-Stemming reduces a word to its root form, e.g., reading to read, etc. 
-For the code, we remove reserved keywords such as: if, while, etc., curly brackets, etc, and extract identifiers and comments. 
-These are then subjected to tokenization, stemming, and stop word removal too."
-\cite{Wang2013} :: An Empirical Study on Developer Interactions in StackOverflow
-
-% Re-write and use what ever fits
-Proposes head word feature and present two approaches to augment semantic features of such head words using WordNet. 
-Their linear SVM and Maximum Entropy (ME) models reached an accuracy of 89.2\% and 89.0\% over a standard benchmark dataset. 
-Used Libsvm.
-Question classification is not trivial; simply using question wh-words cannot achieve satisfactory results. 
-Difficult to classify "what" and "which" type questions. 
-Even though multiple questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
-Due to the large number of features in question classification, one may not need to map data to a higher dimensional space. 
-It has been commonly accepted that the linear kernel of
-K(x$_{i}$, x$_{j}$ ) = x$_{i}^{T}$*x$_{i}$
-is good enough for question classification. \\
-Used five binary feature sets; 
-% perhaps add as a summary list, a suggestion over common categorizations of various question types/classes
-\begin{enumerate}
-	\item Question wh-words (eight types): what, which, when, where, who, how, why, and rest (rest being the type does not belong to any of the previous type).
-	\item Head words: one single word specifying the object that the question seeks to avoid misclassification of entities. Requires syntactic parser.
-	\item WordNet semantic feature for head words: 
-	Use of WordNet for word similarity distance, computing the similarity between the head word of such question and each description word in a question categorization.
-	\item Word N-grams: Used to provide word sense disambiguation for questions
-	\item Word shapes: Five word shape features; all upper case, all lower case, mixed case, all digits, and other.
-\end{enumerate}
-WordNet is a large English lexicon in which meaningfully related words are connected via cognitive synonyms (synsets).  
-The WordNet is a useful tool for word semantics analysis and has been widely used in question classification. 
-Using WordNet for hypernyms; Y is a hypernym of X if every X is a (kind of) Y.
-For example, the hierarchies for a noun sense of domestic dog is described as: 
-dog -> domestic animal -> animal, 
-while another noun sense (a dull unattractive unpleasant girl or woman)  is organized as:
-dog -> unpleasant woman -> unpleasant person.
-Unigram forms the\gls{bow}feature, and bigram forms the pairs of words feature, and so forth. 
-Considered unigram, bigram, and trigram.
-Two experiments to test classifier accuracy.
-The first was evaluation of individual contribution of different feature types to question classification accuracy, 
-and in the second feature sets were incrementally fed to the SVM and ME (default parameter values for both). \\
-Experimented with five machine learning algorithms: 
-\begin{itemize}
-	\item Nearest Neighbors (NN) (simplified version of kNN)
-	\item Naive Bayes (NB)
-	\item Decision Tree (DT)
-	\item Sparse Network of Winnows (SNoW)
-	\item \gls{svm}, using two kinds of features: \gls{bow} and bag of N-grams (all continuous word sequences in the question).
-\end{itemize}
-Using a search engine to retrieve list of documents vs getting the actual answer to the question. 
-To answer a question, you need to understand what answer the question asks for. 
-Classifying the question into semantic categories to understand what answer type is expected. 
-Common words like 'what', 'is', etc. should be neglected for document classification, but these "stop-words" are actually very important for question classification. 
-Writing heuristic rules for question classification can take time, and easily become complicated.
-Considers only the surface text feature for each question (extracting only two features: \gls{bow} and bag of N-grams).
-Every question is represented as binary feature vectors, because the term frequency (tf) of each word or N-gram in a question usually is 0 or 1.
-NB is regarded as one of the top performing methods for document classification. 
-Sparse Network of Winnows (SNoW) algorithm is specifically tailored for learning in the presence of a very large number of features and can be used as a general purpose multi-class classifier. 
-The learned classifier is a sparse network of linear functions. 
-Parameters for all algorithms was default values. 
-\gls{svm}: observed that the bag of N-grams features are not much better than the \gls{bow} features. 
-The \gls{svm} based on linear kernel turned out to be as good as the \gls{svm} based on polynomial kernel, RBF kernel and sigmoid kernel.
-Syntactic structures; proposed using a special kernel function called tree kernel to enable the SVM to take advantage of the syntactic structures of questions.
-\cite{Zhang2003}
-
-
-\section{Text categorization and classification}
-\label{sec:text_classification}
-% my own text; to be re-written
-Text classification can be done in many different ways, since the content and size rarely will be equal. 
-The classification is also based on what you want to retrieve from the text. 
-Do you want an answer to a question, or do you want to see which documents are most relevant for the problem you are currently working on 
-(e.g. searching for research papers that are relevant to your work).
-
-
-
-
-% Re-write and use what ever fits
-Text categorization is a fundamental task in document processing, allowing automated handling of enormous streams of documents in electronic form. 
-N-gram-based system for text categorization that is tolerant of textual errors. 
-The system worked well for language classification, in one test it got 99.8\% classification rate on Usenet newsgroup articles (written in different languages). 
-It also worked well for computer-oriented articles (subject), where the highest classification rate was 80\%.
-Text categorization is assignment of an incoming document to some pre-existing category. 
-Has the following characteristics:
-\begin{itemize}
-	\item categorization must work reliably in spite of textual errors.
-	\item categorization must be efficient, consuming as little storage and processing time as possible, because of the sheer volume of documents to be handled.
-	\item categorization must be able to recognize when a given document does not match any category, or when it falls between two categories. 
-\end{itemize}
-This is because category boundaries are almost never clear cut.
-N-gram is an N-character slice of a longer string. 
-The term can include the notion of any co-occurring set of characters in a string (e.g., an N-gram made up of the first and third character of a word).
-In this paper, they use N-gram for contiguous slices only, with several different lengths simultaneously. 
-Appends space to beginning/end of string (\_ = space): 
-\begin{itemize}
-	\item bi-grams: \_T, TE, EX, XT, T\_
-	\item tri-grams: \_TE, TEX, EXT, XT\_, T\_ \_
-	\item quad-grams: \_TEX, TEXT, EXT\_, XT\_ \_, T\_ \_ \_
-\end{itemize}
----> a string of length k, padded with blanks, will have k+1 bi-grams, k+1 tri-grams, k+1 quad-grams, etc.
-Re-statement of Zipf's Law: The n'th most common word in a human language text occurs with a frequency inversely proportional to n. 
-This means that there is always a set of words which dominates most of the other words of the language in terms of usage frequency. 
-Classifying documents with N-gram frequency statistics will not be very sensitive to cutting off the distributions at a particular rank. 
-If we are comparing documents from the same category they  should have similar N-gram frequency distributions.
-Determined the true classification for each test sample semi-automatically.
-\begin{itemize}
-	\item classification procedure works a little better for longer articles
-	\item classification procedure works better the longer the category profile it has to use for matching. 
-	there were some interesting anomalies (using more N-gram frequencies actually decreased classification performance). 
-	caused by some articles having multiple languages even though mixed types were removed
-\end{itemize}
-Used the classification system to identify the appropriate newsgroup for newsgroup articles (collected article samples from five Usenet newsgroups).
-Chose those because they were all sub-fields of computer science, and wanted to test how the system could confuse similar newsgroups.
-Removed the usual header information, such as subject and keyword identification, leaving only the body of the article (to prevent influential matches). \\
-Possible to achieve similar results using whole word statistics (using frequency statistics for whole words), but several issues exists;
-\begin{enumerate}
-	\item The system would be much more sensitive to OCR problems (one wrong character, and the word is counted separately). 
-	\item Certain articles could be too short to get representative word statistics. 
-	More N-grams in a given passage than there are words, and there are consequently greater opportunities to collect enough N-grams to be significant for matching.
-	\item By using N-gram analysis, you get word stemming for free, since the plurals will all contain the base form. 
-	To get the same results with whole words, the system has to do word stemming, requiring knowledge about the language the documents were written in.  
-	Whereas N-gram frequency approach provides language independence for free.
-	\item Ability to work equally well with short and long documents, and the minimal storage and computational requirements.
-\end{enumerate}
-\cite{Cavnar1994}
-
-
-
-
-
-
-
-% Re-write and use what ever fits
-Using \gls{svm} to solve automatic text classification task.
-Text classification (aka. text categorization or topic spotting) is the activity of labelling natural language texts with thematic categories from a predefined set. \\
-Examples of automatic document classification:
-\begin{itemize}
-	\item spam filtering: separate spam email messages from legitimate emails
-	\item e-mail routing: routing email to address or mailbox based on topic
-	\item language identification: automatically determine the language of a text
-	\item genre classification: automatically determine the genre of a text
-	\item readability assessment: automatically determine the degree of readability of a text 
-	\item classical task of document indexing and filing: filing documents according to their content or other specific information.
-\end{itemize}
-
-The first issue in text classification is to find an adequate representation of the documents. 
-The largely employed model in \gls{ir} is the Vector Space Model (VSM) (aka. \gls{bow} model).
-Term extraction and dimensional reduction steps:
-\begin{enumerate}
-	\item Tokenization: Separating text based on delimiters, e.g. space, EOF and tabs, where these text units are processed in the below steps.
-	\item Case standardization: Convert all characters to the same case
-	\item Tag filtering: if the document is an Internet page or a similar hyper document, the corresponding tags are eliminated
-	\item Stop word removal: "Stop words" are common natural language entities that do not carry strong semantics. 
-	They are therefore considered irrelevant for information retrieval and for text classification purposes. 
-	\item Stemming (or lemmatization): text elements with small variations in their lexicon but with the same semantics must be associated in order to produce the same dimension in the VSM; 
-	some examples are singular and plural variations of the same word and person and time variations of a verb. 
-	Linguistic experts produce specific procedures that convert a word into its "stem" (radix), which is the element employed to represent the corresponding dimension
-	\item Other term associations: it is possible to associate terms of identical semantics using external dictionaries such as the WordNet, or by 
-	computing successive terms that always occur together in the text, e.g. "triple heart bypass", which is considered a triple compound term.
-\end{enumerate}
-The "term-to-term" similarity is deeply analysed. Their work indicates that:
-\begin{enumerate}
-	\item words can be analysed from the linguistic (semantic) point-of-view, to obtain synonyms, antonyms, hyponyms, hypernyms, meronyms, etc.
-	these relations nowadays are included in large linguistic repositories such as the WordNet
-	\item statistical term co-occurrence computation in a corpus is a practical way to compute term similarity
-	\item a more abstract element than the terms, called a “concept”, can be used to represent document dimensions
-	\item a concept is characterized by a set of documents, or, more specifically, corresponds to the maximal subset of documents in the corpus that contains the concept;
-	\item two concepts are uncorrelated if the intersection between the corresponding sets of relevant terms of each document is empty;
-	the greater the overlap between the sets of documents related to two concepts, the more related theses concepts are.
-\end{enumerate}
-Perhaps the most important idea that can be extracted from this analysis is the relation between concepts and vectors: 
-\begin{itemize}
-	\item concepts are represented by vectors
-	\item the determination of a vector basis in the term-space involves the identification of the "fundamental concepts" in the collection, 
-	whose corresponding representative vectors are orthogonal
-	\item documents and queries are linear combinations of the fundamental concepts.
-\end{itemize}
-\cite{Kaestner2013}
-
-
-
-
-% Re-write and use what ever fits
-Text categorization has become one of the key techniques for handling and organizing text data. 
-Text categorization techniques are used to classify news stories, to find interesting information on the WWW, and to guide a user's search through hypertext. 
-Since building text classifiers by hand is difficult and time-consuming, it is advantageous to learn classifiers from example.  
-Goal of text categorization is to classify documents into a number of pre-defined categories, where each document can be in one, multiple or none. 
-Since categories may overlap, each category is treated as a separate binary classification problem.
-The first step in text categorization is to transform documents, which typically are strings of characters, into a representation suitable for the learning algorithm and the classification task.
-\gls{ir} research suggests that word stems work well as representation units and that their ordering in a document is of minor importance for many tasks. 
-This leads to an attribute-value representation of text. 
-Each distinct word w$_{i}$ corresponds to a feature, with the number of times word w$_{i}$ occurs in the document as its value. 
-To avoid unnecessarily large feature vectors, words are considered as features only if they occur in the training data at least 3 times and if they are not "stop-words" (like "and", "or", etc.).
-This representation scheme leads to very high-dimensional feature spaces containing 10000 dimensions and more. 
-Need for feature selection to improve generalization accuracy and avoid "overfitting". 
-From \gls{ir} it is known that scaling the dimensions of the feature vector with their inverse document frequency (IDF) improves performance.
 \gls{svm} is based on the Structural Risk Minimization principle from computational learning theory. 
 The idea of structural risk minimization is to find a hypothesis h for which we can guarantee the lowest true error.  
 The true error of h is the probability that h will make an error on an unseen and randomly selected test example. 
 An upper bound can be used to connect the true error of a hypothesis h with the error of h on the training set and the complexity of H (measured by VC-Dimension), the hypothesis space containing h. 
 \gls{svm}s find the hypothesis h which (approximately) minimizes this bound on the true error by effectively and efficiently controlling the VC-Dimension of H.
-One remarkable property of SVMs is that their ability to learn can be independent of the dimensionality of the feature space. 
+One remarkable property of \gls{svm}s is that their ability to learn can be independent of the dimensionality of the feature space. 
 \gls{svm}s measure the complexity of hypotheses based on the margin with which they separate the data, not the number of features. 
 This means that we can generalize even in the presence of very many features, if our data is separable with a wide margin using functions from the hypothesis space. 
 The same margin argument also suggest a heuristic for selecting good parameter settings for the learner (like the kernel width in all RBF network). 
 The best parameter setting is the one which produces the hypothesis with the lowest VC-Dimension.
 This allows fully automatic parameter tuning without expensive cross-validation. \\
-Theoretical analysis concludes that SVMs acknowledge the particular properties of text: 
+Theoretical analysis concludes that \gls{svm}s acknowledge the particular properties of text: 
 \begin{itemize}
 	\item high dimensional feature spaces, 
 	\item few irrelevant features (dense concept vector), 
@@ -629,17 +300,6 @@ Another advantage of \gls{svm}s over the conventional methods is their robustnes
 Furthermore, \gls{svm}s do not require any parameter tuning, since they can find good parameter settings automatically. 
 All this makes \gls{svm}s a very promising and easy-to-use method for learning text classifiers from examples.
 \cite{Joachims1998}
- 
-
-\section[SVM]{\glsentrylong{svm} (\glsentryshort{svm})}
-\label{sec:svm}
-\gls{svm} is the chosen \gls{ml} algorithm that was chosen to use for the question analysis. 
-This section is mainly intended as a light introduction to what \gls{svm} is, and what the most common uses are. 
-Furthermore, in what way can this be utilized for text and question classification?
-
-% Re-write and use what ever fits
-In \gls{qc}, question is represented using vector space model, the question is a vector which is described by the words inside it. 
-\cite{Loni2011}
 
 
 \section{Dataset}

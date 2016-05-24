@@ -31,3 +31,225 @@ Originally tagged questions as good/bad, but then switched to +/-1 due to consid
 	\caption{MySQL Database used for dataset}
 	\label{fig:mysql_database}
 \end{figure}
+
+
+\begin{comment}
+The results of the current models:
+
+Model 'training_data_10000_unprocessed.pkl' loaded.
+Best score: 0.8043125
+Best parameters: {'clf__C': 1000, 'clf__gamma': 0.001, 'clf__kernel': 'rbf'}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+
+
+Model 'training_data_10000.pkl' loaded.
+Best score: 0.7924375
+Best parameters: {'clf__C': 1000, 'clf__gamma': 0.001, 'clf__kernel': 'rbf'}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+
+
+Model 'training_data_10000_no_stem.pkl' loaded.
+Best score: 0.783375
+Best parameters: {'clf__C': 1000, 'clf__gamma': 0.001, 'clf__kernel': 'rbf'}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+
+Model 'training_data_10000_sgd_log_loss.pkl' loaded.
+Best score: 0.79325
+Best parameters: {'tfidf__norm': 'l2', 'clf__penalty': 'l2', 'tfidf__use_idf': True, 'clf__n_iter': 100, 'vect__min_df': 0.01, 'clf__alpha': 1e-05, 'vect__max_df': 0.75}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.75, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...      penalty='l2', power_t=0.5, random_state=0, shuffle=True, verbose=0,
+warm_start=False))])
+
+
+Model 'training_data_10000_unprocessed_sgd_log_loss.pkl' loaded.
+Best score: 0.8071875
+Best parameters: {'clf__penalty': 'l2', 'tfidf__norm': 'l2', 'tfidf__use_idf': True, 'clf__n_iter': 75, 'vect__min_df': 0.01, 'clf__alpha': 1e-05, 'vect__max_df': 1.0}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=1.0, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...      penalty='l2', power_t=0.5, random_state=0, shuffle=True, verbose=0,
+warm_start=False))])
+
+Model 'training_data_10000_unprocessed_sgd.pkl' loaded.
+Best score: 0.8073125
+Best parameters: {'tfidf__norm': 'l1', 'clf__penalty': 'l1', 'vect__max_df': 1.0, 'clf__n_iter': 100, 'vect__min_df': 0.01, 'clf__alpha': 1e-05, 'tfidf__use_idf': False, 'clf__loss': 'hinge'}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=1.0, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...      penalty='l1', power_t=0.5, random_state=0, shuffle=True, verbose=0,
+warm_start=False))])
+
+
+Model 'tex_dump_10000_unprocessed.pkl' loaded.
+Best score: 0.993031358885
+Best parameters: {'clf__C': 1, 'clf__kernel': 'linear'}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+
+
+
+
+---- singular feature models-------
+
+"C:\Program Files\Python\Python35\python.exe" C:/Users/KnutLucas/PycharmProjects/tests/dump_model_data.py
+Error: ./feat_detect_models\README.md invalid load key, '#'.
+./feat_detect_models\tex_dump_10000_unprocessed_has_codeblock.pkl
+Best score: 0.993031358885
+Best parameters: {'clf__kernel': 'linear', 'clf__C': 1}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\tex_dump_10000_unprocessed_has_hexadecimal.pkl
+Best score: 0.993031358885
+Best parameters: {'clf__kernel': 'linear', 'clf__C': 1}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\tex_dump_10000_unprocessed_has_homework.pkl
+Best score: 0.993031358885
+Best parameters: {'clf__kernel': 'linear', 'clf__C': 1}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\tex_dump_10000_unprocessed_has_links.pkl
+Best score: 0.993031358885
+Best parameters: {'clf__kernel': 'linear', 'clf__C': 1}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\tex_dump_10000_unprocessed_has_numeric.pkl
+Best score: 0.993031358885
+Best parameters: {'clf__kernel': 'linear', 'clf__C': 1}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\tex_dump_10000_unprocessed_has_tags.pkl
+Best score: 0.993031358885
+Best parameters: {'clf__kernel': 'linear', 'clf__C': 1}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...ear',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_unprocessed_has_codeblock.pkl
+Best score: 0.78225
+Best parameters: {'clf__kernel': 'rbf', 'clf__C': 1000, 'clf__gamma': 0.001}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_unprocessed_has_hexadecimal.pkl
+Best score: 0.7931875
+Best parameters: {'clf__kernel': 'rbf', 'clf__gamma': 0.001, 'clf__C': 1000}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_unprocessed_has_homework.pkl
+Best score: 0.793875
+Best parameters: {'clf__kernel': 'rbf', 'clf__C': 1000, 'clf__gamma': 0.001}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_unprocessed_has_links.pkl
+Best score: 0.795
+Best parameters: {'clf__kernel': 'rbf', 'clf__gamma': 0.001, 'clf__C': 1000}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_unprocessed_has_numeric.pkl
+Best score: 0.796625
+Best parameters: {'clf__kernel': 'rbf', 'clf__gamma': 0.001, 'clf__C': 1000}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_unprocessed_has_tags.pkl
+Best score: 0.7566875
+Best parameters: {'clf__kernel': 'rbf', 'clf__gamma': 0.001, 'clf__C': 1000}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+./feat_detect_models\training_data_10000_UP_settings.pkl
+Best score: 0.783375
+Best parameters: {'clf__kernel': 'rbf', 'clf__gamma': 0.001, 'clf__C': 1000}
+Best estimator: Pipeline(steps=[('vect', CountVectorizer(analyzer='word', binary=False, decode_error='strict',
+dtype=<class 'numpy.int64'>, encoding='utf-8', input='content',
+lowercase=True, max_df=0.95, max_features=None, min_df=0.01,
+ngram_range=(1, 1), preprocessor=None, stop_words='english',
+...rbf',
+max_iter=-1, probability=True, random_state=0, shrinking=True, tol=0.001,
+verbose=False))])
+
+\end{comment}
