@@ -174,6 +174,7 @@ One can therefore assume that if you ask a good question, you will get a good an
 To classify a question, it is important to select only those features that helps you identify the class it belongs to.
 Depending on the question type, and the information you want to extract, various methods exists.
 
+
 \paragraph{WH-words}
 \label{sec:wh_words}
 WH-words are mostly found in factoid questions \cite{Lopez2011}. 
@@ -183,62 +184,43 @@ WH-words are mostly found in factoid questions \cite{Lopez2011}.
 }.
 However, not all are equally easy to use for classification, because even if the questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
 Question containing words like "What", "Why", "How" and "Which", can be harder to classify due to the lack of limitation in regards to answer types\footnote{
-	An answer type is the expected type of the answer to a given question (e.g. a Location, Organization, Person, Date, etc). 
+	An answer type (or named entity) is the expected type of the answer to a given question (e.g. a Location, Organization, Person, Date, etc) \cite{Heie2012, Lopez2011, Sasaki2005, Yen2013}. 
 } \cite{Huang2008, Lopez2011}.
-
-
-\paragraph{Named-Entity Class (NE)}
-\label{sec:named_entities}
-- Named-Entity Class (NE): The named entity tag of the word \cite{Xu2012, Sasaki2005, Heie2012}
-
-
-\paragraph{Stop words}
-\label{sec:stop_words}
-- Stop words \cite{Wang2013, Manevitz2002, Zhang2003}
 
 
 \paragraph[Bag-of-words and N-grams]{\glsentrylong{bow} (\glsentryshort{bow}) and N-grams}
 \label{sec:bow}
-- \gls{bow}/N-grams \cite{Bloehdorn2004, Yen2013, Lopez2011, Cavnar1994, Huang2008, Zhang2003}
+N-gram is a model that is used for splitting text into either characters (character model) or word frequencies (word model). 
+The \gls{bow} model (or unigram) only looks at singular words, ignoring the order and relies only on the frequency for each word \cite{Manning2008, Russell2013}. 
+Bi-grams takes dual values, tri-gram takes three, etc.
+\vspace{0.5em}\newline
+One problem with N-grams is that the dimension of the feature space is equal to the amount of words in the vocabulary \cite{Russell2013, Loni2011}
+When using categorization, there can be issues with mapping new words that does not exist in the vocabulary \cite{Yen2013}.
+The impact of N-gram is also related to the size of the text being analysed. 
+\textcite{Zhang2003} found that there was not a big difference when using between bag-of-ngrams (all continuous word sequences in the question) and \gls{bow} as features.
 
-A problem with \gls{qc} learning systems is the high dimensional feature space (typically caused by the n-grams over all the vocabulary words). \cite{Loni2011}
 
-
-\paragraph{Word mapping and processing: Case-sensitivity, Stemming and Tokenization}
+\paragraph{Word mapping and processing: Case-sensitivity, Stemming, Stop words and Tokenization}
 \label{sec:word_mapping_processing}
-- word shape/case-sensitivty \cite{Huang2008, Loni2011}
-- Stemming \cite{Xu2012, Wang2013}
-- Tokenization  \cite{Xu2012, Wang2013}
-- Word mapping/synonyms \cite{Yen2013, Bloehdorn2004}
-- Semantics \cite{Bloehdorn2004, Lopez2011, Huang2008}
-- headwords \cite{Loni2011, Huang2008}
-- Sentiment \cite{Maas2011}
-- ontology \cite{Lopez2011}
-- \gls{pos}: The part-of-speech tag of the word \cite{Xu2012, Yen2013, Bloehdorn2004, Li, Heie2012}
-
-Word shapes (e.g. numeric, case, etc); Defined shape of all the words in the question and added them to feature vector. 
- \cite{Loni2011}
- 
-E.g. POS-tags, context-sensitive spelling correction, word-sense disambiguation, word choice selection in machine translation and identifying discourse markers, etc. \cite{Li, Heie2012}
- 
----> Text classification \cite{Kaestner2013}
-
-
-
-% Re-write and use what ever fits
-\textcite{Xu2012}
-
-Better to classify based on the domain of the question characteristics. 
-Original method for question classification is usually rule-based approach, where the rules decide the category. 
-Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts. 
-Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results. 
-
-Notes that the selection and organization of features is the main issue when working with classification. 
-Features and feature space can have a significant impact on both accuracy and efficiency of the classifier. 
-Compared with rule-based, question features for a specific domain can have greater benefits. 
-To improve performance, the classification must improve the question characteristics. 
-\cite{Xu2012}
-
+To reduce the amount of words used, there are more steps that can be taken. 
+By removing the case-sensitivity, all words will be equal (e.g. is the word 'Hello' equal to the word 'hello'?).
+\cite{Huang2008} includes case-sensitivity under a definition called word shape, consisting of five elements: upper case, all lower case, mixed case, all digits, and other.
+\vspace{0.5em}\newline
+Semantics can be used for word filtering, e.g. removal of duplicate words or words with same meaning. 
+WordNet has a built in function called synsets() which removes synonyms (words having the same meaning). 
+You can also look for hypernyms (words belonging to a category with a parent-child relationship) or use stemming.
+Stemming reduces the word to its base-form, e.g. crying would be converted into the word cry.
+Word separation is also possible through tokenization, which splits the text into an array based on a set delimiter.
+There is also usage of stop words for removal of frequently used words in a given language.
+\vspace{0.5em}\newline
+%Stop words \cite{Manevitz2002, Wang2013, Zhang2003, Kaestner2013, Joachims1998}
+Grammatical properties can be extracted by using \gls{pos}, e.g. by using \gls{nltk}\footnote{
+	\gls{nltk} includes in their \gls{pos} tagger the following grammatical properties:
+	Adjective, adposition, adverb, conjuction, determiner, article, noun, numeral, particle, pronoun, verb, 
+	punctuation mark and others	 \cite[See Section 2.3]{StevenBird2015}.
+}, which can be helpful in reducing ambiguities \cite{Bloehdorn2004}.
+\textcite{Li} uses the word head chunks to identify what the question is asking for when multiple types are introduced (avoid ambiguity). 
+The same concept is used in \cite{Huang2008} and \cite{Loni2011}, but there it is referred to as headwords.
 
 
 \subsection[Question-Answering]{\glsentrylong{qa} (\glsentryshort{qa})}
