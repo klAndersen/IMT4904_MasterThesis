@@ -1,6 +1,76 @@
 %\chapter{Discussions}
 \label{chap:chapter5}
 
+
+
+
+For Discussion chapter:
+--------------------
+
+% Re-write and use what ever fits
+In the \gls{bow} model, only single words or word stems are used as features for representing document content. 
+The issue is that learning algorithms are restricted to detecting patterns in the used terminology only, while ignoring conceptual patterns. 
+List of weaknesses with using \gls{bow} (1-3 addressed issues on a lexical level, and 4 conceptual level):
+\begin{enumerate}
+	\item Multi-Word Expressions with an own meaning like "European Union" are chunked into pieces with possibly very different meanings like "union".
+	\item Synonymous Words like "tungsten" and "wolfram" are mapped into different features.
+	\item Polysemous Words are treated as one single feature while they may actually have multiple distinct meanings.
+	\item Lack of Generalization: there is no way to generalize similar terms like "beef" and "pork" to their common hypernym "meat".
+\end{enumerate}
+WordNet database organizes simple words and multi-word expressions of different syntactic categories into so called synonym sets (synsets), 
+each of which represents an underlying concept and links these through semantic relations. \\
+Conceptual Document Representation:
+\begin{itemize}
+	\item Candidate Term Detection: Strategy built on the assumption that if you find the longest multi-word expressions in the text, 
+	the lexicon will lead to a mapping to the most specific concept for that word (instead of querying single words, which may lead to wrong mapping).
+	\item Syntactical Patterns:Analysis by using POS-tagging.
+	\item Morphological Transformations: Entry form, base form reduction. 
+	Stemming if the first query for the inflected forms on the original lexicon turned out unsuccessful.
+	\item Word Sense Disambiguation (WSD): A lexical entry for an expression does not necessarily imply a one-to-one mapping to a concept in the ontology. 
+	\item Disambiguate an expression versus multiple possible concepts.
+	\item Generalization: Going from specific concepts in the text to general concept representations. Mapping words based on generalization (up to a certain level).
+\end{itemize}
+\cite{Bloehdorn2004}
+
+% Re-write and use what ever fits
+\gls{qc}: predict the entity type of the answer of a natural language question, mostly achieved by using machine learning. 
+Used Latent Semantic Analysis (LSA) technique to reduce the large feature space of questions to a much smaller and efficient feature space. 
+Two different classifiers: Back-Propagation Neural Networks (BPNN) and Support Vector Machines (SVM). 
+Found that using LSA on question classification made it more time efficient and improved classification accuracy by removing redundant features. 
+Discovered that when the original feature space is compact and efficient, its reduced space performs better than a large feature space with a rich set of features. 
+They also found that in the reduced feature space, BPNN was better than SVM.  
+Competitive with state-of-the-art, even though they used smaller feature space.
+\cite{Loni2011}
+
+------------------------
+
+Note to self: Map graph over feature impact (unprocessed, singular, all)
+Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)). 
+
+
+% could be re-phrased into "in this paper, they define question analysis with two different approaches..."
+In the paper by \textcite{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
+E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
+They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
+low precision\footnote{
+	Low precision can occur if the feature sets are not fitted well enough during classifier training 
+	\cite[p.~283]{Toba2011}.
+}). 
+Pattern-based would match word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be based on the accuracy of the classifier 
+(e.g. lexical or linguistic feature sets). 
+% editor space
+The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian Analogical Reasoning (BAR). 
+Features sets are extracted from the training set by use of binary values checking if the question contains a given question word. 
+The BAR framework then learns the related features and computes the estimation for them. 
+Thereafter \gls{qa} pairs are retrieved from the testing set and compared against the training set. 
+Afterwards, the \gls{qa} pairs that have identical question words are identified, and overlapping pairs are grouped according their named entity group.
+To retrieve named entities, they used two different recognizers. 
+The first was Stanford (extracts the person, organization and location), and the second was dictionary based (extract number entities and fine-grained noun-based entities). 
+Question words were extracted by building a question word list from the training set (achieved by using Stanford Part-of-Speech (POS) tagger). 
+Then for each question, look for the appearance of the question word to create the feature set.
+Mapped named-entities.
+\cite{Toba2011}
+
 Potentially move "all this failed and went wrong" here
 
 ~\\
@@ -16,7 +86,7 @@ discussion on the data set and how it was tested. \\
 the results and what they showed.  \\
 potential improvements, etc.
 
-\section{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
+\section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
 \label{sec:ai_methods}
 alternative methods and options (e.g. one could have used ann or k-nn, but as shown in\ldots) \\
 not sure if this section is relevant?

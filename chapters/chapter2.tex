@@ -17,9 +17,11 @@ The following list shows the design used in \gls{so} (based on \textcite[p.~6-7]
 \begin{enumerate}
 	\item Votes: Questions and answers which are considered good (or bad) by the community can be given a score. 
 	This gives a filtering mechanisms, which allows users to ignore answers that are bad or wrong. 
-	Furthermore, answers are sorted by votes, and you can also sort questions on \gls{so} by vote score. 
+	Furthermore, answers are sorted by votes, and you can also sort questions on \gls{so} by vote score 
+	(see Figure \ref{fig:question_list_acc_answ}). 
 	\item Accepted answer: If the user asking a question gets an answer that they find satisfactory, they can select it as the "accepted answer". 
-	This answer will be the first displayed of the answers, and is also viewable when searching for questions (see Figure \ref{fig:question_list_acc_answ}).
+	This answer will be the first displayed of the answers, and is also viewable when searching for questions 
+	(see Figure \ref{fig:question_list_acc_answ} and \ref{fig:so_question_example}).
 	\item Tags: Each question is associated with a tag\footnote{
 		A full list can be seen here: \url{http://stackoverflow.com/tags/}
 	}, which can be a topic, a programming language, a methodology, etc.
@@ -35,29 +37,40 @@ The following list shows the design used in \gls{so} (based on \textcite[p.~6-7]
 	\item Critical mass: Before Atwood and Spoolsky launched \gls{so}, they invited developers and programmers to participate to have some domain experts available. 
 \end{enumerate}
 
+\clearpage
 % figure showing questions, where one question has an accepted answer
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{question_list_acc_answ}
+	\includegraphics[width=0.5\textwidth]{question_list_acc_answ}
 	\caption{List of questions, where one can see those with an accepted answers are marked with a green background.}
 	\label{fig:question_list_acc_answ}
 \end{figure}
 
+
+% figure showing page with question and answer
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{so_question_example}
+	\caption[Example of a question on Stack Overflow]{Example of a question on Stack Overflow\footnotemark}
+	\label{fig:so_question_example}
+\end{figure}
+\footnotetext{Source: \url{http://stackoverflow.com/questions/178325/checking-if-an-element-is-hidden}}
+
 \subsection[Stack Overflow and Gamification]{\glsentrylong{so} (\glsentryshort{so}) and Gamification}
 \label{sec:stackoverflow_gamification}
 \textcite{Deterding2011} defines Gamification as "the use of game design elements in non-game contexts", and is the definition this section will be based on. 
-Several papers make notes of the pedagogical and educational aspect of \gls{so} \cite{Nasehi2012, Posnett2012, Yang2014}, and \cite{Nasehi2012, Yang2014} actually use the term gamification in their paper.
+Several papers make notes of the pedagogical and educational aspect of \gls{so} \cite{Nasehi2012, Posnett2012, Yang2014}, and \cite{Nasehi2012, Yang2014} use the term gamification in their paper.
 One of the founders, Jeff Atwood said in an interview that he wanted users to not just give good answers, but also trick them into improving their communication skills \cite{Posnett2012}\footnote{
-	Based on the interview found here: \\ 
+	From this interview: \\ 
 	\url{http://www.wired.com/2012/07/stackoverflow-jeff-atwood/2012}.
 	}.
 In the course IMT4007 Serious Games Simon McCallum and Marius Nowostawski, presented their game GoRad, which was based on us students reading articles and posting questions which were voted on. 
 The \gls{so} system awards users based their activity by using votes, reputation and badges \cite{M.Sewak2010, Movshovitz-Attias2013, Treude2011, StackOverflow.com2016, StackOverflow.com2016d}.
 In relation to gaming, there are four player types: Achievers, Explorers, Socializers and Killers \cite[p.~3]{Maan2013}.
 \vspace{0.5em}\newline
-These player types can also be used as a representation\footnote{	
-	\textcite{Yang2014} characterised users into "Sparrows" and "Owls", where sparrows are those that answers question for reputation and owls are domain experts answering difficult questions. 
-	\textcite[p.~2]{Ahmed2015} defined users as lurkers, help-seekers (askers) and givers (responders).	
+These player types can be used as a representation\footnote{	
+	\textcite{Yang2014} characterised users as "Sparrows" and "Owls", where sparrows answers question for reputation and owls answers the difficult ones (domain experts).  \\
+	\textcite[p.~2]{Ahmed2015} defined users as "lurkers, help-seekers (askers) and givers (responders)".	
 	} for the various users of \gls{so}. 
 Achievers are there for the reputation and badges, socializers are to interact, discuss and share knowledge. 
 Explorers might find joy in looking at various topics, or searching for unanswered questions.
@@ -67,8 +80,8 @@ In an online \gls{qa} system (or Internet in general), these are what are common
 However, due to the system used in \gls{so}, Trolls would not be able to survive, simply because the reputation controls what you have access to \cite{StackOverflow.com2016g}. 
 If you down-vote a post, you lose reputation. 
 If your post gets down-voted, you also lose reputation. 
-Users can also be locked out of \gls{so} \cite{Atwood2009}.
-Although, there are a lot of blog posts claiming that a lot of moderators on \gls{so} are 
+Users who are not willing to follow the guidelines can be locked out of \gls{so} \cite{Atwood2009}.
+However, today there is a lot of blogs complaining about the current structure of \gls{so}, who claims that a lot of the moderators are
 trolls\footnote{\url{https://www.reddit.com/r/programming/comments/3cafkp/is_stack_overflow_overrun_by_trolls/}. \\	
 	\url{https://medium.com/@johnslegers/the-decline-of-stack-overflow-7cb69faa575d} \\ 
 	Last accessed 23.05.2016. 
@@ -76,23 +89,6 @@ trolls\footnote{\url{https://www.reddit.com/r/programming/comments/3cafkp/is_sta
 
 \subsection[Stack Overflow and reputation]{\glsentrylong{so} (\glsentryshort{so}) and reputation}
 \label{sec:research_on_so}
-
-
-\gls{se} and \gls{so} can be seen as an online learning community, since users help each gain new knowledge, and motivate learning \cite{Posnett2012}. 
-\textcite{Posnett2012} wanted to find out if the quality of the users answers improved over time. 
-By constructing a posting history for each user, they found that the overall answer score decreased, and that the answer quality was static.
-
-
-\textcite{Movshovitz-Attias2013} looked at the reputation system in \gls{so}, and found that users earn more reputation by providing good answers rather than good 
-questions\footnote{
-	However, as stated in \textcite[p.~3]{Movshovitz-Attias2013}, the reputation system was changed at one point. 
-	Originally, up-votes on questions and answers gave users a +10, but this was later changed into up-votes on questions only giving +5. 
-	It should be noted that the reputation score system was changed, since initially up-votes for questions and answers gave +10.
-	}.
-Most questions was asked by the users with a low reputation, but on average users with high reputation asked more questions. 
-This indicates that reputation could be used as a measurement for expertise. 
-\textcite{Ahmed2015} also found that there was a correlation between amount of answers given and the users reputation.
-
 
 Many \gls{qa} sites includes domain experts to ensure some quality is upheld, and uses voting and reputation as a quality measurement \cite{Anderson2012}.
 Furthermore, questions topics, page views and votes can be used by search engines as a ranking mechanism, and it helps users to find the answers they are looking for. 
@@ -104,19 +100,40 @@ Both \textcite{Anderson2012} and \textcite{Treude2011} defines an unanswered que
 }. 
 The second principle is that a questions activity level does not just indicate the interest for the question, but could also be an indicator for quality 
 (because a question can have multiple answers). 
+\vspace{0.5em}\newline
 Since users can only gain 200 reputation points daily, the only way to earn more is by having your answer marked as accepted or through bounties \cite{StackOverflow.com2016d}.
-
-
-
-
-
+\textcite{Movshovitz-Attias2013} found that users earn more reputation by providing good answers rather than good 
+questions\footnote{
+	However, as stated in \textcite[p.~3]{Movshovitz-Attias2013}, the reputation system was changed at one point. 
+	Originally, up-votes on questions and answers gave users a +10, but this was later changed into up-votes on questions only giving +5. 
+}.
+Most questions was asked by the users with a low reputation, but on average users with high reputation asked more questions. 
+This indicates that reputation could be used as a measurement for expertise. 
+\textcite{Ahmed2015} also found that there was a correlation between amount of answers given and the users reputation.
+\vspace{0.5em}\newline
+\textcite{Yang2014} found that the activity level of a user is not equal to knowledge, and divided users into two groups; "Sparrows" and "Owls".
+The sparrows are the basic users who earns reputation and badges by answering the easy questions, and has a greater interest in the gamification element. 
+They found that the sparrows usually has a low average score and targets questions that are easy, or non-relevant. 
+Nonetheless, they are still important since they are able to provide quick feedback.
+As for the owls, they are considered to be the domain experts.
+The owls earn reputation by asking more advanced questions, providing better answers (i.e. getting their answer accepted) and answering popular and difficult\footnote{
+	Popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted.
+	The popularity can also therefore be seen as a measurement for difficulty.
+	The longer it takes to answer, the more difficult the question is. 
+	\cite[p.~273]{Yang2014}.
+} questions.
+\vspace{0.5em}\newline
+\textcite{Posnett2012} views \gls{se} and \gls{so} as a learning community, since users help each gain new knowledge, and motivates learning.
+They wanted to see if the quality of the users answers improved over time. 
+By constructing a posting history for each user, they found that the overall answer score decreased, and that the answer quality was static.
+\vspace{0.5em}\newline
 \textcite{Nasehi2012} did a qualitative analysis of code examples posted on \gls{so}. 
 Their focus was on questions related to Java programming, with the requirements that the question should at least have a score of +4 and the answer +7. 
 In addition, a code example should be included (by checking for <code> in the post).
 They found that the code explanation was just as important as the code examples (but you are still restricted to the quality of that example).
 For the code to be considered good, they listed the following attributes: 
 \begin{enumerate}
-	\item Consise code: Code samples should not be too long. 
+	\item Concise code: Code samples should not be too long. 
 	They should be simple, and only focus on the parts that are relevant to the topic.
 	Additional or non-relevant parts should instead be documented by using descriptive comments.
 	\item Question context: 
@@ -133,166 +150,124 @@ For the code to be considered good, they listed the following attributes:
 \end{enumerate}
 
 
-Activity level is not the same as being a domain expert \cite{Yang2014}. 
-\textcite{Yang2014} divided users into two groups; "Sparrows" and "Owls".
-The sparrows are the basic users who earns reputation and badges by answering the easy questions, and has a greater interest in the gamification element. 
-They found that the sparrows usually has a low average score and targets questions that are easy, or non-relevant. 
-Nonetheless, they are still important since they are able to provide quick feedback.
-As for the owls, they are considered to be the domain experts.
-The owls earn reputation by asking more advanced questions, providing better answers (i.e. getting their answer accepted) and answering popular and difficult\footnote{
-	Popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted.
-	The popularity can also therefore be seen as a measurement for difficulty.
-	The longer it takes to answer, the more difficult the question is. 
-	 \cite[p.~273]{Yang2014}.
-} questions.
+\section{Asking questions}
+\label{sec:asking_questions}
 
-
-
-
-
-\textcite{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
-
-\textcite{Lezina2013} - Predict Closed Questions on StackOverflow
-
-\textcite{Stanley2013} - Predicting Tags for StackOverflow Posts
-
-\textcite{Short2014} - Tag Recommendations in StackOverflow
-
-
-% figure showing page with question and answer
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{so_question_example}
-	\caption[Example of a question on Stack Overflow]{Example of a question on Stack Overflow\footnotemark}
-	\label{fig:so_question_example}
-\end{figure}
-\footnotetext{Source: \url{http://stackoverflow.com/questions/178325/checking-if-an-element-is-hidden}}
-
-
-\begin{comment}
-
-Five main question types: why, how, what, whether and discrepancy \cite{Treude2011}.
-
-% written by me:
-\textcite{Yang2014} characterised users into "Sparrows" and "Owls". Sparrows are users who have a basic knowledge, but grind reputation by answering a lot of questions. 
-Owls are the domain experts, who care little about reputation and the gamification element, but are rather more interested in sharing knowledge and answering complex problems. 
-% Re-write and use what ever fits
-Only a small subset of users are major contributors to the success of \gls{qa} systems. 
-Standard expert identification methods often misclassified very active users for knowledgeable ones, and misjudge activeness for expertise. 
-Characterization of user expertise based on contribution quality.  \\
-Reasons for signing up/using qa systems:  \\
-\begin{enumerate}
-\item to look for existing solutions to their issues;
-\item to post a new question to the platform community;
-\item to contribute by providing new answers
-\item to comment or vote existing questions and answers
-\end{enumerate}
-%editor space
-Two user types/groups: Sparrows and Owls. \\
-Sparrows are an important part of the \gls{qa} system weigh up for a large part of the user base. 
-Even though they are very sociable and answer a lot of questions, it does not mean they are knowledgeable or experts.
-Sparrows are driven by the gamification element, wanting to achieve score votes, get a high reputation and earn a lot of badges. 
-Their focus is not on quality, or providing useful information with long-lasting answers. Usually have a low average score and usually only answers easy and non-relevant questions. 
-However, this user group keeps the community alive by quickly giving answers and feedback.  \\
-% editor space
-Owls are active members that participates not for the glory or gamification element, but because they want to share their knowledge and information for their domain. 
-These users show their expertise by answering difficult and complex questions, or questions that are important for users of the community. 
-Owls also answers questions that are more popular (where popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted).
-The question popularity can thus also be used as measurement for the questions difficulty; the longer it takes to answer, the more difficult the question is. \\
-% editor space
-Questions posted by the owls are also more difficult and popular, whereas questions posted by sparrows are less popular than the owls. 
-This can also be an indicator for the expertise level between the two user groups, since question popularity indicates the understanding the answerer has on the subject.
-The definition of an expert is someone that is recognised to be skilful or knowledgeable in a specific field (e.g. based on judgement by public, peers, etc). 
-Expertise then refers to the characteristics, skills, and knowledge that distinguish experts from novices and less experienced people.
-For \gls{qa} systems, social judgement is critical for expert identification. Questions are answered, and their quality is measured by the amount of votes.
-Answers to questions can reflect how a user applies their knowledge to solve problems. 
-Difficult questions generate a lot of discussions and answers, where the answer vote can be useful in providing evidence on answer expertise. \\
-Gamification is more interesting for sparrows than owls, suggesting that gamification used in \gls{so} is effective in keeping sparrows active within the community.
-\cite{Yang2014}
-
-\gls{so} has three properties of social learning techniques \cite{Nasehi2012}:
-\begin{enumerate}
-\item Support for finding answers based on natural language (does not have to rely on keywords)
-\item Support for connecting to the right people (question tags for domain experts)
-\item Engagement in qa by use of gamification; by use of votes and reputation
-\end{enumerate}
-They chose questions that had a score > 4, focusing on Java programming questions. Selected answers with score > 7, which included code examples (by looking for the <code> in the post).
-Categorised questions into two dimensions: 
-\begin{itemize}
-\item 1. Dimension (did not find any meaningful relationships and recognized answer attributes):
-\begin{itemize}
-\item API related questions
-\item OOP/Design questions
-\item Language basics questions
-\item Migrating to a new language
-\item Comparison of constructs for two different languages
-\end{itemize}
-\item 2. Dimension:
-\begin{itemize}
-\item Debug/Corrective: Runtime/development errors, design/structure issues
-\item Need-to-know: Possibility and uncertainty in relation to being able to achieve something (e.g. is it possible to...?)
-\item How-to-do-it: Scenario settings, how to achieve something, implementation suggestions
-\item Seeking-different-solution: Changes to working code; how can this be done differently
-\end{itemize}
-\end{itemize}
-Attributes of recognized answers:
-\begin{enumerate}
-\item Consise code: 
-Code size/length, simplification/complexity reduction. 
-Use of comments for left-out details/implementations. 
-Code length is distinguishing factor.
-\item Using question context: 
-For flawed/non-working code, answers usually includes improvement suggestions. 
-Best practices, improved readability in addition to working solution suggestion.
-\item Pedagogical benefit, since those asking questions learn to write better code.
-\item Highlighting important elements: 
-"Straight to the point", clearing up misunderstandings, pointing to relevant resources, etc.
-\item Step-by-step solution: 
-Splitting code into chunks, and explaining each chunk. 
-Explanation on how things work. 
-Comparison of languages; e.g. "How can I do X in C\#, when I'm used to Java?"
-\item Providing links to extra resources: 
-Keeping answer short by adding external links. 
-A summary of said link should still be included (e.g. if site goes down, is un-available, etc).
-\end{enumerate}
-\end{comment} 
-
-\section{What is the definition of a question?}
+\subsection{What is the definition of a question?}
 \label{sec:question_definition}
+The context of a question varies within the setting it is used. 
+A question can be broad, where multiple answers can all be correct, or they can be factual, having only one right answer. 
+When you are asking someone a question, you ask because you want to either find a solution to a problem, or learn something new. 
+In the context of learning, questions are used for evaluating the students knowledge, or help them learn something new \textcite{Nielsen2008}.
+\vspace{0.5em}\newline
+When doing research, you need research questions and hypotheses to decide what the goal of your research is. 
+What questions are you trying to find an answer to, and what does that answer tell you?
+\textcite{Slowiaczek1992} defines asking a question as information selection and the answer(s) to a question as information usage. 
+If you are working with statistical data, and you just post the numbers, this will not inform anyone. 
+You need to explain what the numbers mean, and how you got them.
+The quality of an answer is also restricted to the quality of the question you ask. 
+One can therefore assume that if you ask a good question, you will get a good answer \cite{Slowiaczek1992}. 
+
+\subsection[Question classification]{\glsentrylong{qc} (\glsentryshort{qc})}
+\label{sec:question_classification}
+\gls{qc} is the process of categorizing a question into a class or category based on its structure, usually to decide what the expected answer type is \cite{Li, Loni2011, Lopez2011}. 
+To classify a question, it is important to select only those features that helps you identify the class it belongs to.
+Depending on the question type, and the information you want to extract, various methods exists.
+
+\paragraph{WH-words}
+\label{sec:wh_words}
+WH-words are mostly found in factoid questions \cite{Lopez2011}. 
+\textcite{Huang2008} listed eight different WH-words: What, which, when, where, who, how, why, and rest (rest being the type does not belong to any of the previous type). 
+\textcite{Letovsky1987} also listed "Whether" and "Discrepancy"\footnote{
+	"Questions that reflect confusion over a perceived inconsistency." \cite[p.~5]{Letovsky1987}
+}.
+However, not all are equally easy to use for classification, because even if the questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
+Question containing words like "What", "Why", "How" and "Which", can be harder to classify due to the lack of limitation in regards to answer types\footnote{
+	An answer type is the expected type of the answer to a given question (e.g. a Location, Organization, Person, Date, etc). 
+} \cite{Huang2008, Lopez2011}.
+
+
+\paragraph{Named-Entity Class (NE)}
+\label{sec:named_entities}
+- Named-Entity Class (NE): The named entity tag of the word \cite{Xu2012, Sasaki2005, Heie2012}
+
+
+\paragraph{Stop words}
+\label{sec:stop_words}
+- Stop words \cite{Wang2013, Manevitz2002, Zhang2003}
+
+
+\paragraph[Bag-of-words and N-grams]{\glsentrylong{bow} (\glsentryshort{bow}) and N-grams}
+\label{sec:bow}
+- \gls{bow}/N-grams \cite{Bloehdorn2004, Yen2013, Lopez2011, Cavnar1994, Huang2008, Zhang2003}
+
+A problem with \gls{qc} learning systems is the high dimensional feature space (typically caused by the n-grams over all the vocabulary words). \cite{Loni2011}
+
+
+\paragraph{Word mapping and processing: Case-sensitivity, Stemming and Tokenization}
+\label{sec:word_mapping_processing}
+- word shape/case-sensitivty \cite{Huang2008, Loni2011}
+- Stemming \cite{Xu2012, Wang2013}
+- Tokenization  \cite{Xu2012, Wang2013}
+- Word mapping/synonyms \cite{Yen2013, Bloehdorn2004}
+- Semantics \cite{Bloehdorn2004, Lopez2011, Huang2008}
+- headwords \cite{Loni2011, Huang2008}
+- Sentiment \cite{Maas2011}
+- ontology \cite{Lopez2011}
+- \gls{pos}: The part-of-speech tag of the word \cite{Xu2012, Yen2013, Bloehdorn2004, Li, Heie2012}
+
+Word shapes (e.g. numeric, case, etc); Defined shape of all the words in the question and added them to feature vector. 
+ \cite{Loni2011}
+ 
+E.g. POS-tags, context-sensitive spelling correction, word-sense disambiguation, word choice selection in machine translation and identifying discourse markers, etc. \cite{Li, Heie2012}
+ 
+---> Text classification \cite{Kaestner2013}
+
+
 
 % Re-write and use what ever fits
-Question generation depends on the system to which it is embedded. 
-Questions are intended to evaluate knowledge, understanding and skills. 
-Socratic tutoring: Questions should help students understand something they did not understand before. 
-Help system: System should learn what resulted in the request for help. 
-Description of question taxonomy for tutoring systems (validated via human tutoring transcript analyses).
+\textcite{Xu2012}
 
-Revised the taxonomies considering redundancy, usefulness, and completeness. 
-If two labels had the same meaning they were merged. 
-When categories differed, the most generic was selected.
-	-> Mostly primary taxonomy; p. 2, Figure 1 that is relevant for my thesis
-\cite{Nielsen2008}
+Better to classify based on the domain of the question characteristics. 
+Original method for question classification is usually rule-based approach, where the rules decide the category. 
+Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts. 
+Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results. 
+
+Notes that the selection and organization of features is the main issue when working with classification. 
+Features and feature space can have a significant impact on both accuracy and efficiency of the classifier. 
+Compared with rule-based, question features for a specific domain can have greater benefits. 
+To improve performance, the classification must improve the question characteristics. 
+\cite{Xu2012}
 
 
-% Re-write and use what ever fits
-Hypothesis testing includes information selection (asking questions) and the use of information (answers to questions asked). 
-Two experiments using different kinds of inferences (category membership of individuals and composition of sampled populations). 
-Third experiment showed that certain information-gathering tendencies and insensitivity to answer diagnosticity can contribute to a tendency toward preservation of the initial hypothesis. 
-Critical elements in hypothesis testing is having a good question, and knowing what to do with the answer. 
-Gives example of a fictional planet which contains only two creatures. 
-These can only answer 'yes' or 'no', but they will answer truthfully. 
-Based on a given feature list, what question would you ask to be able to classify the creature you encounter? 
-This problem can be re-formulated into a Hypothesis, where H0 and H1 is either 'yes' or 'no' (or more defined, the race is\ldots). 
-Selection of hypothesis based on percentage/probability distribution, e.g. choosing those features that stands most out/is highly separated. 
-Also a question on what type of answers (and how many) one can expect from each individual. 
-Easy to assume that a good question will get a good answer (e.g. overestimation of yes/no when deciding which race creature belongs to). 
-Sensitivity in regards to the yes/no answer given (e.g. treating all cases as identical, etc).
-\cite{Slowiaczek1992}
 
-\section[Question-Answering]{\glsentrylong{qa} (\glsentryshort{qa})}
+\subsection[Question-Answering]{\glsentrylong{qa} (\glsentryshort{qa})}
 \label{sec:question_answering}
 % In various papers, \gls{qc} is said to be equal to text classification.
 
+
+% Re-write and use what ever fits
+Better to classify based on the domain of the question characteristics. 
+Original method for question classification is usually rule-based approach, where the rules decide the category. 
+Rule-based approach uses interrogative words and word combinations with other features of the rules extracted by experts. 
+Difficult to extract these rules and impossible to make all of them, which will have an impact on classification results. 
+Used RBF kernel in this experiment. 
+Notes that the selection and organization of features is the main issue when working with classification. 
+Features and feature space can have a significant impact on both accuracy and efficiency of the classifier. 
+Compared with rule-based, question features for a specific domain can have greater benefits. 
+To improve performance, the classification must improve the question characteristics. 
+\cite{Xu2012}
+
+% Re-write and use what ever fits
+\textcite{Xu2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
+The system included question analysis, \gls{ir} and answer extraction. 
+The question classification accuracy was important to the overall performance of the system. 
+The system was built using \gls{svm} and question semantic similarity, and the feature selection was based on lexical features and domain terms hierarchy. 
+The original method for question classification is mainly rule-based, where the rules decide the category (difficult to extract all the rules for the question category). 
+Another method is using statistics, as was done in \cite{Zhang2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
+Questions were divided into 13 coarse categories and 150 sub-categories. 
+The difference between these were that the sub-categories was built on sentences.
+\textcite{Xu2012}
 
 % Re-write and use what ever fits
 \gls{qa} system that includes question analysis, information retrieval and answer extraction.
@@ -311,7 +286,7 @@ They also needed to add a step for word segmentation and Part-Of-Speech (POS) ta
 To improve classification efficiency, domain knowledge was added by using domain term concept hierarchy (basically if words had the same meaning or concept, then they were added to a feature vector). 
 They used LIBSVM for coarse classification. 
 The sub-classification was done by measuring the similarity between the users question and those in the sub-categories  (calculated by utilizing word similarity based on term concept hierarchy). 
-For the SVM, they used cross-validation, where the training set was divided into five parts of equal size. 
+For the \gls{svm}, they used cross-validation, where the training set was divided into five parts of equal size. 
 After a classifier had been trained on the first four, the last was used to get the cross-validation accuracy (to ensure correct classification).
 \cite{Xu2012}
 
@@ -386,8 +361,6 @@ Mapped ratings to [0,1], and the semantic component did not require labels.
 \cite{Maas2011}	
 
 
-
-
 % Re-write and use what ever fits
 % Semantic web and Q/A
 Search and queries have become difficult and challenging for the semantic web. 
@@ -433,8 +406,6 @@ Needed to reduce complexity and the habitability problem, the main issues hinder
 \cite{Lopez2011}
 
 
-
-
 % Re-write and use what ever fits
 % Semantic web and Q/A
 Purpose of \gls{qa} is to get a factual answer from a large collection of text, instead of a list of documents.
@@ -464,98 +435,65 @@ For the code, we remove reserved keywords such as: if, while, etc., curly bracke
 These are then subjected to tokenization, stemming, and stop word removal too."
 \cite{Wang2013} :: An Empirical Study on Developer Interactions in StackOverflow
 
-
-For Discussion chapter:
---------------------
-
 % Re-write and use what ever fits
-In the \gls{bow} model, only single words or word stems are used as features for representing document content. 
-The issue is that learning algorithms are restricted to detecting patterns in the used terminology only, while ignoring conceptual patterns. 
-List of weaknesses with using \gls{bow} (1-3 addressed issues on a lexical level, and 4 conceptual level):
+Proposes head word feature and present two approaches to augment semantic features of such head words using WordNet. 
+Their linear SVM and Maximum Entropy (ME) models reached an accuracy of 89.2\% and 89.0\% over a standard benchmark dataset. 
+Used Libsvm.
+Question classification is not trivial; simply using question wh-words cannot achieve satisfactory results. 
+Difficult to classify "what" and "which" type questions. 
+Even though multiple questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
+Due to the large number of features in question classification, one may not need to map data to a higher dimensional space. 
+It has been commonly accepted that the linear kernel of
+K(x$_{i}$, x$_{j}$ ) = x$_{i}^{T}$*x$_{i}$
+is good enough for question classification. \\
+Used five binary feature sets; 
+% perhaps add as a summary list, a suggestion over common categorizations of various question types/classes
 \begin{enumerate}
-	\item Multi-Word Expressions with an own meaning like "European Union" are chunked into pieces with possibly very different meanings like "union".
-	\item Synonymous Words like "tungsten" and "wolfram" are mapped into different features.
-	\item Polysemous Words are treated as one single feature while they may actually have multiple distinct meanings.
-	\item Lack of Generalization: there is no way to generalize similar terms like "beef" and "pork" to their common hypernym "meat".
+	\item Question wh-words (eight types): what, which, when, where, who, how, why, and rest (rest being the type does not belong to any of the previous type).
+	\item Head words: one single word specifying the object that the question seeks to avoid misclassification of entities. Requires syntactic parser.
+	\item WordNet semantic feature for head words: 
+	Use of WordNet for word similarity distance, computing the similarity between the head word of such question and each description word in a question categorization.
+	\item Word N-grams: Used to provide word sense disambiguation for questions
+	\item Word shapes: Five word shape features; all upper case, all lower case, mixed case, all digits, and other.
 \end{enumerate}
-WordNet database organizes simple words and multi-word expressions of different syntactic categories into so called synonym sets (synsets), 
-each of which represents an underlying concept and links these through semantic relations. \\
-Conceptual Document Representation:
+WordNet is a large English lexicon in which meaningfully related words are connected via cognitive synonyms (synsets).  
+The WordNet is a useful tool for word semantics analysis and has been widely used in question classification. 
+Using WordNet for hypernyms; Y is a hypernym of X if every X is a (kind of) Y.
+For example, the hierarchies for a noun sense of domestic dog is described as: 
+dog -> domestic animal -> animal, 
+while another noun sense (a dull unattractive unpleasant girl or woman)  is organized as:
+dog -> unpleasant woman -> unpleasant person.
+Unigram forms the\gls{bow}feature, and bigram forms the pairs of words feature, and so forth. 
+Considered unigram, bigram, and trigram.
+Two experiments to test classifier accuracy.
+The first was evaluation of individual contribution of different feature types to question classification accuracy, 
+and in the second feature sets were incrementally fed to the SVM and ME (default parameter values for both). \\
+Experimented with five machine learning algorithms: 
 \begin{itemize}
-	\item Candidate Term Detection: Strategy built on the assumption that if you find the longest multi-word expressions in the text, 
-	the lexicon will lead to a mapping to the most specific concept for that word (instead of querying single words, which may lead to wrong mapping).
-	\item Syntactical Patterns:Analysis by using POS-tagging.
-	\item Morphological Transformations: Entry form, base form reduction. 
-	Stemming if the first query for the inflected forms on the original lexicon turned out unsuccessful.
-	\item Word Sense Disambiguation (WSD): A lexical entry for an expression does not necessarily imply a one-to-one mapping to a concept in the ontology. 
-	\item Disambiguate an expression versus multiple possible concepts.
-	\item Generalization: Going from specific concepts in the text to general concept representations. Mapping words based on generalization (up to a certain level).
+	\item Nearest Neighbors (NN) (simplified version of kNN)
+	\item Naive Bayes (NB)
+	\item Decision Tree (DT)
+	\item Sparse Network of Winnows (SNoW)
+	\item \gls{svm}, using two kinds of features: \gls{bow} and bag of N-grams (all continuous word sequences in the question).
 \end{itemize}
-\cite{Bloehdorn2004}
-
-% Re-write and use what ever fits
-\gls{qc}: predict the entity type of the answer of a natural language question, mostly achieved by using machine learning. 
-Used Latent Semantic Analysis (LSA) technique to reduce the large feature space of questions to a much smaller and efficient feature space. 
-Two different classifiers: Back-Propagation Neural Networks (BPNN) and Support Vector Machines (SVM). 
-Found that using LSA on question classification made it more time efficient and improved classification accuracy by removing redundant features. 
-Discovered that when the original feature space is compact and efficient, its reduced space performs better than a large feature space with a rich set of features. 
-They also found that in the reduced feature space, BPNN was better than SVM.  
-Competitive with state-of-the-art, even though they used smaller feature space.
-\cite{Loni2011}
-
-------------------------
-
-Note to self: Map graph over feature impact (unprocessed, singular, all)
-Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)). 
-
-
-\begin{comment}
-I can either use \verb|\cite{ChangLin2011}| and get: \cite{ChangLin2011}. \\
-Or I can use \verb|\textcite{ChangLin2011}| and get: \textcite{ChangLin2011}. \\
-\verb|\cite| is based on \verb|\renewcommand*{\cite}{\autocite}|, \\
-and \verb|\textcite| is based on \verb|\newcommand{\textcite}{\textcite}|. \\
-Unfortunately, you can't get the year, but at least you can now get in-text citation. 
-\end{comment}
+Using a search engine to retrieve list of documents vs getting the actual answer to the question. 
+To answer a question, you need to understand what answer the question asks for. 
+Classifying the question into semantic categories to understand what answer type is expected. 
+Common words like 'what', 'is', etc. should be neglected for document classification, but these "stop-words" are actually very important for question classification. 
+Writing heuristic rules for question classification can take time, and easily become complicated.
+Considers only the surface text feature for each question (extracting only two features: \gls{bow} and bag of N-grams).
+Every question is represented as binary feature vectors, because the term frequency (tf) of each word or N-gram in a question usually is 0 or 1.
+NB is regarded as one of the top performing methods for document classification. 
+Sparse Network of Winnows (SNoW) algorithm is specifically tailored for learning in the presence of a very large number of features and can be used as a general purpose multi-class classifier. 
+The learned classifier is a sparse network of linear functions. 
+Parameters for all algorithms was default values. 
+\gls{svm}: observed that the bag of N-grams features are not much better than the \gls{bow} features. 
+The \gls{svm} based on linear kernel turned out to be as good as the \gls{svm} based on polynomial kernel, RBF kernel and sigmoid kernel.
+Syntactic structures; proposed using a special kernel function called tree kernel to enable the SVM to take advantage of the syntactic structures of questions.
+\cite{Zhang2003}
 
 
-
-% could be re-phrased into "in this paper, they define question analysis with two different approaches..."
-In the paper by \textcite{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
-E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
-They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
-low precision\footnote{
-	Low precision can occur if the feature sets are not fitted well enough during classifier training 
-	\cite[p.~283]{Toba2011}.
-	}). 
-Pattern-based would match word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be based on the accuracy of the classifier 
-(e.g. lexical or linguistic feature sets). 
-% editor space
-The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian Analogical Reasoning (BAR). 
-Features sets are extracted from the training set by use of binary values checking if the question contains a given question word. 
-The BAR framework then learns the related features and computes the estimation for them. 
-Thereafter \gls{qa} pairs are retrieved from the testing set and compared against the training set. 
-Afterwards, the \gls{qa} pairs that have identical question words are identified, and overlapping pairs are grouped according their named entity group.
-To retrieve named entities, they used two different recognizers. 
-The first was Stanford (extracts the person, organization and location), and the second was dictionary based (extract number entities and fine-grained noun-based entities). 
-Question words were extracted by building a question word list from the training set (achieved by using Stanford Part-of-Speech (POS) tagger). 
-Then for each question, look for the appearance of the question word to create the feature set.
-Mapped named-entities.
-\cite{Toba2011}
-
-
-
-\textcite{Xu2012} used \gls{svm} to create an online \gls{qa} tourism system in Chinese. 
-The system included question analysis, \gls{ir} and answer extraction. 
-The question classification accuracy was important to the overall performance of the system. 
-The system was built using \gls{svm} and question semantic similarity, and the feature selection was based on lexical features and domain terms hierarchy. 
-The original method for question classification is mainly rule-based, where the rules decide the category (difficult to extract all the rules for the question category). 
-Another method is using statistics, as was done in \cite{Zhang2003} ("to classify questions in English. It uses tree kernel to extract features and classify questions with SVM classifier."). 
-Questions were divided into 13 coarse categories and 150 sub-categories. 
-The difference between these were that the sub-categories was built on sentences.
-\textcite{Xu2012}
-
-
-\section{Text classification}
+\section{Text categorization and classification}
 \label{sec:text_classification}
 % my own text; to be re-written
 Text classification can be done in many different ways, since the content and size rarely will be equal. 
@@ -617,63 +555,6 @@ Possible to achieve similar results using whole word statistics (using frequency
 
 
 
-
-% Re-write and use what ever fits
-Proposes head word feature and present two approaches to augment semantic features of such head words using WordNet. 
-Their linear SVM and Maximum Entropy (ME) models reached an accuracy of 89.2\% and 89.0\% over a standard benchmark dataset. 
-Used Libsvm.
-Question classification is not trivial; simply using question wh-words cannot achieve satisfactory results. 
-Difficult to classify "what" and "which" type questions. 
-Even though multiple questions ask for the same answer, wording and syntactic structures can make it difficult to classify.
-Due to the large number of features in question classification, one may not need to map data to a higher dimensional space. 
-It has been commonly accepted that the linear kernel of
-	K(x$_{i}$, x$_{j}$ ) = x$_{i}^{T}$*x$_{i}$
-is good enough for question classification. \\
-Used five binary feature sets; 
-% perhaps add as a summary list, a suggestion over common categorizations of various question types/classes
-\begin{enumerate}
-	\item Question wh-words (eight types): what, which, when, where, who, how, why, and rest (rest being the type does not belong to any of the previous type).
-	\item Head words: one single word specifying the object that the question seeks to avoid misclassification of entities. Requires syntactic parser.
-	\item WordNet semantic feature for head words: 
-	Use of WordNet for word similarity distance, computing the similarity between the head word of such question and each description word in a question categorization.
-	\item Word N-grams: Used to provide word sense disambiguation for questions
-	\item Word shapes: Five word shape features; all upper case, all lower case, mixed case, all digits, and other.
-\end{enumerate}
-WordNet is a large English lexicon in which meaningfully related words are connected via cognitive synonyms (synsets).  
-The WordNet is a useful tool for word semantics analysis and has been widely used in question classification. 
-Using WordNet for hypernyms; Y is a hypernym of X if every X is a (kind of) Y.
-For example, the hierarchies for a noun sense of domestic dog is described as: 
-	dog -> domestic animal -> animal, 
-while another noun sense (a dull unattractive unpleasant girl or woman)  is organized as:
-	dog -> unpleasant woman -> unpleasant person.
-Unigram forms the\gls{bow}feature, and bigram forms the pairs of words feature, and so forth. 
-Considered unigram, bigram, and trigram.
-Two experiments to test classifier accuracy.
-The first was evaluation of individual contribution of different feature types to question classification accuracy, 
-and in the second feature sets were incrementally fed to the SVM and ME (default parameter values for both). \\
-Experimented with five machine learning algorithms: 
-\begin{itemize}
-	\item Nearest Neighbors (NN) (simplified version of kNN)
-	\item Naive Bayes (NB)
-	\item Decision Tree (DT)
-	\item Sparse Network of Winnows (SNoW)
-	\item \gls{svm}, using two kinds of features: \gls{bow} and bag of N-grams (all continuous word sequences in the question).
-\end{itemize}
-Using a search engine to retrieve list of documents vs getting the actual answer to the question. 
-To answer a question, you need to understand what answer the question asks for. 
-Classifying the question into semantic categories to understand what answer type is expected. 
-Common words like 'what', 'is', etc. should be neglected for document classification, but these "stop-words" are actually very important for question classification. 
-Writing heuristic rules for question classification can take time, and easily become complicated.
-Considers only the surface text feature for each question (extracting only two features: \gls{bow} and bag of N-grams).
-Every question is represented as binary feature vectors, because the term frequency (tf) of each word or N-gram in a question usually is 0 or 1.
-NB is regarded as one of the top performing methods for document classification. 
-Sparse Network of Winnows (SNoW) algorithm is specifically tailored for learning in the presence of a very large number of features and can be used as a general purpose multi-class classifier. 
-The learned classifier is a sparse network of linear functions. 
-Parameters for all algorithms was default values. 
-\gls{svm}: observed that the bag of N-grams features are not much better than the \gls{bow} features. 
-The \gls{svm} based on linear kernel turned out to be as good as the \gls{svm} based on polynomial kernel, RBF kernel and sigmoid kernel.
-Syntactic structures; proposed using a special kernel function called tree kernel to enable the SVM to take advantage of the syntactic structures of questions.
-\cite{Zhang2003}
 
 
 
@@ -766,20 +647,7 @@ Another advantage of \gls{svm}s over the conventional methods is their robustnes
 Furthermore, \gls{svm}s do not require any parameter tuning, since they can find good parameter settings automatically. 
 All this makes \gls{svm}s a very promising and easy-to-use method for learning text classifiers from examples.
 \cite{Joachims1998}
-
-
-
-\section{Question classification}
-\label{sec:question_classification}
-Question classification and analysis can be seen as a sub-topic of text classification. 
-In most papers, the basis is that the user has a question they need an answer to. 
-What is the best way to find that answer, and in some cases what is the quickest way to display said answer?
  
-\begin{itemize}
-	\item question-answering techniques and analyses
-	\item ontology and semantics
-	\item StackExchange and other online communities for \gls{qa} (potentially separate section)
-\end{itemize}
 
 \section[SVM]{\glsentrylong{svm} (\glsentryshort{svm})}
 \label{sec:svm}
@@ -787,7 +655,32 @@ What is the best way to find that answer, and in some cases what is the quickest
 This section is mainly intended as a light introduction to what \gls{svm} is, and what the most common uses are. 
 Furthermore, in what way can this be utilized for text and question classification?
 
+% Re-write and use what ever fits
+In \gls{qc}, question is represented using vector space model, the question is a vector which is described by the words inside it. 
+\cite{Loni2011}
+
+
 \section{Dataset}
 \label{sec:dataset}
 short about the datasets, others who has used it, and datasets in general, e.g. 
 \cite{Klein2016,SpaceMachine.net2016,Wissner-Gross2016}
+
+
+
+
+
+
+
+
+
+\section{undefined}
+\label{sec:undefined}
+% stuff everything that doesn't fit elswhere bu is still of relevance
+
+\textcite{Stanley2013} - Predicting Tags for StackOverflow Posts
+
+\textcite{Short2014} - Tag Recommendations in StackOverflow
+
+\textcite{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
+
+\textcite{Lezina2013} - Predict Closed Questions on StackOverflow
