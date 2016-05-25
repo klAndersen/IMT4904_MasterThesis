@@ -112,8 +112,7 @@ As for the owls, they are considered to be the domain experts.
 The owls earn reputation by asking more advanced questions, providing better answers (i.e. getting their answer accepted) and answering popular and difficult\footnote{
 	Popularity was measured based on page views and the time between a question was posted until an answer was selected as accepted.
 	The popularity can also therefore be seen as a measurement for difficulty.
-	The longer it takes to answer, the more difficult the question is. 
-	\cite[p.~273]{Yang2014}.
+	The longer it takes to answer, the more difficult the question is~\cite[p.~273]{Yang2014}.
 } questions.
 \vspace{0.5em}\newline
 \textcite{Posnett2012} views \gls{se} and \gls{so} as a learning community, since users help each gain new knowledge, and motivates learning.
@@ -269,81 +268,83 @@ However, these were outperformed by the \gls{svm}.
 \section[SVM]{\glsentrylong{svm} (\glsentryshort{svm})}
 \label{sec:svm}
 
-\todo[inline]{For simon;  forgot to mention this section is not written, it mainly contained copy/pasted of notes from report. I'm now reading through the books to attempt to write in the relevant}
-
-% rewrite all these; notes from AI/ML books
-\gls{svm} relies on preprocessing of data for presenting patterns in a high dimension, usually higher than original feature space.
-\gls{svm} attempts to solve linear problems by creating a hyperplane that separates the classes with the largest margin.
-\gls{svm} relies on what is known as support vectors, which is the transformed training patterns that are closest to the hyperplane.
-\cite{Duda2001}
-
-Support vectors are the points closest to the margin of the classifier (where margin is the distance from the hyperplane).
-Large margins increase quality of classifier, because you avoid misclassification.
-Decision hyperplane can be defined by an intercept term \textit{b} and a decision hyperplane normal vector $\vec{w}$.
-$\vec{w}$ is known as the weight vector.
-The goal is to satisfy $\vec{w}^{T}\vec{x} = \textit{-b}$ ($\vec{x}$ is all points on the hyperplane).
-$\mathbb{D} = \{(\vec{x}_{i}, y_{i})\}$ where $\vec{x}_{i}$ is data point, and $ y_{i}$ is its belonging class label.
-The class labels are always +1 and -1, and intercept term is always represented by \textit{b}.
-The linear classifier is represented as $f(\vec{x}) = sign(\vec{w}^{T}\vec{x}~+~b)$.
-For non-linear separable cases (common problem in text classification), one can allow it to make some mistakes. 
-To do this, we pay a cost for the misclassification.
-This is represented by a slack variable $\xi_{i}$.
-If $\xi_{i}$ is not zero, then  $\vec{x}_{i}$ can miss the margin requirement at the cost of $\xi_{i}$.
-This can be formulated to finding  $\vec{w},~b$ and $\xi_{i} \geq 0$; where 
-$\frac{1}{2}\vec{w}^{T}\vec{w}~+~C\sum_{i}\xi_{i}$ is minimized, 
-and for all $\{(x_{i}, y_{i})\}, y_{i}(\vec{w}^{T}\vec{x}~+~b) \geq 1 - \xi_{i}$.
-Tradeoff between fatness of margin and ability to amount of points that can be moved around.
-The parameter C is a regularization term, providing ways to avoid overfitting.
-The greater C becomes, the less flexibility you get from the slack variable.
-\gls{svm} is mainly two-class classifiers.
-Mapping to higher dimensional space is done by using the kernel trick (based on math).
-Radial basis function (rbf) maps data into infinite dimensional Hilbert space.
-Hilbert space is vector space closed under dot products.
-\cite{Manning2008}
-
-\gls{svm}s are good for solving regression and classification problems.
-Class label that maximizes the decision function based on the value from $f(\vec{x}) = sign(\vec{w}^{T}\vec{x}~+~b)$.
-Optimal hyperplane is the one most distant from the nearest examples of each class (support vectors).
-Hyperplane equation: $\vec{w}^{T}\vec{x} = \textit{-b}$
-Optimization problem: $\frac{1}{2}\vec{w}^{T}\vec{w}~+~C\sum_{i}\xi_{i}$
-Kernel functions:
-% editor space
-Linear (preserving original attribute space): 
-K (\textbf{t}$_{j}$, \textbf{t}) = \textbf{t} $ \cdot$ \textbf{t}$_{j}$
-% editor space
-Polynomial - for a given polynomial degree \textit{d}, we use this dot product convolution: 
-K (\textbf{t}$_{j}$, \textbf{t}) = [(\textbf{t} $ \cdot$ \textbf{t}$_{j}$) + 1]$^{d}$
-% editor space
-Radial - for a given value given for $\gamma$, we use this dot product convolution: 
-K (\textbf{t}$_{j}$, \textbf{t}) = $e^{-\gamma|\textbf{t}-\textbf{t}_{j}|^{2}}$
-% editor space
+\gls{svm}s are good for solving regression and classification problems, and attempts to solve a linearly separable problem by using hyperplanes \cite{Duda2001, Kononenko2007, Russell2013}.
+It is usually used for binary classifications, where classes are represented as either +1 or -1 \cite{Manning2008, Russell2013}. 
+The hyperplane is the plane which separates the two classes: 
+% hyperplane equation
+\begin{equation}\label{eq:hyperplane}
+\vec{w}^{T}\vec{x} = \textit{-b} 
+\end{equation}
+where \textit{b} is the intercept term and $\vec{w}$ is the weight vector (or decision hyperplane normal vector).
+The data set can be represented as $\mathbb{D} = \{(\vec{x}_{i}, y_{i})\}$ where $\vec{x}_{i}$ is a data point, and $ y_{i}$ is its belonging class label.
+The linear classifier is represented in Equation \ref{eq:linear_classifier}  \cite[p.~295-296]{Manning2008}. 
+% linear classifier
+\begin{equation}\label{eq:linear_classifier}
+f(\vec{x}) = sign(\vec{w}^{T}\vec{x} + b)
+\end{equation}
+% space
+In addition to using a hyperplane, the \gls{svm} has an additional separation known as support vectors. 
+Support vectors are the training points closest to the margin (the margin is the distance from the hyperplane) \cite{Duda2001, Manning2008}.
+Which then gives that the optimal hyperplane is the furthest from the support vectors \cite{Kononenko2007}.
+% space
+\gls{svm} has four different kernels, but a limitation is that there is no way to select the best kernel function. 
+Therefore, \gls{svm} often uses hyper-parameters and select the classifier based on the best results \cite{Theodoridis2009}.
+Equation \ref{eq:kernel_polynomial} - \ref{eq:kernel_sigmoid} shows the kernel functions (K) for polynomial, radial basis function (RBF) and sigmoid (taken from \cite[p.~273]{Kononenko2007}). \\
+% polynomial kernel
+Polynomial - for a given polynomial degree \textit{d}, the following is used:
+\begin{equation}\label{eq:kernel_polynomial}
+K (\textbf{x}_{j}, \textbf{x}) = [(\textbf{x}  \cdot \textbf{x}_{j}) + 1]^{d}
+\end{equation}
+% rbf kernel
+Radial - for a given $\gamma$ value, the following is used:
+\begin{equation}\label{eq:kernel_rbf}
+K (\textbf{x}_{j}, \textbf{x}) = e^{-\gamma|\textbf{x}-\textbf{x}_{j}|^{2}}
+\end{equation}
+% sigmoid kernel
 Sigmoid - for a given sigmoid function S, we get a kernel function of parameters \textit{v} and \textit{c}: 
-K (\textbf{t}$_{j}$, \textbf{t}) = S(\textit{v}(\textbf{t} $ \cdot$ \textbf{t}$_{j}$) + c)
-% editor space
-\cite{Kononenko2007} 
+\begin{equation}\label{eq:kernel_sigmoid}
+K (\textbf{x}_{j}, \textbf{x}) = S(\textit{v}(\textbf{x}  \cdot \textbf{x}_{j}) + c)
+\end{equation}
+
+For text classification, in most cases it will be non-linearly separable. 
+One can therefore allow the \gls{svm} to do some mistakes.
+However, there is a cost for misclassifications, represented by what is called a slack variable $\xi_{i}$.
+If $\xi_{i}$ is set (not zero), then the vector can miss the margin requirement at the cost of $\xi_{i}$.
+Equations are shown in Equation \ref{eq:slack_variable1} - \ref{eq:slack_variable3} (taken from \cite[p.~301]{Manning2008}). \\
+Find
+% slack variable optimization - 1
+\begin{equation}\label{eq:slack_variable1}
+\vec{w}, b~and~\xi_{i} \geq 0
+\end{equation}
+% slack variable optimization - 2
+so that we can minimize the optimization problem
+\begin{equation}\label{eq:slack_variable2}
+\frac{1}{2}\vec{w}^{T}\vec{w}~+~C\sum_{i}\xi_{i}
+\end{equation}
+% slack variable optimization - 3
+and for all
+\begin{equation}\label{eq:slack_variable3}
+\{(x_{i}, y_{i})\},~y_{i}(\vec{w}^{T}\vec{x}~+~b) \geq 1 - \xi_{i}
+\end{equation}
+However, this gives a trade-off between the size of the margin and how much the data points can be adjusted. 
+To avoid overfitting, the parameter C is used for regularization, where the size of C decides how much flexibility you get from the slack variable \cite{Manning2008}.
+\gls{svm} neither suffer from the Curse of dimensionality, because the computational complexity is independent of the kernels dimensional space~\cite{Theodoridis2009}.
 
 
+% SHOULD THIS BE USED?
+%\gls{svm} uses the maximum margin solution, which is based on computational learning theory\footnote{	
+%	Computational learning theory is an attempt to understand how large a data set needs to be in order to give good generalization \cite[p.~344]{Bishop2006}.
+%} \cite{Bishop2006, Joachims1998}.
+%
+%
+%
+%% keep this sentence; its properly re-written
+%For \gls{qc} a question is usually represented as a vector space model, where each vector contains the words from the question \cite{Loni2011}.
 
-
-
-
-
-% keep this sentence; its properly re-written
-For \gls{qc} a question is usually represented as a vector space model, where each vector contains the words from the question \cite{Loni2011}.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\textcite{Joachims1998} found that \gls{svm} consistently achieved good performance during text categorization. 
+Since \gls{svm} could generalize in high dimensional feature space, the need for feature selection was removed, and \gls{svm} was also robust. 
+Since \gls{svm} does not require parameter tuning, they could find good parameter settings automatically. 
+\textcite{Loni2011} found that \gls{svm} are successful on high dimensional data when it is sparse, but they still suffer from redundant features. 
 
 \begin{comment}
 % Re-write and use what ever fits
@@ -386,10 +387,6 @@ Furthermore, \gls{svm}s do not require any parameter tuning, since they can find
 All this makes \gls{svm}s a very promising and easy-to-use method for learning text classifiers from examples.
 \cite{Joachims1998}
 \end{comment}
-
-
-
-
 
 
 \section{Dataset}
