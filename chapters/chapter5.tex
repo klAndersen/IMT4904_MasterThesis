@@ -88,28 +88,9 @@ Potentially move "all this failed and went wrong" here
 		C			& 1					& 1			\\ \hline
 		Kernel		& Linear			& Linear	\\ \hline
 	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors}
+	\caption{Comparison of raw data set (unprocessed) and singular feature detectors for Tex.StackExhange (August 2015 data set).}
 	\label{tab:singular_feature_detector_tex}
 \end{table}
-
-\begin{comment}
-% potentially flip this, and this as a Score X feature (since all kernel values were the same)
-% something like "Comparison ..., with Kernel = RBF, Gamma = gamma and C = c
-% and the table having features as rows, and score X unprocessed as column
-\begin{table}[tbp]
-\centering
-\begin{tabular}{| c | c | c | c | c | c | c | c |}
-\hline
-~ 					& Code sample	& Numerical		& Hexadecimal	& Homework		& Link 		& Tags	\\ \hline
-Score 				& 0.783			& 0.796			& 0.793			& 0.794			& 0.795 	& 0.757	\\ \hline
-C					& 1000			& 1000			& 1000			& 1000			& 1000 		& 1000	\\ \hline
-Gamma ($\gamma$)	& 0.001			& 0.001			& 0.001			& 0.001			& 0.001 	& 0.001	\\ \hline
-Kernel				& RBF			& RBF			& RBF			& RBF			& RBF 		& RBF	\\ \hline
-\end{tabular}
-\caption{Comparison of raw data set (unprocessed) and singular feature detectors}
-\label{tab:singular_feature_detector_so2}
-\end{table}
-\end{comment}
 
 
 \begin{table}[tbp]
@@ -204,24 +185,20 @@ Kernel				& RBF			& RBF			& RBF			& RBF			& RBF 		& RBF	\\ \hline
 	\label{tab:comparison_of_feature_occurences_only}
 \end{table}
 
-\begin{comment}
-\begin{table}[tbp]
-\centering
-\begin{tabular}{| c | c | c | c | c |}
-\hline
-~				& Votes < 0			& Votes = 0			& Votes > 0		& All			\\ \hline
-Amount			& 659,955			& 5,256,105			& 5,286,971		& 11,203,031	\\ \hline
-Oldest			& 06.08.2008		& 06.08.2008		& 31.07.2008	& 31.07.2008 	\\ \hline
-Newest			& 06.03.2016		& 06.03.2016		& 06.03.2016	& 06.03.2016	\\ \hline
-Vote (lowest)	& -147				& 0					& 1				& -147	 		\\ \hline
-Vote (highest)	& -1				& 0					& 13845			& 13845	 		\\ \hline
-\end{tabular}
-\caption{Overview of the Stack Overflow dataset.}
-\label{tab:dataset_overview_so2}
-\end{table}
-\end{comment}
+~\\
+To write: \\
+Tutorials that I went through \\
+Using SGD (based on tutorials from scikit-learn) \\
+Testing out different text classification algorithms (SVC, SGD and LinearSVC) \\
+Paths, Windows vs. Linux, parallellization, gpu\_count, etc
 
-\begin{table}[tbp]
+\section{Data and Testing}
+\label{sec:data_and_testing}
+The dataset was retrieved from Stack Exchange Archive \cite{StackExchange2016}, and contains all the data posted from the beginning. 
+In this thesis, only the data for \gls{so} was used, specifically only the posted questions.
+A simplified overview is shown in Table \ref{tab:dataset_overview_so}, which lists questions based on score. 
+
+\begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c | c | c | c |}
 		\hline
@@ -234,19 +211,44 @@ Vote (highest)	& -1				& 0					& 13845			& 13845	 		\\ \hline
 	\caption{Overview of the Stack Overflow dataset.}
 	\label{tab:dataset_overview_so}
 \end{table}
+As previously mentioned in Section \ref{sec:feature_sets}, the value used to extract the questions was set to -5 and +50. 
+The problem with these values are that they were simply selected. 
+Originally, the value for bad questions was -10, which were then changed to -5 because -10 only retrieved 683 rows (and I wanted 10,000 samples for both question types).
+However, as can be seen from Table \ref{tab:dataset_overview_so}, +50 is most likely a to low value for the good questions. 
+To get better results based on desired quality, there are three options to consider which could improve this.
+\vspace{0.5em}\newline
+The first is the easiest. If you are only interested in a set sample size, then you could simply retrieve the amount sorted by score.
+If you then want 10,000 of each, you would then get the 10,000 that are scored highest (or lowest).
+The second option would be to get a set limit based on the actual score, by using the mean or average.
+For all the questions of a given type, retrieve the average and then select questions which has a score higher (or lower) than the average.
+The third option is based on the representation of the sample size, and can be achieved by using quartiles. 
+Quartiles is measured by a given percentage of the observations, represented by the three observations. 
+Q$_{1}$ (25\%), M (median, 50\%) and Q$_{3}$ (75\%) \cite{Hagen2011}.
+Quartiles can be found by using the equation shown in Equation \ref{eq:quartile1} - \ref{eq:quartile3}, and the result for the \gls{so} database is shown in Equation 
+\ref{eq:quartile_selection}\footnote{
+It should be noted that I have used the first Quartile for both the good and the bad questions, because it represents how many one would need to retrieve for each. 
+If you were to retrieve this from the database, then the limit would be the result, with the addition of sorting the results based on the highest or lowest score.	
+}.
 
-~\\
-To write: \\
-Tutorials that I went through \\
-Using SGD (based on tutorials from scikit-learn) \\
-Testing out different text classification algorithms (SVC, SGD and LinearSVC) \\
-Paths, Windows vs. Linux, parallellization, gpu\_count, etc
+\begin{equation}\label{eq:quartile1}
+Q_{1} = \frac{(n + 1)}{4}
+\end{equation}
 
-\section{Data and Testing}
-\label{sec:data_and_testing}
-discussion on the data set and how it was tested. \\
-the results and what they showed.  \\
-potential improvements, etc.
+\begin{equation}\label{eq:quartile2}
+M = \frac{(n + 1)}{2}
+\end{equation}
+
+\begin{equation}\label{eq:quartile3}
+Q_{3} = \frac{3 \cdot (n + 1)}{4}
+\end{equation}
+
+\begin{equation}\label{eq:quartile_selection}
+\begin{split}
+Q_{1} = \frac{(659,955 + 1)}{4} = 164,989 \\
+Q_{1} = \frac{(5,286,971 + 1)}{4} = 1,321,743
+\end{split}
+\end{equation}
+
 
 \section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
 \label{sec:ai_methods}
