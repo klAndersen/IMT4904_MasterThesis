@@ -76,115 +76,6 @@ Mapped named-entities.
 Potentially move "all this failed and went wrong" here
 \end{comment}
 
-
-\todo[inline]{temporary results listing of various stuff - some will be removed, moved to appendix, etc}
-
-\begin{table}[tbp]
-	\centering
-	\begin{tabular}{| c | c | c |}
-		\hline
-		~ 			& Unprocessed		& Features	\\ \hline
-		Score 		& 0.993				& 0.993		\\ \hline
-		C			& 1					& 1			\\ \hline
-		Kernel		& Linear			& Linear	\\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors for Tex.StackExhange (August 2015 data set).}
-	\label{tab:singular_feature_detector_tex}
-\end{table}
-
-
-\begin{table}[tbp]
-	\centering
-	\begin{tabular}{| c | c |}
-		\hline
-		~ 				& Score	\\ \hline
-		Code samples 	& 0.783	\\ \hline
-		Numerical		& 0.796	\\ \hline
-		Hexadecimal		& 0.793	\\ \hline
-		Homework 		& 0.794	\\ \hline
-		Link			& 0.795	\\ \hline
-		Tags			& 0.757	\\ \hline
-		Unprocessed		& 0.804 \\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors. Using SVC, with Kernel=RBF, C=1000 and Gamma=($\gamma$) 0.001}
-	\label{tab:singular_feature_detector_so}
-\end{table}
-
-
-\begin{table}[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c |}
-		\hline
-		~ 					& Unprocessed (SVC)	& All features	& All features (no stemming)	\\ \hline
-		Score 				& 0.804				& 0.793			& 0.784							\\ \hline
-		C					& 1000				& 1000			& 1000							\\ \hline
-		Gamma ($\gamma$)	& 0.001				& 0.001			&  0.001							\\ \hline
-		Kernel				& RBF				& RBF			& RBF							\\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors (SVC)}
-	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
-\end{table}
-
-\begin{table}[tbp]
-	\centering
-	\begin{tabular}{| c| c | c | c | c |}
-		\hline
-		~				& Unprocessed		& Unprocessed (loss='log')		& All features (loss='log')	\\ \hline
-		Score 			& 0.8073125				& 0.8071875					& 0.79325					\\ \hline
-		Min DF 			& 0.01					& 0.01						& 0.01						\\ \hline
-		Max DF 			& 1.0					& 1.0						& 0.75						\\ \hline
-		Use IDF			& False					& True						& True						\\ \hline
-		Alpha 			& 1e-05					& 1e-05						& 1e-05						\\ \hline
-		Normalization 	& l1					& l2						& l2						\\ \hline		
-		Penalty 		& l1					& l2						& l2						\\ \hline
-		Iteration 		& 100					& 75						& 100						\\ \hline
-		Loss 			& hinge					& log						& log						\\ \hline		
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors (SGD)}
-	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
-\end{table}
-
-
-\begin{lstlisting}[caption={Parameters for SGD}, label={lst:param_sgd}] 
-    grid_parameters = {
-    	'vect__min_df': (0.01, 0.025, 0.05, 0.075, 0.1),
-    	'vect__max_df': (0.25, 0.5, 0.75, 0.95, 1.0),
-    	'tfidf__use_idf': (True, False),
-    	'tfidf__norm': ('l1', 'l2'),
-    	'clf__alpha': (0.00001, 0.000001),
-    	'clf__penalty': ('l1', 'l2', 'elasticnet'),
-    	'clf__n_iter': (10, 50, 75, 100),
-    	# 'clf__loss': ('hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'),
-    }
-\end{lstlisting}
-
-
-\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}] 
-    param_svm = [
-    {'clf__C': [1, 10, 100, 1000], 'clf__kernel': ['linear']},
-    {'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['rbf']},
-    {'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['sigmoid']},
-    ]
-\end{lstlisting}
-
-
-\begin{table}[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c | c | c | c |}
-		\hline
-		~				& Unprocessed		& FEATURE		& C			& Gamma ($\gamma$)	& Kernel	& Amount	 	\\ \hline
-		Code samples 	& Score: 0.802		& Score: 0.784	& 1000		& 0.001				& RBF 		& 9,855 		\\ \hline
-		Numerical		& Score: 0.834		& Score: 0.815	& 1			& N/A				& Linear	& 9,024			\\ \hline
-		Hexadecimal		& Score: 0.859		& Score: 0.883	& 1000		& 0.001				& RBF		& 160 			\\ \hline
-		Homework 		& Score: 0.873		& Score: 0.859	& 1000		& 0.001				& RBF		& 374 			\\ \hline
-		Link			& Score: 0.885		& Score: 0.838	& 1			& N/A				& Linear	& 2,575			\\ \hline
-		Tags			& Score: 0.806		& Score: 0.757	& 1000		& 0.001				& Sigmoid	& 19,967		\\ \hline
-		All features	& Score: 0.808		& Score: 0.788	& 1000		& 0.001				& RBF 		& 17,558		\\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and numerical, for questions that had it.}
-	\label{tab:comparison_of_feature_occurences_only}
-\end{table}
-
 ~\\
 To write: \\
 Tutorials that I went through \\
@@ -192,7 +83,7 @@ Using SGD (based on tutorials from scikit-learn) \\
 Testing out different text classification algorithms (SVC, SGD and LinearSVC) \\
 Paths, Windows vs. Linux, parallellization, gpu\_count, etc
 
-\section{Data and Testing}
+\section{Data set and Question selection}
 \label{sec:data_and_testing}
 The dataset was retrieved from Stack Exchange Archive \cite{StackExchange2016}, and contains all the data posted from the beginning. 
 In this thesis, only the data for \gls{so} was used, specifically only the posted questions.
@@ -236,8 +127,153 @@ M = \frac{(n + 1)}{2}
 \begin{equation}\label{eq:quartile3}
 Q_{3} = \frac{3 \cdot (n + 1)}{4}
 \end{equation}
+As previously mentioned in Section \ref{sec:feature_sets}, there was no clear indicator for the good questions. 
+Some consisted only of two sentences, e.g. "I committed the wrong files to Git. How can I undo this commit?"\footnote{
+	This question currently have a score of 10,406: \\ 
+	\url{http://stackoverflow.com/questions/927358/how-do-you-undo-the-last-commit/6866485}.
+}. Common for most of the top-voted are that they are mostly short, however you also have those that are long\footnote{
+	One example is this, with a score of 3009: \\
+	\url{http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting}.
+}.
+There is also what I would call a bias factor. 
+If enough people have the same problem, then it will automatically become a good question. 
+Not because of the questions quality, but simply because many will encounter it (e.g. Bugs, \gls{ide} behaviour, tweaks, etc).
+The same can be said for bad questions. 
+In many cases, a question is bad not because of the question that is asked, but simply because it does not follow the guidelines. 
+If a question is a duplicate, it is automatically voted for closure, and will in most cases receive multiple down-votes. 
+Questions which gives a hint of being school related will also receive down-votes, mainly because \gls{so} targets professionals and experts. 
 \vspace{0.5em}\newline
-gdssgsdg
+Is \gls{so} fit for measuring question quality?
+In a closed domain setting, the answer is yes. 
+However, as mentioned, what type of quality being measured must be taken into consideration. 
+As it is, the system would not be useful for an educational setting, because it bases its prediction on questions asked on \gls{so}.
+If a student were to ask the system a question, it might respond saying that this is a bad question (but the result may be based on the fact that it is a duplicate).
+For an educational setting, a better solution would be to develop a system similar to the one in \cite{Lezina2013}.
+With the current state of the system (if it were to be used), it would be more appropriate to use it as a measurement tool for new \gls{so} questions, rather then general question quality.
+
+\section{Development}
+\label{sec:development}
+There was a lot of back and forth during the testing, and a lot of time was invested trying to understand how Scikit-learn should be used. 
+Aside from the examples from Scikit-learns own pages \cite{Scikitlearn.org2016,Scikitlearn.org2016h}, two that helped getting some progress were \cite{Rehurek2014} and \cite{Elahi2016}.
+\textcite{Rehurek2014} used in his example \gls{svc} to train the \gls{svm}, but he had no explanation to what the numbers he used was taken from\footnote{
+	I later found that these were just the basic numbers used in Scikit-learns tutorial as a default value.
+}.
+Scikit-learn has in their tutorial for text data \cite{Scikitlearn.org2016h} a list of tasks one can complete. 
+When looking at the solution for the second task (Sentiment analysis), I saw that they used \gls{sgd} (see \cite{Scikitlearn.org2016f}).
+Furthermore, when looking at the suggested "road map" (see Appendix \ref{app:acronyms}, Figure \ref{fig:ml_map} on p.~\pageref{app:acronyms}), 
+I accidentally misread a zero and decided to use \gls{sgd} instead of \gls{svc}.
+
+
+
+
+\todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
+
+
+\begin{lstlisting}[caption={Parameters for SGD}, label={lst:param_sgd}] 
+grid_parameters = {
+'vect__min_df': (0.01, 0.025, 0.05, 0.075, 0.1),
+'vect__max_df': (0.25, 0.5, 0.75, 0.95, 1.0),
+'tfidf__use_idf': (True, False),
+'tfidf__norm': ('l1', 'l2'),
+'clf__alpha': (0.00001, 0.000001),
+'clf__penalty': ('l1', 'l2', 'elasticnet'),
+'clf__n_iter': (10, 50, 75, 100),
+# 'clf__loss': ('hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'),
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}] 
+param_svm = [
+{'clf__C': [1, 10, 100, 1000], 'clf__kernel': ['linear']},
+{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['rbf']},
+{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['sigmoid']},
+]
+\end{lstlisting}
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		~ 			& Unprocessed		& Features	\\ \hline
+		Score 		& 0.993				& 0.993		\\ \hline
+		C			& 1					& 1			\\ \hline
+		Kernel		& Linear			& Linear	\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular feature detectors for Tex.StackExhange (August 2015 data set).}
+	\label{tab:singular_feature_detector_tex}
+\end{table}
+
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c |}
+		\hline
+		~ 				& Score	\\ \hline
+		Code samples 	& 0.783	\\ \hline
+		Numerical		& 0.796	\\ \hline
+		Hexadecimal		& 0.793	\\ \hline
+		Homework 		& 0.794	\\ \hline
+		Link			& 0.795	\\ \hline
+		Tags			& 0.757	\\ \hline
+		Unprocessed		& 0.804 \\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular feature detectors. Using SVC, with Kernel=RBF, C=1000 and Gamma=($\gamma$) 0.001}
+	\label{tab:singular_feature_detector_so}
+\end{table}
+
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		~ 					& Unprocessed (SVC)	& All features	& All features (no stemming)	\\ \hline
+		Score 				& 0.804				& 0.793			& 0.784							\\ \hline
+		C					& 1000				& 1000			& 1000							\\ \hline
+		Gamma ($\gamma$)	& 0.001				& 0.001			&  0.001							\\ \hline
+		Kernel				& RBF				& RBF			& RBF							\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular feature detectors (SVC)}
+	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
+\end{table}
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c| c | c | c | c |}
+		\hline
+		~				& Unprocessed		& Unprocessed (loss='log')		& All features (loss='log')	\\ \hline
+		Score 			& 0.8073125				& 0.8071875					& 0.79325					\\ \hline
+		Min DF 			& 0.01					& 0.01						& 0.01						\\ \hline
+		Max DF 			& 1.0					& 1.0						& 0.75						\\ \hline
+		Use IDF			& False					& True						& True						\\ \hline
+		Alpha 			& 1e-05					& 1e-05						& 1e-05						\\ \hline
+		Normalization 	& l1					& l2						& l2						\\ \hline		
+		Penalty 		& l1					& l2						& l2						\\ \hline
+		Iteration 		& 100					& 75						& 100						\\ \hline
+		Loss 			& hinge					& log						& log						\\ \hline		
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular feature detectors (SGD)}
+	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
+\end{table}
+
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c | c |}
+		\hline
+		~				& Unprocessed		& FEATURE		& C			& Gamma ($\gamma$)	& Kernel	& Amount	 	\\ \hline
+		Code samples 	& Score: 0.802		& Score: 0.784	& 1000		& 0.001				& RBF 		& 9,855 		\\ \hline
+		Numerical		& Score: 0.834		& Score: 0.815	& 1			& N/A				& Linear	& 9,024			\\ \hline
+		Hexadecimal		& Score: 0.859		& Score: 0.883	& 1000		& 0.001				& RBF		& 160 			\\ \hline
+		Homework 		& Score: 0.873		& Score: 0.859	& 1000		& 0.001				& RBF		& 374 			\\ \hline
+		Link			& Score: 0.885		& Score: 0.838	& 1			& N/A				& Linear	& 2,575			\\ \hline
+		Tags			& Score: 0.806		& Score: 0.757	& 1000		& 0.001				& Sigmoid	& 19,967		\\ \hline
+		All features	& Score: 0.808		& Score: 0.788	& 1000		& 0.001				& RBF 		& 17,558		\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and numerical, for questions that had it.}
+	\label{tab:comparison_of_feature_occurences_only}
+\end{table}
+
 
 
 \section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
