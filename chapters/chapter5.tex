@@ -221,33 +221,23 @@ The first is the easiest. If you are only interested in a set sample size, then 
 If you then want 10,000 of each, you would then get the 10,000 that are scored highest (or lowest).
 The second option would be to get a set limit based on the actual score, by using the mean or average.
 For all the questions of a given type, retrieve the average and then select questions which has a score higher (or lower) than the average.
-The third option is based on the representation of the sample size, and can be achieved by using quartiles. 
-Quartiles is measured by a given percentage of the observations, represented by the three observations. 
-Q$_{1}$ (25\%), M (median, 50\%) and Q$_{3}$ (75\%) \cite{Hagen2011}.
-Quartiles can be found by using the equation shown in Equation \ref{eq:quartile1} - \ref{eq:quartile3}, and the result for the \gls{so} database is shown in Equation 
-\ref{eq:quartile_selection}\footnote{
-It should be noted that I have used the first Quartile for both the good and the bad questions, because it represents how many one would need to retrieve for each. 
-If you were to retrieve this from the database, then the limit would be the result, with the addition of sorting the results based on the highest or lowest score.	
-}.
-
+The third option would be to use quartiles. 
+Quartiles is measured by a given percentage of the observations, where each quartile represents 25\%: Q$_{1}$ (25\%), M (median, 50\%) and Q$_{3}$ (75\%) \cite{Hagen2011}.
+The equation to calculate the quartiles are shown in Equation \ref{eq:quartile1} - \ref{eq:quartile3}.
+% equation: Quartile 1
 \begin{equation}\label{eq:quartile1}
 Q_{1} = \frac{(n + 1)}{4}
 \end{equation}
-
+% equation: Quartile 2
 \begin{equation}\label{eq:quartile2}
 M = \frac{(n + 1)}{2}
 \end{equation}
-
+% equation: Quartile 3
 \begin{equation}\label{eq:quartile3}
 Q_{3} = \frac{3 \cdot (n + 1)}{4}
 \end{equation}
-
-\begin{equation}\label{eq:quartile_selection}
-\begin{split}
-Q_{1} = \frac{(659,955 + 1)}{4} = 164,989 \\
-Q_{1} = \frac{(5,286,971 + 1)}{4} = 1,321,743
-\end{split}
-\end{equation}
+\vspace{0.5em}\newline
+gdssgsdg
 
 
 \section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
