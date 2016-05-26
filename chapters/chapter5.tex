@@ -92,19 +92,43 @@ Potentially move "all this failed and went wrong" here
 	\label{tab:singular_feature_detector_tex}
 \end{table}
 
+\begin{comment}
+% potentially flip this, and this as a Score X feature (since all kernel values were the same)
+% something like "Comparison ..., with Kernel = RBF, Gamma = gamma and C = c
+% and the table having features as rows, and score X unprocessed as column
+\begin{table}[tbp]
+\centering
+\begin{tabular}{| c | c | c | c | c | c | c | c |}
+\hline
+~ 					& Code sample	& Numerical		& Hexadecimal	& Homework		& Link 		& Tags	\\ \hline
+Score 				& 0.783			& 0.796			& 0.793			& 0.794			& 0.795 	& 0.757	\\ \hline
+C					& 1000			& 1000			& 1000			& 1000			& 1000 		& 1000	\\ \hline
+Gamma ($\gamma$)	& 0.001			& 0.001			& 0.001			& 0.001			& 0.001 	& 0.001	\\ \hline
+Kernel				& RBF			& RBF			& RBF			& RBF			& RBF 		& RBF	\\ \hline
+\end{tabular}
+\caption{Comparison of raw data set (unprocessed) and singular feature detectors}
+\label{tab:singular_feature_detector_so2}
+\end{table}
+\end{comment}
+
+
 \begin{table}[tbp]
 	\centering
-	\begin{tabular}{| c | c | c | c | c | c | c | c |}
+	\begin{tabular}{| c | c |}
 		\hline
-		~ 					& Code sample	& Numerical		& Hexadecimal	& Homework		& Link 		& Tags	\\ \hline
-		Score 				& 0.783			& 0.796			& 0.793			& 0.794			& 0.795 	& 0.757	\\ \hline
-		C					& 1000			& 1000			& 1000			& 1000			& 1000 		& 1000	\\ \hline
-		Gamma ($\gamma$)	& 0.001			& 0.001			& 0.001			& 0.001			& 0.001 	& 0.001	\\ \hline
-		Kernel				& RBF			& RBF			& RBF			& RBF			& RBF 		& RBF	\\ \hline
+		~ 				& Score	\\ \hline
+		Code samples 	& 0.783	\\ \hline
+		Numerical		& 0.796	\\ \hline
+		Hexadecimal		& 0.793	\\ \hline
+		Homework 		& 0.794	\\ \hline
+		Link			& 0.795	\\ \hline
+		Tags			& 0.757	\\ \hline
+		Unprocessed		& 0.804 \\ \hline
 	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors}
+	\caption{Comparison of raw data set (unprocessed) and singular feature detectors. Using SVC, with Kernel=RBF, C=1000 and Gamma=($\gamma$) 0.001}
 	\label{tab:singular_feature_detector_so}
 \end{table}
+
 
 \begin{table}[tbp]
 	\centering
@@ -162,24 +186,54 @@ Potentially move "all this failed and went wrong" here
     ]
 \end{lstlisting}
 
+
 \begin{table}[tbp]
 	\centering
 	\begin{tabular}{| c | c | c | c | c | c | c |}
 		\hline
 		~				& Unprocessed		& FEATURE		& C			& Gamma ($\gamma$)	& Kernel	& Amount	 	\\ \hline
-		Code samples 	& Score: 0.784		& Score: 0.784	& 1000		& 0.001				& RBF 		& 9,855 		\\ \hline
-		Numerical		& Score: 0.815		& Score: 0.815	& 1			& N/A				& Linear	& 9,024			\\ \hline
-		Hexadecimal		& Score: 0.88		& Score: 0.88	& 10		& N/A				& Linear	& 160 			\\ \hline
-		Homework 		& Score: 0.863		& Score: 0.863	& 10		& N/A				& Linear	& 374 			\\ \hline
-		Link			& Score: 0.838		& Score: 0.838	& 1			& N/A				& Linear	& 2,575			\\ \hline
-		Tags			& Score: 0.758		& Score: 0.758	& 1000		& 0.001				& RBF 		& 19,967		\\ \hline
-		All features	& Score: 0.808		& Score: 0.788	& 1000		& 0.001				& RBF 		& 9,023			\\ \hline
+		Code samples 	& Score: 0.802		& Score: 0.784	& 1000		& 0.001				& RBF 		& 9,855 		\\ \hline
+		Numerical		& Score: 0.834		& Score: 0.815	& 1			& N/A				& Linear	& 9,024			\\ \hline
+		Hexadecimal		& Score: 0.859		& Score: 0.883	& 1000		& 0.001				& RBF		& 160 			\\ \hline
+		Homework 		& Score: 0.873		& Score: 0.859	& 1000		& 0.001				& RBF		& 374 			\\ \hline
+		Link			& Score: 0.885		& Score: 0.838	& 1			& N/A				& Linear	& 2,575			\\ \hline
+		Tags			& Score: 0.806		& Score: 0.757	& 1000		& 0.001				& Sigmoid	& 19,967		\\ \hline
+		All features	& Score: 0.808		& Score: 0.788	& 1000		& 0.001				& RBF 		& 17,558		\\ \hline
 	\end{tabular}
 	\caption{Comparison of raw data set (unprocessed) and numerical, for questions that had it.}
 	\label{tab:comparison_of_feature_occurences_only}
 \end{table}
 
+\begin{comment}
+\begin{table}[tbp]
+\centering
+\begin{tabular}{| c | c | c | c | c |}
+\hline
+~				& Votes < 0			& Votes = 0			& Votes > 0		& All			\\ \hline
+Amount			& 659,955			& 5,256,105			& 5,286,971		& 11,203,031	\\ \hline
+Oldest			& 06.08.2008		& 06.08.2008		& 31.07.2008	& 31.07.2008 	\\ \hline
+Newest			& 06.03.2016		& 06.03.2016		& 06.03.2016	& 06.03.2016	\\ \hline
+Vote (lowest)	& -147				& 0					& 1				& -147	 		\\ \hline
+Vote (highest)	& -1				& 0					& 13845			& 13845	 		\\ \hline
+\end{tabular}
+\caption{Overview of the Stack Overflow dataset.}
+\label{tab:dataset_overview_so2}
+\end{table}
+\end{comment}
 
+\begin{table}[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~				& Amount		& Oldest		& Newest		& Vote (lowest)		& Vote (highest)	\\ \hline
+		Votes < 0		& 659,955		& 06.08.2008	& 06.03.2016	& -147				& -1				\\ \hline
+		Votes = 0		& 5,256,105		& 06.08.2008	& 06.03.2016	& 0					& 0					\\ \hline
+		Votes > 0		& 5,286,971		& 31.07.2008	& 06.03.2016	& 1					& 13845				\\ \hline
+		All questions	& 11,203,031	& 31.07.2008	& 06.03.2016	& -147				& 13845				\\ \hline
+	\end{tabular}
+	\caption{Overview of the Stack Overflow dataset.}
+	\label{tab:dataset_overview_so}
+\end{table}
 
 ~\\
 To write: \\
