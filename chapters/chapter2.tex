@@ -6,7 +6,7 @@
 
 \subsection[Stack Overflows design]{\glsentrylong{so}s (\glsentryshort{so}) Design}
 \label{sec:stackoverflow_design}
-The following list shows the design used in \gls{so} (based on \textcite[p.~6-7]{M.Sewak2010} and \textcite[p.~805]{Treude2011}):
+The following lists the factors that were used when designing \gls{so} (based on \textcite[p.~6-7]{M.Sewak2010} and \textcite[p.~805]{Treude2011}):
 \begin{enumerate}
 	\item Votes: Questions and answers which are considered good (or bad) by the community can be given a score. 
 	This gives a filtering mechanisms, which allows users to ignore answers that are bad or wrong. 
@@ -59,8 +59,8 @@ One of the founders, Jeff Atwood said in an interview that he wanted users to no
 	}.
 In the course IMT4007 Serious Games Simon McCallum and Marius Nowostawski, presented their game GoRad, which was based on us students reading articles and posting questions which were voted on. 
 The \gls{so} system awards users based their activity by using votes, reputation and badges \cite{M.Sewak2010, Movshovitz-Attias2013, Treude2011, StackOverflow.com2016, StackOverflow.com2016d}.
-In relation to gaming, there are four player types: Achievers, Explorers, Socializers and Killers \cite[p.~3]{Maan2013}.
 \vspace{0.5em}\newline
+If you look at \gls{so} as a game, users could be represented as the four player types presented in \cite[p.~3]{Maan2013}: Achievers, Explorers, Socializers and Killers. 
 These player types can be used as a representation\footnote{	
 	\textcite{Yang2014} characterised users as "Sparrows" and "Owls", where sparrows answers question for reputation and owls answers the difficult ones (domain experts).  \\
 	\textcite[p.~2]{Ahmed2015} defined users as "lurkers, help-seekers (askers) and givers (responders)".	
@@ -68,7 +68,7 @@ These player types can be used as a representation\footnote{
 Achievers are there for the reputation and badges, socializers are to interact, discuss and share knowledge. 
 Explorers might find joy in looking at various topics, or searching for unanswered questions.
 The only exception would be the "Killer" type. 
-Killers are those "\ldots who always want to create trouble/problems for other participants" \cite[p.~3]{Maan2013}. 
+\textcite[p.~3]{Maan2013} defines Killers as those "\ldots who always want to create trouble/problems for other participants" (although this would be more fitting for the term "Griefer"). 
 In an online \gls{qa} system (or Internet in general), these are what are commonly referred to as "Trolls" \cite{Fosdick2012, Atwood2015}. 
 However, due to the system used in \gls{so}, Trolls would not be able to survive, simply because the reputation controls what you have access to \cite{StackOverflow.com2016g}. 
 If you down-vote a post, you lose reputation. 
@@ -158,7 +158,7 @@ What questions are you trying to find an answer to, and what does that answer te
 If you are working with statistical data, and you just post the numbers, this will not inform anyone. 
 You need to explain what the numbers mean, and how you got them.
 The quality of an answer is also restricted to the quality of the question you ask. 
-One can therefore assume that if you ask a good question, you will get a good answer \cite{Slowiaczek1992}. 
+One can therefore assume that if you ask a good question, you increase the chance of getting a good answer \cite{Slowiaczek1992}. 
 
 \subsection[Question classification]{\glsentrylong{qc} (\glsentryshort{qc})}
 \label{sec:question_classification}
@@ -202,7 +202,7 @@ The impact of N-gram is also related to the size of the text being analysed.
 
 \paragraph{Word mapping and processing: Case-sensitivity, Stemming, Stop words and Tokenization}
 \label{sec:word_mapping_processing}
-To reduce the amount of words used, there are more steps that can be taken. 
+To reduce the number of words used, there are more steps that can be taken. 
 By removing the case-sensitivity, all words will be equal (e.g. is the word 'Hello' equal to the word 'hello'?).
 \cite{Huang2008} includes case-sensitivity under a definition called word shape, consisting of five elements: upper case, all lower case, mixed case, all digits, and other.
 \vspace{0.5em}\newline

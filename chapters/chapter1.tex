@@ -115,7 +115,7 @@ This means that new research possibilities could be opened up in relation to res
 Since all the communities within \gls{se} is based on the same model, few modifications would be needed to scale the program to be used within the other communities.
 As noted in several papers \cite{Movshovitz-Attias2013, Nasehi2012, Posnett2012, M.Sewak2010, Treude2011, Yang2014}, question quality is measured based on the amount of votes given. 
 Which can also be compared against the peer-review process in academia, and given that \gls{so} targets professionals and experts, 
-using \gls{so} as a scientific reference is not that far-fetched\footnote{
+using \gls{so} as a scientific reference is not that unusual\footnote{
 	 \textcite[p.~1]{Posnett2012} noted that \gls{so} "ranked 2$^{nd}$ among reference sites, 4$^{th}$ among computer science sites, and 97$^{th}$ overall among all websites".
 	 }.
 \gls{se} has also been the focus of various researchers these past years \cite{Vasilescu2012}.
@@ -129,9 +129,9 @@ The process starts with someone posting a question, which is then read, scored a
 The feedback can then improve the question through edits by the poster, based on the feedback given 
 (e.g. adding additional information or explaining how the given problem(s) occurred).
 \vspace{0.5em}\newline
-Scikit-learns \gls{svm} implementation is based on libsvm \cite{ChangLin2011}, but it is simpler to use. 
+Scikit-learns \gls{svm} implementation is based on libsvm \cite{Chang2011}, but it is simpler to use. 
 In addition, scikit-learn focuses on code quality\footnote{Coverage on their GitHub repository was 94\% on 06. May 2015.}, 
-to ensure that everything works as it should \cite[p.~3]{PedregosaVaroquauxGramfortEtAl2011}.
+to ensure that everything works as it should \cite[p.~3]{Pedregosa2011}.
 \vspace{0.5em}\newline
 It is not a lot of research being done related to asking and defining good questions. 
 Although the focus is only on programming questions, it can still be useful to improve question quality. 
@@ -141,28 +141,28 @@ This in turn can help to improve the question quality (at least acceptability), 
 
 \section{Limitations}
 \label{sec:limitations}
-The greatest limitation is the time available. 
-A large amount of time was spent on setting up the database, and retrieving the questions (the Posts table contains both questions and answers).
-Only a selection of the questions were selected (a total of 20,000 questions), and training the \gls{svm} over one sample set can easily take several hours. 
-This also has an impact on classification accuracy, since in some cases there is only a small amount of the questions that contains a given feature 
-(e.g. the hexadecimal feature, which only was present in 160 of 20,000 questions).
+The selection of questions is only 20,000 (10,000 good and bad), which is a lower number than the number used in\todo{cites}.
+The retrieval of questions could also have been better, since the vote score was based on static values, rather than selecting those with the highest/lowest score.
+Some features were not very representative (e.g. Hexadecimal, which only occurred in 160 of the 20,000 questions), and may therefore have a negative impact on classifier accuracy. 
+The version of Scikit-learn that was used was the latest development version (v0.18.dev0), instead of the stable. 
+This means that potential bugs and un-finished implementations can have an effect on the prediction and probability (e.g. giving the wrong results).
 A limitation is also that the focus is only on \gls{so}, which means that one would need to make additional adjustments and add more filtering to account 
 for the differences that may occur in each community.
  
 \section{Thesis contribution}
 \label{sec:thesis_contribution}
 This thesis contribution can be summarized as to the following: 
-Predicting (programming) question quality by  using \gls{ai} and \gls{ml} to improve the questions quality. 
+Predicting programming question quality by  using \gls{ai} and \gls{ml} to improve the questions quality. 
 Instead of posting bad questions that can get down-voted or closed, the developed system could be able to give feedback to the questions quality. 
 Furthermore, the research presented could open up for new research in relation to how we ask questions online, and in what ways these best can be analysed.
 It can also be used for educational purposes, e.g. having questions iteratively improve their question quality by asking the system questions.
 
 \section{Thesis structure}
 \label{sec:thesis_structure}
-The following is the structure of this thesis:
-\begin{itemize}
-	\item Chapter \ref{chap:chapter2}: State of the art and relevant research
-	\item Chapter \ref{chap:chapter3}: Methodology 
-	\item Chapter \ref{chap:chapter5}: Discussion on development, the thesis and limitations
-	\item Chapter \ref{chap:chapter6}: Conclusion and suggestions for further work
-\end{itemize}
+The thesis is structured as follows. In Chapter \ref{chap:chapter2}, relevant research is presented. 
+This includes \gls{so}, a definition of what a question is and short about \gls{svm}, to give an overview of the current state. 
+The thesis continues with a presentation of the methodology that was used in Chapter \ref{chap:chapter3}. 
+This includes information on the data set, the created database and how the development progressed. 
+A short explanation to the selection of feature detectors is also included. 
+Following is a discussion on the choices that were made, the issues that occurred and the results, which is presented in  Chapter \ref{chap:chapter5}.
+The thesis ends with a conclusion and suggestions for further work in Chapter \ref{chap:chapter6}.
