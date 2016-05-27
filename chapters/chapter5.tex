@@ -130,9 +130,9 @@ Q_{3} = \frac{3 \cdot (n + 1)}{4}
 As previously mentioned in Section \ref{sec:feature_sets}, there was no clear indicator for the good questions. 
 Some consisted only of two sentences, e.g. "I committed the wrong files to Git. How can I undo this commit?"\footnote{
 	This question currently have a score of 10,406: \\ 
-	\url{http://stackoverflow.com/questions/927358/how-do-you-undo-the-last-commit/6866485}.
+	\url{http://stackoverflow.com/questions/927358/how-do-you-undo-the-last-commit}.
 }. Common for most of the top-voted are that they are mostly short, however you also have those that are long\footnote{
-	One example is this, with a score of 3009: \\
+	One example is this question, with a score of 3,009: \\
 	\url{http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting}.
 }.
 There is also what I would call a bias factor. 
@@ -153,14 +153,31 @@ With the current state of the system (if it were to be used), it would be more a
 
 \section{Development}
 \label{sec:development}
-\todo[inline]{this section is a bit messy, and will be re-written. as of now I'm just focusing on getting most of my notes in, and then removing the non-relevant later on.}
-There was a lot of back and forth during the testing, and a lot of time was invested trying to understand how Scikit-learn should be used. 
-Aside from the examples from Scikit-learns own pages \cite{Scikitlearn.org2016j, Scikitlearn.org2016,Scikitlearn.org2016h}, two that helped getting some progress were \cite{Rehurek2014} and \cite{Elahi2016}.
-\textcite{Rehurek2014} used in his example \gls{svc} to train the \gls{svm}, but he had no explanation to what the numbers he used was taken from\footnote{
+There was a lot of back and forth during the development, with a lot of time being invested in properly understanding how to use Scikit-learn.
+The most useful resource were of course Scikit-learns tutorials \cite{Scikitlearn.org2016j}\footnote{
+	The examples that were worked through can be seen here (as stated in ReadMe, the only thing I have altered is comments and adjustments for v0.18.dev0): \\
+	\url{https://github.com/klAndersen/scikit-learn_tutorials}.
+	} and documentation \cite{Scikitlearn.org2016,Scikitlearn.org2016h}, 
+but there were also two other tutorials that proved helpful (\cite{Rehurek2014} and \cite{Elahi2016}).
+The main problem was that Scikit-learns documentation and most of the tutorials written by others is based on v0.17.1.
+Due to various problems with installation in regards to Numpy and Scipy, Scikit-learn had to be installed from GitHub (which is v0.18.dev0).
+In the development version, a lot of functions and modules had been re-written and moved, making many tutorials and examples outdated.
+One example is the code snippet in \cite["In $\lbrack$42$\rbrack$"]{Rehurek2014}, where '\emph{cv=StratifiedKFold(label\_train, n\_folds=5)}' fails, 
+because it expects the first argument to be n\_folds\footnote{
+	Documentation for v0.17.1: 
+	\url{http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedKFold.html}. \\
+	Documentation for v0.18.dev0: 
+	\url{http://scikit-learn.org/dev/modules/generated/sklearn.model_selection.StratifiedKFold.html}.
+}.
+\vspace{0.5em}\newline
+\textcite{Rehurek2014} used in his example \gls{svc} to train the \gls{svm}, but no explanation to why these parameter values\footnote{
 	I later found that these were just the basic numbers used in one of their examples for the grid search: 
 	\url{http://scikit-learn.org/stable/auto_examples/model_selection/grid_search_digits.html}.
-}.
-Furthermore, the printout I got made no sense (shown in Listing \ref{lst:svc_tutorial}), and I could not understand how he knew that the values he selected were the best.
+},
+nor how he selected the best parameter from the printout\footnote{
+	The score, parameters and estimator can be found by using these attributes: '\emph{best\_score\_}', '\emph{best\_params\_}' and '\emph{best\_estimator\_}'.
+} (mine is shown in Listing \ref{lst:svc_tutorial}).
+
 \begin{lstlisting}[caption={Output from SVC tutorial (testing with linear, rbf and sigmoid)}, label={lst:svc_tutorial}] 
 [mean: 0.80232, std: 0.01056, params: {'classifier__kernel': 'linear', 'classifier__C': 1}, 
 mean: 0.78451, std: 0.01750, params: {'classifier__kernel': 'linear', 'classifier__C': 10}, 
@@ -168,15 +185,16 @@ mean: 0.78451, std: 0.01750, params: {'classifier__kernel': 'linear', 'classifie
 mean: 0.71416, std: 0.00101, params: {'classifier__gamma': 0.0001, 'classifier__kernel': 
 'sigmoid', 'classifier__C': 1000}]
 \end{lstlisting}
-In addition to having no access to the data sets that were used by \cite{Rehurek2014} and \cite{Elahi2016}, the Scikit-learn version I used was the developer version (0.18.dev0). 
-In this version, a lot of the old modules had either been changed or removed, so for those tutorials I did found with a minimum working example, I did not get the same results.
-
-% find a place to put this
-In one of Scikit-learns tutorials for text data \cite{Scikitlearn.org2016h}, they have suggested assignments with included solutions. 
+Another issue was that since few tutorials had the data sets available, it was hard to compare my results against theirs to (considering version changes).
+In Scikit-learns tutorial for text data \cite{Scikitlearn.org2016h}, they have at the end task suggestions, with attached solutions in the Scikit-learn library.
 When looking at the solution for the second task (sentiment analysis), I saw that they used \gls{sgd} (see \cite{Scikitlearn.org2016f}).
-Furthermore, when looking at the suggested "road map" (see Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map} on p.~\pageref{app:ml_map}), 
-I accidentally misread a zero and decided to try \gls{sgd} instead of \gls{svc}.
+Looking at the suggested "road map" (see Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map} on p.~\pageref{app:ml_map}), 
+I accidentally misread a zero and decided to go with \gls{sgd} instead of \gls{svc}.
 \vspace{0.5em}\newline
+
+
+
+
 When understanding more about how GridSearchCV worked and how one could select the best parameters from it, things got back on track. 
 However, when comparing it against the \gls{svc}, it turned out that the \gls{svc} got a higher score\footnote{
 	A comparison was done on \gls{sgd}, \gls{svc} and LinearSVC using GridSearchCV.
