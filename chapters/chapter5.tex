@@ -63,6 +63,7 @@ The same can be said for bad questions.
 In many cases, a question is bad not because of the question that is asked, but simply because it does not follow the guidelines. 
 If a question is a duplicate, it is automatically voted for closure, and will in most cases receive multiple down-votes. 
 Questions which gives a hint of being school related will also receive down-votes, mainly because \gls{so} targets professionals and experts. 
+\gls{so} is neither a fan of unnecessary text like greetings and gratefulness \cite{CommunityWiki2016a,Heyer2012}.
 \vspace{0.5em}\newline
 Is \gls{so} fit for measuring question quality?
 In a closed domain setting, the answer is yes. 
@@ -85,9 +86,9 @@ Due to various problems with installation in regards to Numpy and Scipy, Scikit-
 In the development version, a lot of functions and modules had been re-written and moved, making many tutorials and examples outdated.
 One example is the code snippet in \cite["In $\lbrack$42$\rbrack$"]{Rehurek2014}, where '\emph{cv=StratifiedKFold(label\_train, n\_folds=5)}' fails, 
 because it expects the first argument to be n\_folds\footnote{
-	Documentation for v0.17.1: 
+	Documentation for v0.17.1: \\
 	\url{http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedKFold.html}. \\
-	Documentation for v0.18.dev0: 
+	Documentation for v0.18.dev0: \\
 	\url{http://scikit-learn.org/dev/modules/generated/sklearn.model_selection.StratifiedKFold.html}.
 }.
 \vspace{0.5em}\newline
@@ -126,12 +127,23 @@ A comparison was done on \gls{sgd}, \gls{svc} and LinearSVC using GridSearchCV.
 % something about the results
 % something about using probability prediction (e.g. taking twice the time, worse results for SGD, etc.)
 
-\section{Grid search parameters and results}
+\section{Parameter selection for GridSearchCV and the results}
 \label{sec:grid_search_and_results}
-
-\todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
-
-
+There were two different classifiers that were used on the training data, \gls{svc} (parameters shown in Listing \ref{lst:param_svc}) and \gls{sgd} 
+(parameters shown in Listing \ref{lst:param_sgd}).
+The values for the \gls{svc} are based on the example from \textcite{Scikitlearn.org2016k}, the same goes for the values for the \gls{sgd} \textcite{Scikitlearn.org2016l} 
+(\cite{Huang2008, Maas2011, Zhang2003} used the default values when training their system). 
+The reason that these two were used were because of the "roadmap", shown in the Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map} on p.~\pageref{app:ml_map}. 
+The reason for including \gls{sgd} was partially because I misread a zero, but also because if one were to extend the sample size, \gls{sgd} could potentially get better results.
+% Listing for the SVC parameters
+\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}] 
+param_svm = [
+{'clf__C': [1, 10, 100, 1000], 'clf__kernel': ['linear']},
+{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['rbf']},
+{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['sigmoid']},
+]
+\end{lstlisting}
+% Listing for the SGD parameters
 \begin{lstlisting}[caption={Parameters for SGD}, label={lst:param_sgd}] 
 grid_parameters = {
 'vect__min_df': (0.01, 0.025, 0.05, 0.075, 0.1),
@@ -144,15 +156,39 @@ grid_parameters = {
 # 'clf__loss': ('hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'),
 }
 \end{lstlisting}
+% editor space
+Only 20,000 questions were selected, and it would probably had been better to have selected more than this. 
+However, one need to take in consideration the time available, and the time it takes to process and train all the classifiers. 
+When using exhaustive search it matches all the parameters against each other, to see which one has the best combination. 
+This means that if you have 30 different parameters, and a cross-validation of 10, then the total amount of fits is 300 \cite{Markham2015a}.
+The fit count is shown in Equation \ref{eq:fit_svc} for \gls{svc} and in Equation \ref{eq:fit_sgd} for \gls{sgd}.
+% Equation for the amount of fits for SVC
+\begin{equation}\label{eq:fit_svc}
+\begin{split}
+\text{count(C)} + (\text{count(C)} \cdot \text{count(gamma)}) + (\text{count(C)} \cdot \text{count(gamma)}) \\
+\Longrightarrow  \text{result} \cdot \text{cross-validation} = \text{fit\_amount} \\
+\Longrightarrow  4 + (4 \cdot 2) + (4 \cdot 2) = 20 \cdot 5 = 100 
+\end{split}
+\end{equation}
+% Equation for the amount of fits for SGD
+\begin{equation}\label{eq:fit_sgd}
+\begin{split}
+\text{count(min\_df)} \cdot \text{count(max\_df)} \cdot \text{count(use\_idf)} \cdot \text{count(norm)} \cdot \text{count(alpha)} \\ 
+\cdot ~ \text{count(penalty)} \cdot \text{count(n\_iter)} \cdot \text{count(loss)} \Longrightarrow  result \cdot \text{cross-validation} = \text{fit\_amount} \\
+\Longrightarrow  5 \cdot 5 \cdot 2 \cdot 2 \cdot 2 \cdot 3 \cdot 4 = 2400 \cdot 5 = 12,000
+\end{split}
+\end{equation}
+% editor space
+%These results must then be multiplied with two, because if you want a probability for the prediction it needs to run twice to calculate this.
+A faster alternative to GridSearchCV would be RandomizedCV, but as stated in \cite{Markham2015a}, it may give lower scores. 
+His suggestion is to start with GridSearchCV, and then compare the results against RandomizedCV.
+This was not done in this thesis, as it did not seem relevant for thesis.
+However, for the process of fine-tuning the parameters, RandomizedCV would perhaps have been a better option. 
+One could then have started with a high spread of values to then narrow it down, and finally get the optimal ones using GridSearchCV.
+ 
+\todo[inline]{will add discussions on features and results after all new models have been created - Issue: Unprocessed was trained with HTML in text}
 
-
-\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}] 
-param_svm = [
-{'clf__C': [1, 10, 100, 1000], 'clf__kernel': ['linear']},
-{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['rbf']},
-{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['sigmoid']},
-]
-\end{lstlisting}
+\todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
 
 \begin{table}[!h]%[tbp]
 	\centering
@@ -196,7 +232,7 @@ param_svm = [
 		Gamma ($\gamma$)	& 0.001				& 0.001			&  0.001							\\ \hline
 		Kernel				& RBF				& RBF			& RBF							\\ \hline
 	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors (SVC)}
+	\caption{Comparison of raw data set (unprocessed) and all feature detectors (SVC)}
 	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
 \end{table}
 
@@ -215,7 +251,7 @@ param_svm = [
 		Iteration 		& 100					& 75						& 100						\\ \hline
 		Loss 			& hinge					& log						& log						\\ \hline		
 	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular feature detectors (SGD)}
+	\caption{Comparison of raw data set (unprocessed) and all feature detectors (SGD)}
 	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
 \end{table}
 
@@ -233,7 +269,7 @@ param_svm = [
 		Tags			& Score: 0.806		& Score: 0.757	& 1000		& 0.001				& Sigmoid	& 19,967		\\ \hline
 		All features	& Score: 0.808		& Score: 0.788	& 1000		& 0.001				& RBF 		& 17,558		\\ \hline
 	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and numerical, for questions that had it.}
+	\caption{Comparison of raw data set (unprocessed) and singular features, for questions that had it.}
 	\label{tab:comparison_of_feature_occurences_only}
 \end{table}
 
