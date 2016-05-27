@@ -180,13 +180,26 @@ The fit count is shown in Equation \ref{eq:fit_svc} for \gls{svc} and in Equatio
 \end{equation}
 % editor space
 %These results must then be multiplied with two, because if you want a probability for the prediction it needs to run twice to calculate this.
-A faster alternative to GridSearchCV would be RandomizedCV, but as stated in \cite{Markham2015a}, it may give lower scores. 
-His suggestion is to start with GridSearchCV, and then compare the results against RandomizedCV.
+A faster alternative to GridSearchCV would be RandomizedSearchCV, but as stated in \cite{Markham2015a}, it may give lower scores. 
+His suggestion is to start with GridSearchCV, and then compare the results against RandomizedSearchCV.
 This was not done in this thesis, as it did not seem relevant for thesis.
-However, for the process of fine-tuning the parameters, RandomizedCV would perhaps have been a better option. 
+However, for the process of fine-tuning the parameters, RandomizedSearchCV would perhaps have been a better option. 
 One could then have started with a high spread of values to then narrow it down, and finally get the optimal ones using GridSearchCV.
  
 \todo[inline]{will add discussions on features and results after all new models have been created - Issue: Unprocessed was trained with HTML in text}
+To be written:
+\begin{enumerate}
+	\item Discussion on features
+	\item Classifier and features; none, singular, all
+	\item Classifier and features; none, singular, all - for questions that contain the given feature
+	\item Classifier and estimator
+	\item Site tags and "assignment": Excluded from training set using "all" features
+	\item \gls{so} dataset vs. tex.stackexhange
+	\item Stemming - did this improve or worsen the results? Regardless of results, why?
+	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
+	\item The cost of probability (i.e. \gls{sgd})
+	\item Presumption that max\_df=95\% was a smart move (was it really when comparing to SGD using all?)
+\end{enumerate}
 
 \todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
 

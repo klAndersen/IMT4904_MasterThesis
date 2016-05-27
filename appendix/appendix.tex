@@ -57,8 +57,7 @@ Before installing anything, download the following:
 		\url{http://stackoverflow.com/q/33323172}
 	}.
 \end{itemize}
-
-
+% editor space
 \begin{enumerate}
 	\item Install Python, update pip, and install these packages: \\
 	\emph{pip install -U bs4 pandas nltk matplotlib cython nose nosetests}
@@ -75,6 +74,7 @@ Before installing anything, download the following:
 	\emph{pip install "scipy-0.17.1-cp35-cp35m-win\_amd64.whl"} and verify using the same steps, swapping numpy with scipy.
 	\item Start CygWin (run as administrator), change to directory containing Scikit-learn and run the following commands: \\
 	\emph{python setup.py build}  and \emph{python setup.py install}.
+	\item If you want to use \gls{nltk}, you need to run \emph{python}, \emph{import nltk} and \emph{ntlk.download()} to download the corpus.
 \end{enumerate}
 
 
