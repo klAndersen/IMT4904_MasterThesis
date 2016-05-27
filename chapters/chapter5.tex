@@ -92,11 +92,12 @@ because it expects the first argument to be n\_folds\footnote{
 	\url{http://scikit-learn.org/dev/modules/generated/sklearn.model_selection.StratifiedKFold.html}.
 }.
 \vspace{0.5em}\newline
-\textcite{Rehurek2014} used in his example \gls{svc} to train the \gls{svm}, but no explanation to why these parameter values\footnote{
+\todo[inline]{either write more here, or remove this paragraph}
+\textcite{Rehurek2014} used in his tutorial \gls{svc} to train the \gls{svm}, but gave no explanation to why these parameter values\footnote{
 	I later found that these were just the basic numbers used in one of their examples for the grid search: 
 	\url{http://scikit-learn.org/stable/auto_examples/model_selection/grid_search_digits.html}.
 },
-nor how he selected the best parameter from the printout\footnote{
+were selected, nor how he selected the best parameter from the printout\footnote{
 	The score, parameters and estimator can be found by using these attributes: '\emph{best\_score\_}', '\emph{best\_params\_}' and '\emph{best\_estimator\_}'.
 } (mine is shown in Listing \ref{lst:svc_tutorial}).
 
@@ -129,8 +130,8 @@ A comparison was done on \gls{sgd}, \gls{svc} and LinearSVC using GridSearchCV.
 
 \section{Parameter selection for GridSearchCV and the results}
 \label{sec:grid_search_and_results}
-There were two different classifiers that were used on the training data, \gls{svc} (parameters shown in Listing \ref{lst:param_svc}) and \gls{sgd} 
-(parameters shown in Listing \ref{lst:param_sgd}).
+Two different classifiers were used, \gls{svc} (parameters shown in Listing \ref{lst:param_svc}) and \gls{sgd} (parameters shown in Listing \ref{lst:param_sgd}).
+\todo[inline]{re-write paragraph below}
 The values for the \gls{svc} are based on the example from \textcite{Scikitlearn.org2016k}, the same goes for the values for the \gls{sgd} \textcite{Scikitlearn.org2016l} 
 (\cite{Huang2008, Maas2011, Zhang2003} used the default values when training their system). 
 The reason that these two were used were because of the "roadmap", shown in the Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map} on p.~\pageref{app:ml_map}. 
@@ -410,7 +411,7 @@ However, multi-threading is not supported in Windows \cite{GS2015}.
 To ensure that progress was made, and that the program had not frozen again, the verbose level was increased.
 By increasing the verbose level, you can force the algorithm to print more information about progress, but with an increase in the time it takes to finish \cite{Manuel2015, user29912432014}. 
 The most fascinating part was that after increasing the verbose level, it not only printed out continuously, but it even finished training in less than 3 hours!
-It has not been tested in Linux, but the reason nothing happened may have been the same which happened for Windows, that it could not utilize all cores\footnote{
+This have not been tested in Linux, but the reason nothing happened may have been the same which happened for Windows, that it could not utilize all CPU cores\footnote{
 	My assumption is that when all the logical cores are used, there is no processing power left for the Operative System (OS). 
 	This in turn would then cause an infinite deadlock, since by using all the cores, there is no processing power left for the OS.
 	There is also a known issue with parallelization in Linux, see: 
