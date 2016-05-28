@@ -24,6 +24,54 @@
 \end{figure}
 
 \clearpage
+\section{Tex.Stack Exchange: Data set and Features}
+\label{app:tables_tex}
+%description
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~				& Amount		& Oldest		& Newest		& Vote (lowest)		& Vote (highest)	\\ \hline
+		Votes < 0		& 93			& 22.08.2010	& 10.09.2014	& -14				& -1				\\ \hline
+		Votes = 0		& 5,078			& 26.07.2010	& 14.09.2014	& 0					& 0					\\ \hline
+		Votes > 0		& 65,919		& 18.08.2008	& 14.09.2014	& 1					& 448				\\ \hline
+		All questions	& 71,090 		& 18.08.2008	& 14.09.2014	& -14				& 448				\\ \hline
+	\end{tabular}
+\caption{Overview of the questions in the Tex.StackExhange (August 2015 data set)}
+\label{tab:dataset_overview_tex}
+\end{table}
+% editor space
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		~ 			& Unprocessed		& Features	\\ \hline
+		Score 		& 0.99				& 0.99		\\ \hline
+		C			& 1					& 1			\\ \hline
+		Kernel		& Linear			& Linear	\\ \hline
+	\end{tabular}
+\caption{Comparison of raw data set (unprocessed) and feature detectors for Tex.StackExhange (August 2015 data set). Vote score was < 0 for bad and > +7 for good.}
+\label{tab:singular_feature_detector_tex}
+\end{table}
+				
+\clearpage
+\section{Various screenshots}
+\label{app:various_screenshots}
+% image of how it looked when using all tags
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{tag_features_raw}
+	\caption{Question without external tags detected.}
+	\label{fig:tag_features_raw}
+\end{figure}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{tag_features_external}
+	\caption{Question with external tags detected.}
+	\label{fig:tag_features_external}
+\end{figure}
+
+\clearpage
 \section{Scikit-learns roadmap - Choosing the right estimator}
 \label{app:ml_map}
 % image of the cheat-sheet from scikit-learn

@@ -131,11 +131,12 @@ A comparison was done on \gls{sgd}, \gls{svc} and LinearSVC using GridSearchCV.
 \section{Parameter selection for GridSearchCV and the results}
 \label{sec:grid_search_and_results}
 Two different classifiers were used, \gls{svc} (parameters shown in Listing \ref{lst:param_svc}) and \gls{sgd} (parameters shown in Listing \ref{lst:param_sgd}).
-\todo[inline]{re-write paragraph below}
-The values for the \gls{svc} are based on the example from \textcite{Scikitlearn.org2016k}, the same goes for the values for the \gls{sgd} \textcite{Scikitlearn.org2016l} 
-(\cite{Huang2008, Maas2011, Zhang2003} used the default values when training their system). 
-The reason that these two were used were because of the "roadmap", shown in the Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map} on p.~\pageref{app:ml_map}. 
-The reason for including \gls{sgd} was partially because I misread a zero, but also because if one were to extend the sample size, \gls{sgd} could potentially get better results.
+The parameter values used for training both the \gls{svc} and \gls{sgd}, are the default values shown in Scikit-learns tutorials \cite{Scikitlearn.org2016k, Scikitlearn.org2016l} 
+(\cite{Huang2008, Maas2011, Zhang2003} used default values for training their system). 
+\gls{sgd} was included because of Scikit-learns "roadmap" (shown in the Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map} on p.~\pageref{app:ml_map}).
+Although \gls{sgd} are targeted at sample sizes greater than 100,000, it would still be interesting to compare it against \gls{svc} to see which one got the best results. 
+Given the that the sample size was below the threshold, the expectation was that in this case, \gls{svc} would get better results.
+
 % Listing for the SVC parameters
 \begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}] 
 param_svm = [
@@ -158,7 +159,7 @@ grid_parameters = {
 }
 \end{lstlisting}
 % editor space
-Only 20,000 questions were selected, and it would probably had been better to have selected more than this. 
+Only 20,000 questions were selected, and a larger sample size would probably have helped getting better predictions from the classifier.
 However, one need to take in consideration the time available, and the time it takes to process and train all the classifiers. 
 When using exhaustive search it matches all the parameters against each other, to see which one has the best combination. 
 This means that if you have 30 different parameters, and a cross-validation of 10, then the total amount of fits is 300 \cite{Markham2015a}.
@@ -183,54 +184,34 @@ The fit count is shown in Equation \ref{eq:fit_svc} for \gls{svc} and in Equatio
 %These results must then be multiplied with two, because if you want a probability for the prediction it needs to run twice to calculate this.
 A faster alternative to GridSearchCV would be RandomizedSearchCV, but as stated in \cite{Markham2015a}, it may give lower scores. 
 His suggestion is to start with GridSearchCV, and then compare the results against RandomizedSearchCV.
-This was not done in this thesis, as it did not seem relevant for thesis.
-However, for the process of fine-tuning the parameters, RandomizedSearchCV would perhaps have been a better option. 
-One could then have started with a high spread of values to then narrow it down, and finally get the optimal ones using GridSearchCV.
- 
-\todo[inline]{will add discussions on features and results after all new models have been created - Issue: Unprocessed was trained with HTML in text}
-To be written:
-\begin{enumerate}
-	\item Discussion on features
-	\item Classifier and features; none, singular, all
-	\item Classifier and features; none, singular, all - for questions that contain the given feature
-	\item Classifier and estimator
-	\item Site tags and "assignment": Excluded from training set using "all" features
-	\item \gls{so} dataset vs. tex.stackexhange
-	\item Stemming - did this improve or worsen the results? Regardless of results, why?
-	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
-	\item The cost of probability (i.e. \gls{sgd})
-	\item Presumption that max\_df=95\% was a smart move (was it really when comparing to SGD using all?)
-\end{enumerate}
-
-\todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
-
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c | c | c |}
-		\hline
-		~				& Amount		& Oldest		& Newest		& Vote (lowest)		& Vote (highest)	\\ \hline
-		Votes < 0		& 93			& 22.08.2010	& 10.09.2014	& -14				& -1				\\ \hline
-		Votes = 0		& 5,078			& 26.07.2010	& 14.09.2014	& 0					& 0					\\ \hline
-		Votes > 0		& 65,919		& 18.08.2008	& 14.09.2014	& 1					& 448				\\ \hline
-		All questions	& 71,090 		& 18.08.2008	& 14.09.2014	& -14				& 448				\\ \hline
-	\end{tabular}
-	\caption{Overview of the questions in the Tex.StackExhange (August 2015 data set)}
-	\label{tab:dataset_overview_tex}
-\end{table}
-
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c |}
-		\hline
-		~ 			& Unprocessed		& Features	\\ \hline
-		Score 		& 0.99				& 0.99		\\ \hline
-		C			& 1					& 1			\\ \hline
-		Kernel		& Linear			& Linear	\\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and feature detectors for Tex.StackExhange (August 2015 data set). Vote score was < 0 for bad and > +7 for good.}
-	\label{tab:singular_feature_detector_tex}
-\end{table}
-
+This was not done, as this type of comparison was not relevant for this thesis.
+If one were to fine-tune the parameters to get as close to optimal as possible, RandomizedSearchCV would be an excellent choice. 
+You could start with a wide spread of values, and when there is little change in the resulting score, GridSearchCV could be used for fine-tuning.
+\vspace{0.5em}\newline
+A total of six features were detected and converted from each question. 
+These features were code samples\footnote{
+	Nothing was done to the content of the code sample, it was only removed and replaced with 'has\_codeblock'.
+}, 
+hexadecimal, numerical, synonyms for homework and tags. 
+As mentioned in Section \ref{sec:feature_sets}, homework and tags contained two feature types. 
+One problem with the external tags (all tags listed on the given site), was that it replaced even normal words\footnote{
+	For a visualization of how bad it was, see Figure \ref{fig:tag_features_raw} and \ref{fig:tag_features_external} in Appendix \ref{app:various_screenshots}, p.~\pageref{app:various_screenshots}.
+	See also the files "\emph{training\_data\_10000\_unprocessed\_UP\_has\_tags.csv}" and "\emph{training\_data\_10000\_unprocessed\_has\_tags.csv}", found in \emph{./extraction\_sets/}.
+} (e.g. "this", "can", "let", etc).
+Since the external tags and the word 'assignment' was conflictive, these were only included when creating classifier models for the singular feature detectors\footnote{
+	The singular feature detectors are based on the premise that each feature should be tested individually, and none of the other feature detectors should be used in the model creation process.
+}.
+\vspace{0.5em}\newline
+To be able to compare if a feature would have an impact, the creation of classifier models was divided into three parts. 
+In the first part, the raw, unprocessed data set was used to create a classifier model by using GridSearchCV. 
+The only modification done was the removal of HTML-tags and reducing the text to lower-case. 
+In the second part, the best parameter values from the unprocessed classifier model was used to create new models for the singular feature detectors.
+This ensures that a correct comparison can be made, since the results for both models are based on the same values. 
+If they were all trained separately with GridSearchCV, there is a risk that it would select other parameters for the model.
+The last part consisted of using all the features, both with the values from the unprocessed classifier model, and using GridSearchCV to select the best parameters.
+Porter stemming was also included, but this was only used for the last classifier model.
+\vspace{0.5em}\newline
+The results for the first and second part of the training is shown in Table \ref{tab:singular_feature_detector_so}.
 
 \begin{table}[!h]%[tbp]
 	\centering
@@ -249,17 +230,52 @@ To be written:
 	\caption{Classifier results based on the parameters found for the raw (unprocessed) questions. Classifier=SVC, with Kernel=RBF, C=1000 and Gamma=($\gamma$) 0.0001}	
 	\label{tab:singular_feature_detector_so}
 \end{table}
+ 
+
+\todo[inline]{To be written:}
+\begin{enumerate}
+%	\item Discussion on features
+%	\item Classifier and features; none, singular, all
+	\item Classifier and features; none, singular, all - for questions that contain the given feature
+	\item Classifier and estimator
+%	\item Site tags and "assignment": Excluded from training set using "all" features
+	\item \gls{so} dataset vs. tex.stackexhange
+	\item Stemming - did this improve or worsen the results? Regardless of results, why?
+	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
+	\item The cost of probability (i.e. \gls{sgd})
+	\item Presumption that max\_df=95\% was a smart move (was it really when comparing to SGD using all?)
+\end{enumerate}
+
+\todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
+
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c | c |}
+		\hline
+		~				& Unprocessed		& Feature					& C				& Gamma ($\gamma$)	& Kernel	& Row count	 	\\ \hline
+		Code samples 	& Score: 0.794		& Score: 0.7827				& 1				& N/A				& Linear 	& 9,855 		\\ \hline
+		Hexadecimal		& Score: 0.8828		& Score: 0.875				& 1				& N/A				& Linear	& 160 			\\ \hline
+		Homework 		& Score: 0.8595		& Score: 0.856				& 1				& N/A				& Linear	& 374 			\\ \hline
+		Link			& Score: 0.843		& Score: 0.8378				& 1				& N/A				& Linear	& 2,575			\\ \hline		
+		Numerical		& Score: 0.8206		& Score: 0.8123				& 1000			& 0.0001			& RBF		& 9,024			\\ \hline
+		Tags			& Score: 0.7937		& Score: 0.757				& 1000			& 0.0001			& RBF		& 19,967		\\ \hline
+		All features	& Score: 0.80		& Score: 0.79				& 1000 			& 0.0001			& RBF 		& 17,558		\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular features, for questions containing the given feature. Classifier: SVC.}
+	\label{tab:comparison_of_feature_occurences_only}
+\end{table}
 
 % remove this?
 \begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c | c |}
 		\hline
-		~ 					& Unprocessed		& All features		& All features (no stemming)	\\ \hline
-		Score 				& 0.7945			& 0.792437			& 0.78337						\\ \hline
-		C					& 1000				& 1000				& 1000							\\ \hline
-		Gamma ($\gamma$)	& 0.0001			& 0.001				& 0.001							\\ \hline
-		Kernel				& RBF				& RBF				& RBF							\\ \hline
+		~ 					& Unprocessed			& All features			& All features (no stemming)	\\ \hline
+		Score 				& 0.7945				& 0.792437				& 0.78337						\\ \hline
+		C					& 1000					& 1000					& 1000							\\ \hline
+		Gamma ($\gamma$)	& 1e$^{-04}$ (0.0001)	& 1e$^{-03}$ (0.001)	& 1e$^{-03}$ (0.001) 			\\ \hline
+		Kernel				& RBF					& RBF					& RBF							\\ \hline
 	\end{tabular}
 	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SVC.}
 	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
@@ -278,7 +294,7 @@ To be written:
 		Min DF 			& xxxxx				& 0.01						& 0.01						\\ \hline
 		Max DF 			& xxxxx				& 0.5						& 0.75						\\ \hline
 		Use IDF			& xxxxx				& False						& True						\\ \hline
-		Alpha 			& xxxxx				& 1e-05						& 1e-05						\\ \hline
+		Alpha 			& xxxxx				& 1e$^{-05}$ (0.00001)		& 1e$^{-05}$ (0.00001)		\\ \hline
 		Normalization 	& xxxxx				& l2						& l2						\\ \hline		
 		Penalty 		& xxxxx				& elasticnet				& l2						\\ \hline
 		Iteration 		& xxxxx				& 50						& 100						\\ \hline
@@ -286,24 +302,6 @@ To be written:
 	\end{tabular}
 	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
 	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
-\end{table}
-
-
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c | c | c | c |}
-		\hline
-		~				& Unprocessed		& FEATURE					& C				& Gamma ($\gamma$)	& Kernel	& Amount	 	\\ \hline
-		Code samples 	& Score: 0.794		& Score: 0.7827				& 1				& N/A				& Linear 	& 9,855 		\\ \hline
-		Hexadecimal		& Score: 0.8828		& Score: 0.875				& 1				& N/A				& Linear	& 160 			\\ \hline
-		Homework 		& Score: 0.8595		& Score: 0.856				& 1				& N/A				& Linear	& 374 			\\ \hline
-		Link			& Score: 0.843		& Score: 0.8378				& 1				& N/A				& Linear	& 2,575			\\ \hline		
-		Numerical		& Score: 0.8206		& Score: 0.8123				& 1000			& 0.0001			& RBF		& 9,024			\\ \hline
-		Tags			& Score: 0.7937		& Score: 0.757				& 1000			& 0.0001			& RBF		& 19,967		\\ \hline
-		All features	& Score: 0.80		& Score: 0.79				& 1000 			& 0.0001			& RBF 		& 17,558		\\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular features, for questions containing the given feature. Classifier: SVC.}
-	\label{tab:comparison_of_feature_occurences_only}
 \end{table}
 
 
