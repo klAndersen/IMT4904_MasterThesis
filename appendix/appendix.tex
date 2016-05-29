@@ -26,6 +26,7 @@
 \clearpage
 \section{Tex.Stack Exchange: Data set and Features}
 \label{app:tables_tex}
+
 %description
 \begin{table}[!h]%[tbp]
 	\centering
@@ -40,6 +41,7 @@
 \caption{Overview of the questions in the Tex.StackExhange (August 2015 data set)}
 \label{tab:dataset_overview_tex}
 \end{table}
+
 % editor space
 \begin{table}[!h]%[tbp]
 	\centering
@@ -53,6 +55,326 @@
 \caption{Comparison of raw data set (unprocessed) and feature detectors for Tex.StackExhange (August 2015 data set). Vote score was < 0 for bad and > +7 for good.}
 \label{tab:singular_feature_detector_tex}
 \end{table}
+
+% description
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+		-1			& 0			& 15				\\ \hline
+		1			& 0			& 2004				\\ \hline
+	\end{tabular}
+	\caption{Confusion Matrix for Tex.StackExhange.}
+	\label{tab:confusion_matrix_tex}
+\end{table}
+
+% description
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c |}
+		\hline
+		~				& Precision		& Recall	& F1-score		& Support	\\ \hline
+		-1      		& 0.00			& 0.00		& 0.00			& 15		\\ \hline
+		1       		& 0.99			& 1.00		& 1.00			& 2004		\\ \hline
+		avg / total		& 0.99			& 0.99		& 0.99			& 2019		\\ \hline
+	\end{tabular}
+	\caption{Classification report for Tex.StackExhange (August 2015 data set).}
+	\label{tab:tex_classification_report}
+\end{table}
+
+\clearpage
+\section{Confusion Matrices for Stack Overflow}
+\label{app:confusion_matrix}
+\subsection{Confusion matrix for unprocessed and all feature detectors}
+
+\begin{table}[!htb]
+	\caption{Confusion Matrix for unprocessed data set and all feature detectors with the same parameters.}
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed dataset}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1591			& 403			\\ \hline
+			1			& 401			& 1605			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{All features}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1558			& 436			\\ \hline
+			1			& 401			& 1605			\\ \hline
+		\end{tabular}
+	\end{minipage} 
+\end{table}	
+
+
+\begin{table}[!htb]
+	\caption{Confusion Matrix for all features, with and without stemming.}
+	\begin{minipage}{.5\linewidth}
+		\caption{With stemming}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1558			& 436				\\ \hline
+			1			& 525			& 1481				\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Without stemming}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1567			& 427				\\ \hline
+			1			& 408			& 1598				\\ \hline
+		\end{tabular}
+	\end{minipage} 
+\end{table}	
+
+\begin{table}[!htb]
+	\caption{Confusion Matrix for the SGD classifier, with loss='log'.}
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1610			& 384			\\ \hline
+			1			& 594			& 1412			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\caption{All features with stemming}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1607			& 387			\\ \hline
+			1			& 418			& 1588			\\ \hline
+		\end{tabular}
+	\end{minipage} 
+\end{table}	
+
+\clearpage
+\subsection{Confusion matrix for singular feature detectors - all questions}
+
+\begin{table}[!htb]
+	\caption{Confusion Matrix for singular feature detectors, based on all questions in the data set.}
+	\begin{minipage}{.5\linewidth}
+		\caption{Code samples}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1547			& 420			\\ \hline
+			1			& 413			& 1593			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Hexadecimal}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1591			& 403			\\ \hline
+			1			& 401			& 1605			\\ \hline
+		\end{tabular}
+	\end{minipage} 
+	\begin{minipage}{.5\linewidth}
+		\caption{Homework}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1590			& 404			\\ \hline
+			1			& 400			& 1606			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Links}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1548			& 410			\\ \hline
+			1			& 416			& 1590			\\ \hline
+		\end{tabular}
+	\end{minipage} 	
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Numerical}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1591			& 403			\\ \hline
+			1			& 375			& 1631			\\ \hline
+		\end{tabular}
+	\end{minipage} 	
+	\begin{minipage}{.5\linewidth}
+		\caption{Tags}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1508			& 486			\\ \hline
+			1			& 467			& 1539			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+\end{table}	
+
+\clearpage
+\subsection{Confusion matrix for singular feature detectors - occurrence only}
+
+\begin{table}[!htb]
+	\caption{Confusion Matrix for singular feature detectors, only for questions containing it.}
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 786			& 202			\\ \hline
+			1			& 215			& 768				\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Code samples}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 793			& 195			\\ \hline
+			1			& 218			& 765				\\ \hline
+		\end{tabular}
+	\end{minipage}
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 21			& 6			\\ \hline
+			1			& 6				& 5				\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Hexadecimal}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 21			& 0				\\ \hline
+			1			& 6				& 5				\\ \hline
+		\end{tabular}
+	\end{minipage} 	
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Unprocessed}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 52			& 5			\\ \hline
+			1			& 8				& 11		\\ \hline
+		\end{tabular}
+	\end{minipage} 	%
+	\begin{minipage}{.5\linewidth}
+		\caption{Homework}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 50			& 6 			\\ \hline
+			1			& 7 			& 12			\\ \hline
+		\end{tabular}
+	\end{minipage}
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 95			& 56			\\ \hline
+			1			& 28			& 337			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Links}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 87			& 64			\\ \hline
+			1			& 30			& 335			\\ \hline
+		\end{tabular}
+	\end{minipage} 
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1044			& 110			\\ \hline
+			1			& 247			& 404			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Numerical}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1043			& 111			\\ \hline
+			1			& 256			& 395			\\ \hline
+		\end{tabular}
+	\end{minipage} 	
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Unprocessed}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1559			& 426			\\ \hline
+			1			& 398			& 1611			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\caption{Tags}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& xxx			& xxx			\\ \hline
+			1			& xxx			& xxx			\\ \hline
+		\end{tabular}
+	\end{minipage}
+	\begin{minipage}{.5\linewidth}
+		\caption{Unprocessed}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1284			& 387			\\ \hline
+			1			& 342			& 1499			\\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\caption{All features}
+		\centering
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+			-1			& 1268			& 403			\\ \hline
+			1			& 329			& 1512			\\ \hline
+		\end{tabular}
+	\end{minipage}
+\end{table}	
+
 				
 \clearpage
 \section{Various screenshots}
@@ -128,6 +450,472 @@ Before installing anything, download the following:
 
 % backup of various created tables
 
+
+\begin{comment}
+
+td-10000-Unprocessed
+--------------------
+Confusion matrix for test set classification:
+[[1591  403]
+[ 401 1605]]
+Accuracy score for test set:
+0.799
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.80      0.80      0.80      1994
+1       0.80      0.80      0.80      2006
+
+avg / total       0.80      0.80      0.80      4000
+
+
+Creating singular feature detector:  Code blocks
+-----------------------------------------------
+Confusion matrix for test set classification:
+[[1574  420]
+[ 413 1593]]
+Accuracy score for test set:
+0.79175
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.79      0.79      0.79      1994
+1       0.79      0.79      0.79      2006
+
+avg / total       0.79      0.79      0.79      4000
+
+
+Creating singular feature detector:  Links
+-------------------------------------------
+Confusion matrix for test set classification:
+[[1584  410]
+[ 416 1590]]
+Accuracy score for test set:
+0.7935
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.79      0.79      0.79      1994
+1       0.80      0.79      0.79      2006
+
+avg / total       0.79      0.79      0.79      4000
+
+
+Creating singular feature detector:  Homework
+----------------------------------------
+Confusion matrix for test set classification:
+[[1590  404]
+[ 400 1606]]
+Accuracy score for test set:
+0.799
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.80      0.80      0.80      1994
+1       0.80      0.80      0.80      2006
+
+avg / total       0.80      0.80      0.80      4000
+
+
+Creating singular feature detector:  Numerical
+----------------------------------------
+Confusion matrix for test set classification:
+[[1591  403]
+[ 375 1631]]
+Accuracy score for test set:
+0.8055
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.81      0.80      0.80      1994
+1       0.80      0.81      0.81      2006
+
+avg / total       0.81      0.81      0.81      4000
+
+
+Creating singular feature detector:  Hexadecimal
+----------------------------------------
+Confusion matrix for test set classification:
+[[1591  403]
+[ 401 1605]]
+Accuracy score for test set:
+0.799
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.80      0.80      0.80      1994
+1       0.80      0.80      0.80      2006
+
+avg / total       0.80      0.80      0.80      4000
+
+
+Creating singular feature detector:  Tags
+----------------------------------------
+Confusion matrix for test set classification:
+[[1508  486]
+[ 467 1539]]
+Accuracy score for test set:
+0.76175
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.76      0.76      0.76      1994
+1       0.76      0.77      0.76      2006
+
+avg / total       0.76      0.76      0.76      4000
+
+
+All features using 10k-unprocessed settings
+----------------------------------------
+Confusion matrix for test set classification:
+[[1558  436]
+[ 401 1605]]
+Accuracy score for test set:
+0.79075
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.80      0.78      0.79      1994
+1       0.79      0.80      0.79      2006
+
+avg / total       0.79      0.79      0.79      4000
+
+
+Creating model without stemming, using exhaustive search
+------------------------------------------------------------
+Confusion matrix for test set classification:
+[[1567  427]
+[ 408 1598]]
+Accuracy score for test set:
+0.79125
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.79      0.79      0.79      1994
+1       0.79      0.80      0.79      2006
+
+avg / total       0.79      0.79      0.79      4000
+
+
+td-10k
+----------------------------------------
+Confusion matrix for test set classification:
+[[1558  436]
+[ 525 1481]]
+Accuracy score for test set:
+0.75975
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.75      0.78      0.76      1994
+1       0.77      0.74      0.76      2006
+
+avg / total       0.76      0.76      0.76      4000
+
+
+td-10k-no-stemming
+---------------------------------------------
+Confusion matrix for test set classification:
+[[1568  426]
+[ 408 1598]]
+Accuracy score for test set:
+0.7915
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.79      0.79      0.79      1994
+1       0.79      0.80      0.79      2006
+
+avg / total       0.79      0.79      0.79      4000
+
+
+10k-sgd-loss-log
+----------------------------------------
+Confusion matrix for test set classification:
+[[1610  384]
+[ 594 1412]]
+Accuracy score for test set:
+0.7555
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.73      0.81      0.77      1994
+1       0.79      0.70      0.74      2006
+
+avg / total       0.76      0.76      0.75      4000
+
+
+10k-unprocessed-sgd
+------------------
+Confusion matrix for test set classification:
+[[1607  387]
+[ 418 1588]]
+Accuracy score for test set:
+0.79875
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.79      0.81      0.80      1994
+1       0.80      0.79      0.80      2006
+
+avg / total       0.80      0.80      0.80      4000
+
+
+10k-unprocessed-sgd-log-loss
+------------------
+Confusion matrix for test set classification:
+[[1607  387]
+[ 418 1588]]
+Accuracy score for test set:
+0.79875
+Classification Report:
+precision    recall  f1-score   support
+
+-1       0.79      0.81      0.80      1994
+1       0.80      0.79      0.80      2006
+
+avg / total       0.80      0.80      0.80      4000
+
+
+td-10k-all-features-occurrence-only
+------------------
+Confusion matrix for test set classification:
+[[1268  403]
+[ 329 1512]]
+Accuracy score for test set:
+0.791571753986
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.79      0.76      0.78      1671
+1.0       0.79      0.82      0.81      1841
+
+avg / total       0.79      0.79      0.79      3512
+
+
+td-10l-unprocessed-codeblocks
+------------------------------------
+Confusion matrix for test set classification:
+[[793 195]
+[218 765]]
+Accuracy score for test set:
+0.790461694571
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.78      0.80      0.79       988
+1.0       0.80      0.78      0.79       983
+
+avg / total       0.79      0.79      0.79      1971
+
+
+td-10l-unprocessed-hexadecimal
+------------------------------------
+Confusion matrix for test set classification:
+[[21  0]
+[ 6  5]]
+Accuracy score for test set:
+0.8125
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.78      1.00      0.88        21
+1.0       1.00      0.45      0.62        11
+
+avg / total       0.85      0.81      0.79        32
+
+
+td-10l-unprocessed-homework
+------------------------------------
+Confusion matrix for test set classification:
+[[50  6]
+[ 7 12]]
+Accuracy score for test set:
+0.826666666667
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.88      0.89      0.88        56
+1.0       0.67      0.63      0.65        19
+
+avg / total       0.82      0.83      0.83        75
+
+
+td-10l-unprocessed-links
+------------------------------------
+Confusion matrix for test set classification:
+[[ 87  64]
+[ 30 335]]
+Accuracy score for test set:
+0.817829457364
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.74      0.58      0.65       151
+1.0       0.84      0.92      0.88       365
+
+avg / total       0.81      0.82      0.81       516
+
+
+td-10l-unprocessed-numeric
+------------------------------------
+Confusion matrix for test set classification:
+[[1043  111]
+[ 256  395]]
+Accuracy score for test set:
+0.796675900277
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.80      0.90      0.85      1154
+1.0       0.78      0.61      0.68       651
+
+avg / total       0.79      0.80      0.79      1805
+
+
+td-10l-unprocessed-tags
+------------------------------------
+MISSING
+
+td-10l-unprocessed-all-features
+------------------------------------
+Confusion matrix for test set classification:
+[[1284  387]
+[ 342 1499]]
+Accuracy score for test set:
+0.792425968109
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.79      0.77      0.78      1671
+1.0       0.79      0.81      0.80      1841
+
+avg / total       0.79      0.79      0.79      3512
+
+
+td-10l-unprocessed-up-codeblocks
+------------------------------------
+Confusion matrix for test set classification:
+[[786 202]
+[215 768]]
+Accuracy score for test set:
+0.788432267884
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.79      0.80      0.79       988
+1.0       0.79      0.78      0.79       983
+
+avg / total       0.79      0.79      0.79      1971
+
+
+td-10l-unprocessed-up-hex
+------------------------------------
+Confusion matrix for test set classification:
+[[21  0]
+[ 6  5]]
+Accuracy score for test set:
+0.8125
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.78      1.00      0.88        21
+1.0       1.00      0.45      0.62        11
+
+avg / total       0.85      0.81      0.79        32
+
+
+td-10l-unprocessed-up-homework
+------------------------------------
+Confusion matrix for test set classification:
+[[52  4]
+[ 8 11]]
+Accuracy score for test set:
+0.84
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.87      0.93      0.90        56
+1.0       0.73      0.58      0.65        19
+
+avg / total       0.83      0.84      0.83        75
+
+
+td-10l-unprocessed-up-links
+------------------------------------
+Confusion matrix for test set classification:
+[[ 95  56]
+[ 28 337]]
+Accuracy score for test set:
+0.837209302326
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.77      0.63      0.69       151
+1.0       0.86      0.92      0.89       365
+
+avg / total       0.83      0.84      0.83       516
+
+
+td-10l-unprocessed-up-numeric
+------------------------------------
+Confusion matrix for test set classification:
+[[1044  110]
+[ 247  404]]
+Accuracy score for test set:
+0.802216066482
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.81      0.90      0.85      1154
+1.0       0.79      0.62      0.69       651
+
+avg / total       0.80      0.80      0.80      1805
+
+
+td-10l-unprocessed-up-tags
+------------------------------------
+Confusion matrix for test set classification:
+[[1559  426]
+[ 398 1611]]
+Accuracy score for test set:
+0.793690535804
+Classification Report:
+precision    recall  f1-score   support
+
+-1.0       0.80      0.79      0.79      1985
+1.0       0.79      0.80      0.80      2009
+
+avg / total       0.79      0.79      0.79      3994
+
+\end{comment}
+
+
+\begin{comment}
+\begin{table}[!htb]
+\caption{Confusion Matrix for xxxxx.}
+\begin{minipage}{.5\linewidth}
+\caption{Unprocessed dataset}
+\centering
+\begin{tabular}{| c | c | c |}
+\hline
+Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+-1			& xx			& xx			\\ \hline
+1			& xx			& xx			\\ \hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+\centering
+\caption{All features}
+\begin{tabular}{| c | c | c |}
+\hline
+Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+-1			& xx			& xx			\\ \hline
+1			& xx			& xx			\\ \hline
+\end{tabular}
+\end{minipage} 
+\end{table}	
+\end{comment}
 \begin{comment}
 % potentially flip this, and this as a Score X feature (since all kernel values were the same)
 % something like "Comparison ..., with Kernel = RBF, Gamma = gamma and C = c
@@ -145,9 +933,7 @@ Kernel				& RBF			& RBF			& RBF			& RBF			& RBF 		& RBF	\\ \hline
 \caption{Comparison of raw data set (unprocessed) and singular feature detectors}
 %\label{tab:singular_feature_detector_so2}
 \end{table}
-\end{comment}
 
-\begin{comment}
 \begin{table}[tbp]
 \centering
 \begin{tabular}{| c | c | c | c | c |}
@@ -162,9 +948,7 @@ Vote (highest)	& -1				& 0					& 13845			& 13845	 		\\ \hline
 \caption{Overview of the Stack Overflow dataset.}
 %\label{tab:dataset_overview_so2}
 \end{table}
-\end{comment}
 
-\begin{comment}
 Amount of features before anything was done to the text: 69766 - CountVectorizer(analyzer='word') - \%
 Amount of features after adding stop word (English): 69462 - CountVectorizer(analyzer='word', stop\_words="english") - \%
 Amount of features after removing code samples, hexadecimals and numeric values: 27624 - \%
