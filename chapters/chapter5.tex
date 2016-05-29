@@ -275,10 +275,12 @@ Numerical is now below the unprocessed, but in this case the classifier was base
 \end{table}
 \vspace{0.5em}\newline
 Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} shows a comparison between the classifier for unprocessed and all features. 
-When considering to use stemming, there were two that were considered, Porter and Lancaster. \\
-write something more about stemming and choices here \\
-surprising that it got worse result \\
-combining and not combining related words during stemming
+This also includes a comparison of stemmed vs non-stemmed features. 
+
+There were two stemmers that were considered, Porter and Lancaster.
+Lancaster is based on Porter, but is more aggressive, and what I experienced was that words which was not even of the same root (e.g. 'user' and 'using' both became 'us') \cite{Textprocessing.com2016}.
+The expectation was that stemming would enhance the prediction and increase the prediction accuracy, but this was not the case. 
+When compared with the unprocessed, the accuracy score was 3.93\% lower, and 3.15\% lower than the data set with all feature detectors without stemming.
 \begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c | c |}
@@ -291,10 +293,15 @@ combining and not combining related words during stemming
 	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
 \end{table}
 \vspace{0.5em}\newline
-In Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, the classifier results for the \gls{sgd} using all loss functions are omitted because it selected loss='log', giving the same values. 
+Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so} shows a comparison between unprocessed and all features (stemmed) using the \gls{sgd} classifier.
+A full exhaustive search was also done, but this is omitted because it resulted in the same values as for loss='log'.
+% a bit funky sentence; Re-write?
+The reason that two exhaustive searches were used is because the possibility to get a prediction probability is only available for loss='log' when using \gls{sgd}.
+Probability was a desired functionality, because then the user would upon entering a question, not only be told this is a good/bad question, but also get the probability.
 As expected, when comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} with Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, \gls{svc} did get a slightly higher score.
 The difference is barely notable, since the classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
 Whereas for the classifier using all features, \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
+This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier.
 \begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c |}
@@ -313,20 +320,28 @@ Whereas for the classifier using all features, \gls{svc} achieved a score 75.97\
 	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
 	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
 \end{table}
+\vspace{0.5em}\newline
+% TODO: merge this into the related paragraphs (if needed)
+In Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}, the confusion matrices for all these are listed. 
+The confusion matrix is based on the test set that was created using train\_test\_split.
+These show a clear indication that the system is much better at predicting bad questions, then good.
+This also explains why it was easier to spot the bad questions, rather than a good one when attempting to find features. 
+
 
 \clearpage
 \todo[inline]{To be written:}
 \begin{enumerate}
-	%	\item Discussion on features
-	%	\item Classifier and features; none, singular, all
+%	\item Discussion on features
+%	\item Classifier and features; none, singular, all
 	\item Classifier and features; none, singular, all - for questions that contain the given feature
-	\item Classifier and estimator
-	%	\item Site tags and "assignment": Excluded from training set using "all" features
+%	\item Classifier and estimator
+%	\item Site tags and "assignment": Excluded from training set using "all" features
 	\item \gls{so} dataset vs. tex.stackexhange
-	\item Stemming - did this improve or worsen the results? Regardless of results, why?
-	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
-	\item The cost of probability (i.e. \gls{sgd})
+%	\item Stemming - did this improve or worsen the results? Regardless of results, why?
+%	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
+%	\item The cost of probability (i.e. \gls{sgd})
 	\item Presumption that max\_df=95\% was a smart move (was it really when comparing to SGD using all?)
+	\item Analysis of the confusion matrices presented in Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}
 \end{enumerate}
 
 \todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
