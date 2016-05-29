@@ -1,9 +1,8 @@
 %\chapter{Discussions}
 \label{chap:chapter5}
 
-\todo[inline]{for now this chapter is a bit messy due to the tables appearing all over the place. please ignore the "readability" issues these causes for now}
-\todo[inline]{chapter \ref{sec:data_and_testing} is temporarily done, the same goes for \ref{sec:development} (might add more to that later on)}
-
+\todo[inline]{Large parts of this chapter will be re-written for increased consistency and make it less repetitive. }
+\todo[inline]{add this in relation to data set section: \cite{Klein2016,SpaceMachine.net2016,Wissner-Gross2016}}
 \section{Data set and Question selection}
 \label{sec:data_and_testing}
 The dataset was retrieved from Stack Exchange Archive \cite{StackExchange2016}, and contains all the data posted from the beginning. 
@@ -138,7 +137,7 @@ Although \gls{sgd} are targeted at sample sizes greater than 100,000, it would s
 Given the that the sample size was below the threshold, the expectation was that in this case, \gls{svc} would get better results.
 
 % Listing for the SVC parameters
-\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}] 
+\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}, language={Python}] 
 param_svm = [
 {'clf__C': [1, 10, 100, 1000], 'clf__kernel': ['linear']},
 {'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['rbf']},
@@ -146,7 +145,7 @@ param_svm = [
 ]
 \end{lstlisting}
 % Listing for the SGD parameters
-\begin{lstlisting}[caption={Parameters for SGD}, label={lst:param_sgd}] 
+\begin{lstlisting}[caption={Parameters for SGD}, label={lst:param_sgd}, language={Python}] 
 grid_parameters = {
 'vect__min_df': (0.01, 0.025, 0.05, 0.075, 0.1),
 'vect__max_df': (0.25, 0.5, 0.75, 0.95, 1.0),
@@ -232,7 +231,7 @@ The accuracy for Homework is equal to the unprocessed, but as with Tags, this is
 	\begin{tabular}{| c | c |}
 		\hline
 		~ 				& Accuracy Score	\\ \hline
-		Code samples 	& 79.17\%			\\ \hline
+		Code block 	& 79.17\%			\\ \hline
 		Hexadecimal		& 79.90\%			\\ \hline
 		Homework 		& 79.90\%			\\ \hline
 		Links			& 79.35\%			\\ \hline				
@@ -262,7 +261,7 @@ Numerical is now below the unprocessed, but in this case the classifier was base
 	\begin{tabular}{| c | c | c | c | c | c | c |}
 		\hline
 		~				& Unprocessed			& Feature						& C				& Gamma ($\gamma$)	& Kernel	& Rows	 		\\ \hline
-		Code samples 	& Accuracy: 78.84\%		& Accuracy: 79.04\%				& 1				& N/A				& Linear 	& 9,855 		\\ \hline
+		Code block	 	& Accuracy: 78.84\%		& Accuracy: 79.04\%				& 1				& N/A				& Linear 	& 9,855 		\\ \hline
 		Hexadecimal		& Accuracy: 81.25\%		& Accuracy: 81.25\%				& 1				& N/A				& Linear	& 160 			\\ \hline
 		Homework 		& Accuracy: 84.00\%		& Accuracy: 82.67\%				& 1				& N/A				& Linear	& 374 			\\ \hline
 		Links			& Accuracy: 83.72\%		& Accuracy: 81.78\%				& 1				& N/A				& Linear	& 2,575			\\ \hline		
@@ -326,25 +325,76 @@ In Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}, the conf
 The confusion matrix is based on the test set that was created using train\_test\_split.
 These show a clear indication that the system is much better at predicting bad questions, then good.
 This also explains why it was easier to spot the bad questions, rather than a good one when attempting to find features. 
+\\
+When looking at the confusion matrices presented in Appendix \ref{app:confusion_matrix}, p.~\pageref{app:confusion_matrix}, the features worsens the predictability (numerical being the exception).
+The results of Tags and Homework are questionable, simply because they contain features (external and homework) not represented in the classifier for all the features.
+Based on the parameters that was used for the unprocessed data set, there is no improvement of prediction for good, and they worsen the prediction for bad questions.
+One exception is the feature for Hexadecimal, but this has no impact on neither good or bad questions, and is only present in 160 questions. 
+This means that if this were not used as a feature, it would not be present at all, since all words with a frequency less than 1\% will be excluded. 
+The same can be said for homework, considering that this also includes the word 'assignment' (e.g. if 'assignment' was excluded, would it still be in over 1\% of the questions).
+One thing that is interesting is the comparison of the stemmed and non-stemmed classifiers for the \gls{svc}.
+The stemmed classifier has the worst prediction, but the non-stemmed classifier using its own parameters have better prediction for bad questions.
+The \gls{sgd} is better at predicting bad questions, but performs worse for good.
+When comparing the unprocessed \gls{sgd} classifier against the one using all features, it is much better at predicting good questions.
+For the singular features, code samples, hexadecimal, homework and links do not have that much variation from the unprocessed (but the prediction is still worse).
+The numerical feature is the only feature making a difference, with an equal classification prediction for bad, and even better for good (only 375 misclassified as bad).
+\\
+The comparison of singular features vs. unprocessed showed a worse results for most of the features, even numerical (the sconfusion matrices are shown in Appendix \ref{app:conf_matrix_singular_only}, 
+ p.~\pageref{app:conf_matrix_singular_only}). 
+One thing that needs to be taken into consideration is the total sample size that was used for training and testing. 
+When all questions were used, a total of 16,000 questions was used for training and 4,000 used for evaluation.
+Table \ref{tab:amount_of_singular_questions_processed} shows the number of good and bad questions containing at least one of the given feature detectors.
+Table \ref{tab:questions_used_for_singular_training} shows the number of questions used for training and evaluation based on their class.
+The feature for code blocks is better at classifying bad questions. 
+This could indicate that bad questions include more code samples than those writing good questions (e.g. as shown in PAPER, where they found code samples should be short).
+However, no analysis was done to the code samples, but some questions did use the <code> tag on words like 'Integer' and 'Double'.
+If external tags were to be included as a feature detector, adjustments would need to be made, e.g. using only programming related terms and ignore the rest.
+The feature detector using all has now a better predictability than the unprocessed for bad questions, but it is still worse on good questions.
+As for numerical, there are more bad than good questions, which means that it will lean toward classifying questions as bad rather than good.
+% table here
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		~ 					& Bad: -1			& Good: 1		& Total		\\ \hline
+		Code block			& 5,090				& 4,765			& 9,855		\\ \hline
+		Hexadecimal			& 109				& 51			& 160		\\ \hline
+		Homework			& 261				& 113			& 374		\\ \hline
+		Links				& 778				& 1,798			& 2,575		\\ \hline
+		Numerical			& 5,804				& 3,220			& 9,024		\\ \hline
+		Tags				& 9,987				& 9,980			& 19,967	\\ \hline
+		All features		& 8,466				& 9,092			& 17,558	\\ \hline
+	\end{tabular}
+	\caption{The number of questions containing the given feature.}
+	\label{tab:amount_of_singular_questions_processed}
+\end{table}
 
 
-\clearpage
-\todo[inline]{To be written:}
-\begin{enumerate}
-%	\item Discussion on features
-%	\item Classifier and features; none, singular, all
-	\item Classifier and features; none, singular, all - for questions that contain the given feature
-%	\item Classifier and estimator
-%	\item Site tags and "assignment": Excluded from training set using "all" features
-	\item \gls{so} dataset vs. tex.stackexhange
-%	\item Stemming - did this improve or worsen the results? Regardless of results, why?
-%	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
-%	\item The cost of probability (i.e. \gls{sgd})
-	\item Presumption that max\_df=95\% was a smart move (was it really when comparing to SGD using all?)
-	\item Analysis of the confusion matrices presented in Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}
-\end{enumerate}
+% table here
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~ 					& Training: -1		& Training: 1		& Evaluation: -1	& Evaluation: 1	\\ \hline
+		Code block			& 4102				& 3782				& 988				& 983			\\ \hline
+		Hexadecimal			& 88				& 40				& 21				& 11			\\ \hline
+		Homework			& 205				& 94				& 56				& 19			\\ \hline
+		Links				& 627				& 1433				& 151				& 365			\\ \hline
+		Numerical			& 4650				& 2569				& 1154				& 651			\\ \hline
+		Tags				& 8002				& 7971				& 1985				& 2009			\\ \hline
+		All features		& 6795				& 7251				& 1671				& 1841			\\ \hline
+	\end{tabular}
+	\caption{The number of questions used for evaluation.}
+	\label{tab:questions_used_for_singular_training}
+\end{table}
 
-\todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
+\todo[inline]{this is not intended to be in the final version, just commentary before re-write}
+To see if the system was indeed expandable for communities in \gls{se}, Tex.StackExchange was also tested to see which would be more predictive 
+(tables are shown in Appendix \ref{app:tables_tex}, p.~\pageref{app:tables_tex}). 
+The results clearly shows that \gls{so} is more predictive, given the amount of data available when compared to Tex.StackExchange\footnote{
+	However, it should be noted that this dataset was downloaded in August 2015, but the latest post in that database was from 2014.
+}
+
 
 
 

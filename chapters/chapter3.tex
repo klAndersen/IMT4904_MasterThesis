@@ -21,7 +21,7 @@ However, since this turned out to be outdated, the latest dataset was downloaded
 The dataset comes in zip-files, where each zip-file contains all the rows found in the given table. 
 These rows are presented in an XML file, as shown in Listing \ref{lst:so_xml_file}.
 % listing
-\begin{lstlisting}[caption={Content in stackoverflow.com-Tags.xml}, label={lst:so_xml_file}] 
+\begin{lstlisting}[caption={Content in stackoverflow.com-Tags.xml}, label={lst:so_xml_file}, language={XML}] 
 <?xml version="1.0" encoding="utf-8"?>
 <tags>
 <row Id="1" TagName=".net" Count="227675" 
@@ -84,7 +84,7 @@ datadir = /home/mysql
 \end{lstlisting}
 
 % Listing showing the SQL for loading XML row data into MySQL
-\begin{lstlisting}[caption={Load XML file into a table in the MySQL database}, label={lst:load_xml_file}] 
+\begin{lstlisting}[caption={Load XML file into a table in the MySQL database}, label={lst:load_xml_file}, language={SQL}] 
 LOAD XML LOCAL INFILE 
 path_to_xml_file
 INTO TABLE db_table
@@ -285,7 +285,7 @@ one can see that for the 10,000 bad questions, the average vote score was -7. Th
 
 \newpage
 \begin{lstlisting}[caption={Getting Categorical data from pandas.DataFrame}, 
-label={lst:pandas_categorical}, basicstyle=\small] 
+label={lst:pandas_categorical}, language={Python}, basicstyle=\small] 
 from pandas import DataFrame, Categorical
 
 # get statistics from pandas.DataFrame
@@ -385,7 +385,7 @@ In addition, the tags needed to be sorted based on their length, since for quest
 if <C> came first, it replaced the <C++> with 'has\_*\_tag'++. The text also had to be converted to lower-case to ensure proper tag matching. 
 
 \begin{lstlisting}[caption={Replacing tags in the question}, 
-label={lst:pandas_categorical}, basicstyle=\small] 
+label={lst:pandas_categorical}, language={Python}, basicstyle=\small] 
 for word in word_set:
 	if len(word) == 1:
 		# if its only one character (e.g. 'C'), ensure that it is a singular word by using regex
