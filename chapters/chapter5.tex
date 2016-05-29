@@ -162,8 +162,8 @@ grid_parameters = {
 Only 20,000 questions were selected, and a larger sample size would probably have helped getting better predictions from the classifier.
 However, one need to take in consideration the time available, and the time it takes to process and train all the classifiers. 
 When using exhaustive search it matches all the parameters against each other, to see which one has the best combination. 
-This means that if you have 30 different parameters, and a cross-validation of 10, then the total amount of fits is 300 \cite{Markham2015a}.
-The fit count is shown in Equation \ref{eq:fit_svc} for \gls{svc} and in Equation \ref{eq:fit_sgd} for \gls{sgd}.
+This means that if you have 30 different parameters, and a cross-validation of 10, then the total amount of fits is 300 \cite{Markham2015a, Bishop2006}.
+The fit count is shown in Equation \ref{eq:fit_svc} for \gls{svc} and in Equation \ref{eq:fit_sgd} for \gls{sgd} (in this thesis, cross-validation was set to 5).
 % Equation for the amount of fits for SVC
 \begin{equation}\label{eq:fit_svc}
 \begin{split}
@@ -211,34 +211,117 @@ If they were all trained separately with GridSearchCV, there is a risk that it w
 The last part consisted of using all the features, both with the values from the unprocessed classifier model, and using GridSearchCV to select the best parameters.
 Porter stemming was also included, but this was only used for the last classifier model.
 \vspace{0.5em}\newline
+Before running the grid search, data was split by using Scikit-learns train\_test\_split.
+20\% of the questions (4,000) was randomly assigned to a test set, which was not used during training. 
+Cross-validation was done by using StratifiedKFold with 5-folds.
+StratifiedKFold was selected because it is often used for classification tasks \cite{Kononenko2007}.
+Cross-validation splits data into k-folds, where training is done on k-1 folds, and then evaluated against the last fold \cite{Bishop2006}.
+This means that only 80\% of the 16,000 questions is used for training (12,800 questions for training, and 3,200 for evaluation).
+After the training was completed, the classifier models prediction accuracy was tested by using the test data from train\_test\_split.
+\vspace{0.5em}\newline
 The results for the first and second part of the training is shown in Table \ref{tab:singular_feature_detector_so}.
-
+In this table, all classifiers have been trained using the same parameter settings, which were found using GridSearchCV on the unprocessed data set.
+Without doing anything to the data in the data set, the accuracy is already at 79.9\%. 
+The only feature which increases the accuracy, is the numerical, whereas the Tag features reduce accuracy with over 3\%.
+Although, as previously mentioned, this score is not that useful, since the external tags are not included in the classifier for all features. 
+A better solution would have been to have added an additional classification  for the attached tags only. 
+It does however show that using the external tags without any filtering is not a good idea.
+The accuracy for Homework is equal to the unprocessed, but as with Tags, this is also a questionable accuracy (since 'assignment'is excluded from the classifier using all features). 
 \begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c |}
 		\hline
-		~ 				& Score			\\ \hline
-		Code samples 	& 0.78337		\\ \hline
-		Hexadecimal		& 0.7945		\\ \hline
-		Homework 		& 0.79468		\\ \hline
-		Link			& 0.794			\\ \hline				
-		Numerical		& 0.79568		\\ \hline
-		Tags			& 0.755			\\ \hline
-		All features	& 0.781			\\ \hline
-		Unprocessed		& 0.7945		\\ \hline
+		~ 				& Accuracy Score	\\ \hline
+		Code samples 	& 79.17\%			\\ \hline
+		Hexadecimal		& 79.90\%			\\ \hline
+		Homework 		& 79.90\%			\\ \hline
+		Links			& 79.35\%			\\ \hline				
+		Numerical		& 80.55\%			\\ \hline
+		Tags			& 76.17\%			\\ \hline
+		All features	& 79.07\%			\\ \hline
+		Unprocessed		& 79.90\%			\\ \hline
 	\end{tabular}
 	\caption{Classifier results based on the parameters found for the raw (unprocessed) questions. Classifier=SVC, with Kernel=RBF, C=1000 and Gamma=($\gamma$) 0.0001}	
 	\label{tab:singular_feature_detector_so}
 \end{table}
- 
+\vspace{0.5em}\newline
+It would also be interesting to compare the unprocessed against each feature detector, for the question in which it appeared.
+Therefore, new classifier models were made, following the same strategy as mentioned earlier, but now the classifier was re-trained for each feature.
+The results from this training is displayed in Table \ref{tab:comparison_of_feature_occurences_only}.
+This table also includes the parameter values that were selected from the grid search. 
+Since the amount of questions would vary, a new classifier model was made using the unprocessed data set. 
+However, this time the data set only contained the questions which had at least one occurrence of the given feature. 
+These are represented in the column 'Rows', where the value indicates how many questions contained it (e.g. there were only 160 questions that contained at least one hexadecimal value).
+This table also gives more insight into how many of the external tags were not included when using all the features. 
+Both attached and external tags were present in 19,967 questions, but all the features (excluding 'assignment' and external tags) were only present in 17,558 (thus excluding 2409 questions).
+Hexadecimal has not had any change, and is still equal to the unprocessed.
+Numerical is now below the unprocessed, but in this case the classifier was based on 9,024 questions, instead of 20,000.
+% what is a bit weird - why? is that all the features with amount > 9k is RBF, but codeblocks uses linear
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c | c |}
+		\hline
+		~				& Unprocessed			& Feature						& C				& Gamma ($\gamma$)	& Kernel	& Rows	 		\\ \hline
+		Code samples 	& Accuracy: 78.84\%		& Accuracy: 79.04\%				& 1				& N/A				& Linear 	& 9,855 		\\ \hline
+		Hexadecimal		& Accuracy: 81.25\%		& Accuracy: 81.25\%				& 1				& N/A				& Linear	& 160 			\\ \hline
+		Homework 		& Accuracy: 84.00\%		& Accuracy: 82.67\%				& 1				& N/A				& Linear	& 374 			\\ \hline
+		Links			& Accuracy: 83.72\%		& Accuracy: 81.78\%				& 1				& N/A				& Linear	& 2,575			\\ \hline		
+		Numerical		& Accuracy: 80.22\%		& Accuracy: 79.66\%				& 1000			& 0.0001			& RBF		& 9,024			\\ \hline
+		Tags			& Accuracy: 79.36\%		& Accuracy: \%					& 1000			& 0.0001			& RBF		& 19,967		\\ \hline
+		All features	& Accuracy: 79.24\%		& Accuracy: 79.15\%				& 1000 			& 0.0001			& RBF 		& 17,558		\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular features, for questions containing the given feature. Classifier: SVC.}
+	\label{tab:comparison_of_feature_occurences_only}
+\end{table}
+\vspace{0.5em}\newline
+Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} shows a comparison between the classifier for unprocessed and all features. 
+When considering to use stemming, there were two that were considered, Porter and Lancaster. \\
+write something more about stemming and choices here \\
+surprising that it got worse result \\
+combining and not combining related words during stemming
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		~ 					& Unprocessed			& All features			& All features (no stemming)	\\ \hline
+		Score 				& 79.90\%				& 75.97\%				& 79.12\%						\\ \hline
+		Gamma ($\gamma$)	& 1e$^{-04}$ (0.0001)	& 1e$^{-03}$ (0.001)	& 1e$^{-03}$ (0.001) 			\\ \hline
+	\end{tabular}
+	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SVC, Kernel=RBF and C=1000.}
+	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
+\end{table}
+\vspace{0.5em}\newline
+In Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, the classifier results for the \gls{sgd} using all loss functions are omitted because it selected loss='log', giving the same values. 
+As expected, when comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} with Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, \gls{svc} did get a slightly higher score.
+The difference is barely notable, since the classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
+Whereas for the classifier using all features, \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		~				& Unprocessed (loss='log')	& All features (loss='log')	\\ \hline
+		Score 			& 79.87\%					& 75.55\%					\\ \hline
+		Min DF 			& 0.01						& 0.01						\\ \hline
+		Max DF 			& 0.5						& 0.75						\\ \hline
+		Use IDF			& False						& True						\\ \hline
+		Alpha 			& 1e$^{-05}$ (0.00001)		& 1e$^{-05}$ (0.00001)		\\ \hline
+		Normalization 	& l2						& l2						\\ \hline		
+		Penalty 		& elasticnet				& l2						\\ \hline
+		Iteration 		& 50						& 100						\\ \hline
+		Loss 			& log						& log						\\ \hline		
+	\end{tabular}
+	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
+	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
+\end{table}
 
+\clearpage
 \todo[inline]{To be written:}
 \begin{enumerate}
-%	\item Discussion on features
-%	\item Classifier and features; none, singular, all
+	%	\item Discussion on features
+	%	\item Classifier and features; none, singular, all
 	\item Classifier and features; none, singular, all - for questions that contain the given feature
 	\item Classifier and estimator
-%	\item Site tags and "assignment": Excluded from training set using "all" features
+	%	\item Site tags and "assignment": Excluded from training set using "all" features
 	\item \gls{so} dataset vs. tex.stackexhange
 	\item Stemming - did this improve or worsen the results? Regardless of results, why?
 	\item Stemming - Porter vs. Lancaster (e.g. issue with certain words not being stemmed, vs. too much stemming (non-related words))
@@ -248,61 +331,6 @@ The results for the first and second part of the training is shown in Table \ref
 
 \todo[inline]{these tables and listings are temporarily placed here and might be moved into Appendix at a later point.}
 
-
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c | c | c | c |}
-		\hline
-		~				& Unprocessed		& Feature					& C				& Gamma ($\gamma$)	& Kernel	& Row count	 	\\ \hline
-		Code samples 	& Score: 0.794		& Score: 0.7827				& 1				& N/A				& Linear 	& 9,855 		\\ \hline
-		Hexadecimal		& Score: 0.8828		& Score: 0.875				& 1				& N/A				& Linear	& 160 			\\ \hline
-		Homework 		& Score: 0.8595		& Score: 0.856				& 1				& N/A				& Linear	& 374 			\\ \hline
-		Link			& Score: 0.843		& Score: 0.8378				& 1				& N/A				& Linear	& 2,575			\\ \hline		
-		Numerical		& Score: 0.8206		& Score: 0.8123				& 1000			& 0.0001			& RBF		& 9,024			\\ \hline
-		Tags			& Score: 0.7937		& Score: 0.757				& 1000			& 0.0001			& RBF		& 19,967		\\ \hline
-		All features	& Score: 0.80		& Score: 0.79				& 1000 			& 0.0001			& RBF 		& 17,558		\\ \hline
-	\end{tabular}
-	\caption{Comparison of raw data set (unprocessed) and singular features, for questions containing the given feature. Classifier: SVC.}
-	\label{tab:comparison_of_feature_occurences_only}
-\end{table}
-
-% remove this?
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c |}
-		\hline
-		~ 					& Unprocessed			& All features			& All features (no stemming)	\\ \hline
-		Score 				& 0.7945				& 0.792437				& 0.78337						\\ \hline
-		C					& 1000					& 1000					& 1000							\\ \hline
-		Gamma ($\gamma$)	& 1e$^{-04}$ (0.0001)	& 1e$^{-03}$ (0.001)	& 1e$^{-03}$ (0.001) 			\\ \hline
-		Kernel				& RBF					& RBF					& RBF							\\ \hline
-	\end{tabular}
-	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SVC.}
-	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
-\end{table}
-
-% training_data_10000_unprocessed_sgd
-% Best parameters: {'vect__max_df': 0.5, 'vect__min_df': 0.01, 'clf__alpha': 1e-05, 'clf__n_iter': 50, 'tfidf__norm': 'l2', 
-% 'clf__loss': 'log', 'tfidf__use_idf': False, 'clf__penalty': 'elasticnet'}
-
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c| c | c | c | c |}
-		\hline
-		~				& Unprocessed		& Unprocessed (loss='log')	& All features (loss='log')	\\ \hline
-		Score 			& xxxxx				& 0.7949375					& 0.79325					\\ \hline
-		Min DF 			& xxxxx				& 0.01						& 0.01						\\ \hline
-		Max DF 			& xxxxx				& 0.5						& 0.75						\\ \hline
-		Use IDF			& xxxxx				& False						& True						\\ \hline
-		Alpha 			& xxxxx				& 1e$^{-05}$ (0.00001)		& 1e$^{-05}$ (0.00001)		\\ \hline
-		Normalization 	& xxxxx				& l2						& l2						\\ \hline		
-		Penalty 		& xxxxx				& elasticnet				& l2						\\ \hline
-		Iteration 		& xxxxx				& 50						& 100						\\ \hline
-		Loss 			& xxxxx				& log						& log						\\ \hline		
-	\end{tabular}
-	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
-	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
-\end{table}
 
 
 \clearpage

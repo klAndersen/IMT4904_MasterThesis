@@ -9,7 +9,9 @@ considered as a good or bad question.
 This was achieved by using the \gls{se} data set, specifically using the one for \gls{so}. 
 Questions were dived into two classes, where bad questions was question with a vote score below zero, and good questions were those above zero. 
 Based on content in the various questions, a set of feature detectors was developed and tested against the raw data set. 
-Surprisingly, the features actually lowered the overall score (the raw data set had a score of 0.7945, and the ones using all the feature detectors had a score of 0.792). \\
+Surprisingly, the features actually lowered the accuracy score.
+The raw, unprocessed classifier achieved a score of 79.90\%.
+The classifier using Porter stemming and all features achieved a score of 75.97\%, and the classifier without stemming using all the features got a score of 79.12\%.
 
 
 \begin{comment}
