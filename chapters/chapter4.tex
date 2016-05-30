@@ -1,5 +1,5 @@
 %\chapter{Discussions}
-\label{chap:chapter5}
+\label{chap:chapter4}
 
 \todo[inline]{Working on re-writing \ref{sec:feature_classifier_results} and re-writing \ref{sec:limitations_and_issues}}
 
@@ -216,13 +216,16 @@ This also includes a comparison of stemmed vs non-stemmed features.
 There were two stemmers that were considered, Porter and Lancaster.
 Lancaster is based on Porter, but is more aggressive, and what I experienced was that words which was not even of the same root (e.g. 'user' and 'using' both became 'us') \cite{Textprocessing.com2016}.
 The expectation was that stemming would enhance the prediction and increase the prediction accuracy, but this was not the case. 
-When compared with the unprocessed, the accuracy score was 3.93\% lower, and 3.15\% lower than the data set with all feature detectors without stemming.
+The stemmed feature detector only achieved an accuracy score of 75.97\%, which is 3.93\% lower than the unprocessed and 3.15\% lower than the non-stemmed classifier.
+When comparing the stemmed feature detector against the unprocessed and the other two feature detectors including all features, it has the highest misclassification (based on confusion matrices).
+However, the non-stemmed feature detector that was trained based on grid-search performs better than the feature detector using the unprocessed parameters.
+This is because it is able to predict more of the bad questions.
 \begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c | c |}
 		\hline
 		~ 					& Unprocessed			& All features			& All features (no stemming)	\\ \hline
-		Score 				& 79.90\%				& 75.97\%				& 79.15\%						\\ \hline
+		Score 				& 79.90\%				& 75.97\%				& 79.12\%						\\ \hline
 		Gamma ($\gamma$)	& 1e$^{-04}$ (0.0001)	& 1e$^{-03}$ (0.001)	& 1e$^{-03}$ (0.001) 			\\ \hline
 	\end{tabular}
 	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SVC, Kernel=RBF and C=1000.}
@@ -233,22 +236,17 @@ Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so} shows a comparison b
 A full exhaustive search was also ran on the unprocessed, but this is omitted because it resulted in the same values as for loss='log'.
 The reason loss was set to 'log' is because you can then get a probability score when using prediction.
 Probability was desired, because when a user then enters a new question to predict, the output would also contain the probability and not just "This is a good/bad question".
-
-\todo[inline]{continue re-writing from here}
-
-As expected, when comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} with Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, \gls{svc} did get a slightly higher score.
-The difference is barely notable, since the classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
-Whereas for the classifier using all features, \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
-This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier.
-
-
-% confusion matrix part
-One thing that is interesting is the comparison of the stemmed and non-stemmed classifiers for the \gls{svc}.
-The stemmed classifier has the worst prediction, but the non-stemmed classifier using its own parameters have better prediction for bad questions.
-The \gls{sgd} is better at predicting bad questions, but performs worse for good.
-When comparing the unprocessed \gls{sgd} classifier against the one using all features, it is much better at predicting good questions.
-
-
+\vspace{0.5em}\newline
+\gls{svc} did perform slightly better than the \gls{sgd}, which can be seen from comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} and \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}.
+The classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
+When comparing the feature detector containing all features (where both were stemmed), \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
+This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier than \gls{svc}.
+Based on the confusion matrices, if one only were interested in predicting bad questions, \gls{sgd} would be a better option, given that it has the lowest misclassification.
+However, as seen in Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, it uses a max document frequency of 50\%, meaning that words appearing in over 50\% of the questions are excluded.
+This could be related to it filtering out code samples and dummy words, since the classifier using all features uses up to 75\%.
+Another difference is that for the \gls{svc}, a constant value was set for max document frequency to exclude words used in more than 95\% of the questions. 
+This was mainly because it would be more interesting to use the less used words, but these results shows that it would have been better for the grid search to select that value.
+% table showing comparison of the unprocssed and all features classifier using loss='log'
 \begin{table}[!h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c |}
@@ -267,24 +265,18 @@ When comparing the unprocessed \gls{sgd} classifier against the one using all fe
 	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
 	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
 \end{table}
-%\vspace{0.5em}\newline
-
-
-\todo[inline]{move or delete this paragraph}
-In Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}, the confusion matrices for all these are listed. 
-The confusion matrix is based on the test set that was created using train\_test\_split.
-These show a clear indication that the system is much better at predicting bad questions, then good.
-This also explains why it was easier to spot the bad questions, rather than a good one when attempting to find features. 
-\\
-
-\todo[inline]{this is not intended to be in the final version, just commentary before re-write}
-To see if the system was indeed expandable for communities in \gls{se}, Tex.StackExchange was also tested to see which would be more predictive 
-(tables are shown in Appendix \ref{app:tables_tex}, p.~\pageref{app:tables_tex}). 
-The results clearly shows that \gls{so} is more predictive, given the amount of data available when compared to Tex.StackExchange\footnote{
-	However, it should be noted that this dataset was downloaded in August 2015, but the latest post in that database was from 2014.
-}
-
-
+\vspace{0.5em}\newline
+Since this thesis was mainly focused on programming questions and \gls{so}, one could ask the question whether or not this is a closed domain system. 
+The answer to that is that it is an open domain system for \gls{se}.
+\gls{se} uses the same database format for all their data, which is listed in the ReadMe.txt included in the data set (and also what the database was based on).
+To see if the system is expandable, the data for Tex.StackExchange\footnote{
+	The Tex.StackExchange data is based on a data set that was downloaded in August 2015, but the newest question in the data set is from 2014.
+} was extracted and added to a database. 
+Given the amount of data available in \gls{so} vs. the amount of data in Tex.StackExchange, which would be more predictive?
+One critique is that the number of questions is not comparable, as shown in Table \ref{tab:dataset_overview_tex} in Appendix \ref{app:tables_tex}, p.~\pageref{app:tables_tex}.
+However, this also helps prove a point in relation to whether or not data matters when training a classifier.
+The results show that \gls{so} is more predictive than Tex.StackExchange.
+Tex.StackExchange got an accuracy score of 99\%, but it misclassified all 15 bad questions as good (and in total, it only contains 93 bad questions).
 
 
 \clearpage
@@ -370,22 +362,30 @@ Mapped named-entities.
 \clearpage
 \section{Limitations and other issues}
 \label{sec:limitations_and_issues}
-\todo[inline]{This whole section will be re-written}
-One of the major issues was the fact that the latest development version was used instead of the stable one.
+One potential issue is that it is the development version (v0.18.dev0) of Scikit-learn and not the stable version (v0.17.1) that was used.
+Due to various installation issues, the development version from GitHub was used.
+In the development version, a lot of changes have been added, where modules have been moved and function parameters removed (making a lot of tutorials outdated).
 The question became at one point whether or not a switch should be made from using the development version into the stable version.
-There were two things that needed to be taken into consideration. 
+However, there were two things that needed to be taken into consideration.  
 First of all, it was unknown when this development version would become the next stable one.
-If the development version became the new stable version, a lot of alterations would have to be made to the source code.
 Furthermore, for the long term, if this system would become successful, it would be easier to maintain in the future if it relied on the latest version.
 \vspace{0.5em}\newline
 When you are only one person with only one computer there is a certain limitation to how much work can be done simultaneously.
-A lot of time were spent having to rebuild the database and processing the data (e.g. finding features, replacing it, training classifiers).
-To ensure expandability (for the \gls{se} community) and ensuring replicability (having a unprocessed data set), more than once code had to be updated or re-written. 
-This easily caused a lot of unforeseen issues.
-The worst one was the realization that after the update of the unprocessed data set (changing it to contain HTML like in the database), the HTML was not removed from the text.
-The impact was that all the models that were created using the parameters and data from the unprocessed had to be re-trained to get correct results. 
+As previously mentioned, the Tags and Homework should have had an additional classifier training, using only the words for Homework and the tags attached to the question.
+The grid searches have only been used over a short set of parameters, which mean that the parameters it selected is not the best ones.
+Instead, it selected those because it could not go higher (or lower) for the given parameter. 
+There is neither any comparison of feature detectors for the \gls{sgd}, as was done with the \gls{svc}.
+This was excluded due to the time it takes to train each classifier.
 \vspace{0.5em}\newline
-One of the more peculiar issues (which I do not have an explanation for), was when the real training started (using the \gls{svc} and GridSearchCV).
+Tex.StackExchange does not contain enough questions to be on equal comparison terms with the \gls{so} data set. 
+However, it was selected based on the expectation that it would not contain an equal amount of data. 
+For Tex.StackExchange the score had to be set to greater than zero to even have enough bad questions to compare with.
+Which leads to the score retrieval. 
+When retrieving questions based on vote score, there is no sorting or selecting of the best or worst. 
+It just selects the values that are greater or lower then the set value. 
+This means that if you were to select all the best and worst (sorted on vote score), you could perhaps get better accuracy score.
+\vspace{0.5em}\newline
+One of the more peculiar issues (which I do not have an explanation for), was when the proper training started (using the \gls{svc} and GridSearchCV).
 The reason that this issue cannot be explained, is because I do not know what caused it to happen.
 What happened was that when the training was started, no verbose was printed at all (which was weird considering I had used the same values before and it then gave a verbose output). 
 The program ran for hours, without giving any feedback, errors or output. 
@@ -408,23 +408,3 @@ This have not been tested in Linux, but the reason nothing happened may have bee
 	There is also a known issue with parallelization in Linux, see: 
 	\url{https://pythonhosted.org/joblib/parallel.html\#bad-interaction-of-multiprocessing-and-third-party-libraries}.
 }.
-
-
-
-
-
-
-\todo[inline]{either add this to limitation/issues or delete it}
-
-
-% this could probably be re-used
-The most useful resource were of course Scikit-learns tutorials \cite{Scikitlearn.org2016j}\footnote{
-	The examples that were worked through can be seen here (as stated in ReadMe, the only thing I have altered is comments and adjustments for v0.18.dev0): \\
-	\url{https://github.com/klAndersen/scikit-learn_tutorials}.
-} and documentation \cite{Scikitlearn.org2016,Scikitlearn.org2016h}, 
-but there were also two other tutorials that proved helpful (\cite{Rehurek2014} and \cite{Elahi2016}).
-% this could also probably be re-used
-The main problem was that Scikit-learns documentation and most of the tutorials written by others is based on v0.17.1.
-Due to various problems with installation in regards to Numpy and Scipy, Scikit-learn had to be installed from GitHub (which is v0.18.dev0).
-In the development version, a lot of functions and modules had been re-written and moved, making many tutorials and examples outdated.
-
