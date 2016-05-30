@@ -1,4 +1,430 @@
-%\chapter{chapter4}
-\label{chap:chapter4}
+%\chapter{Discussions}
+\label{chap:chapter5}
 
-empty placeholder section
+\todo[inline]{Working on re-writing \ref{sec:feature_classifier_results} and re-writing \ref{sec:limitations_and_issues}}
+
+\section{Data set and Question selection}
+\label{sec:data_and_testing}
+The dataset was retrieved from Stack Exchange Archive \cite{StackExchange2016}, and contains all the data posted since the beginning in 2008. 
+In this thesis, only the data for \gls{so} was used, specifically the posted questions.
+A simplified overview is shown in Table \ref{tab:dataset_overview_so}, listing questions based on vote score. 
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~				& Amount		& Oldest		& Newest		& Vote (lowest)		& Vote (highest)	\\ \hline
+		Votes < 0		& 659,955		& 06.08.2008	& 06.03.2016	& -147				& -1				\\ \hline
+		Votes = 0		& 5,256,105		& 06.08.2008	& 06.03.2016	& 0					& 0					\\ \hline
+		Votes > 0		& 5,286,971		& 31.07.2008	& 06.03.2016	& 1					& 13845				\\ \hline
+		All questions	& 11,203,031	& 31.07.2008	& 06.03.2016	& -147				& 13845				\\ \hline
+	\end{tabular}
+	\caption{Overview of the questions in the Stack Overflow dataset.}
+	\label{tab:dataset_overview_so}
+\end{table}
+As previously mentioned in Section \ref{sec:feature_sets}, the value used to extract the questions was set to -5 and +50. 
+The problem with these values are that they were simply selected. 
+Originally, the value for bad questions was -10, which were then changed to -5, because -10 only retrieved 683 rows (and I wanted 10,000 samples for both question types).
+However, as can be seen from Table \ref{tab:dataset_overview_so}, +50 is most likely a too low value for the good questions. 
+To get more representative results, three different alternatives could be considered.
+\vspace{0.5em}\newline
+The first alternative is the easiest. 
+If you are only interested in a set sample size, then you could simply retrieve the amount sorted by score.
+If you want 10,000 of each, you would then get the 10,000 that are scored highest (or lowest).
+The second alternative would be to get a set limit based on the actual score, by using the mean or average.
+For all the questions of a given type, retrieve the average and then select questions which has a score higher (or lower) than the average.
+The third alternative would be to use quartiles. 
+Quartiles is measured by a given percentage of the observations, where each quartile represents 25\%; 
+Q$_{1}$ (25\%), M (median, 50\%) and Q$_{3}$ (75\%) \cite{Hagen2011}.
+The equation to calculate the quartiles are shown in Equation \ref{eq:quartile1} - \ref{eq:quartile3}.
+% equation: Quartile 1
+\begin{equation}\label{eq:quartile1}
+Q_{1} = \frac{(n + 1)}{4}
+\end{equation}
+% equation: Quartile 2
+\begin{equation}\label{eq:quartile2}
+M = \frac{(n + 1)}{2}
+\end{equation}
+% equation: Quartile 3
+\begin{equation}\label{eq:quartile3}
+Q_{3} = \frac{3 \cdot (n + 1)}{4}
+\end{equation}
+As previously mentioned in Section \ref{sec:feature_sets}, there was no clear indicator for the good questions. 
+Some consisted only of two sentences, e.g. "I committed the wrong files to Git. How can I undo this commit?"\footnote{
+	This question currently have a score of 10,406: \\ 
+	\url{http://stackoverflow.com/questions/927358/how-do-you-undo-the-last-commit}.
+}. Common for many of the top-voted questions is that they are short, but that is not the case for all of them\footnote{
+	One example is this question, with a score of 3,009: \\
+	\url{http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting}.
+}.
+There is also what I would call a bias factor. 
+If enough people have the same problem, then it will automatically become a good question. 
+Not because of the questions quality, but simply because many will encounter it (e.g. Bugs, \gls{ide} behaviour, tweaks, etc).
+The same can be said for bad questions. 
+In many cases, a question is bad not because of the question that is asked, but simply because it does not follow the guidelines. 
+If a question is a duplicate, it is automatically voted for closure, and will in most cases receive multiple down-votes. 
+Questions which gives a hint of being school related will also receive down-votes, mainly because \gls{so} targets professionals and experts. 
+\gls{so} is neither a fan of unnecessary text like greetings and gratefulness \cite{CommunityWiki2016a,Heyer2012}.
+\vspace{0.5em}\newline
+Is \gls{so} fit for measuring question quality?
+In a closed domain setting, the answer is yes. 
+However, as mentioned, what type of quality being measured must be taken into consideration. 
+As it is, the system would not be useful for an educational setting, because it bases its prediction on questions asked on \gls{so}.
+If a student were to ask the system a question, it might respond saying that this is a bad question (but the result may be based on the fact that it is a duplicate).
+For an educational setting, a better solution would be to develop a system similar to the one in \cite{Lezina2013}.
+With the current state of the system (if it were to be used), it would be more appropriate to use it as a measurement tool for new \gls{so} questions, rather then general question quality.
+\vspace{0.5em}\newline
+Considering the amount of data this data set provides, there is a lot of research that could be used in relation to \gls{ai} and \gls{ml} development. 
+One example is \textcite{Schutte2016}, who used the same data set to build an auto-complete for Javascript. 
+When taking Big Data into consideration, a question has also been presented on whether or not it is the data, and not the algorithm which improves \gls{ai}~\cite{Klein2016,SpaceMachine.net2016,Wissner-Gross2016}.
+
+
+\section{Feature and classifier results}
+\label{sec:feature_classifier_results}
+A total of six features were detected and converted from each question. 
+These features were code samples\footnote{
+	Nothing was done to the content of the code sample, it was only removed and replaced with 'has\_codeblock'.
+}, 
+hexadecimal, numerical, synonyms for homework and tags. 
+As mentioned in Section \ref{sec:feature_sets}, homework and tags contained two feature types. 
+One problem with the external tags (all tags listed on the given site), was that it replaced even normal words\footnote{
+	For a visualization of how bad it was, see Figure \ref{fig:tag_features_raw} and \ref{fig:tag_features_external} in Appendix \ref{app:various_screenshots}, p.~\pageref{app:various_screenshots}.
+	See also the files "\emph{training\_data\_10000\_unprocessed\_UP\_has\_tags.csv}" and "\emph{training\_data\_10000\_unprocessed\_has\_tags.csv}", found in \\ 
+	\emph{./IMT4904\_MasterThesis\_Code/extraction\_sets/}.
+} (e.g. "this", "can", "let", etc).
+Since the external tags and the word "assignment" was conflictive, these were only included when creating classifier models for the singular feature detectors\footnote{
+	The singular feature detectors are based on the premise that each feature should be tested individually, and none of the other feature detectors should be used in the model creation process.
+}.
+\vspace{0.5em}\newline
+To be able to compare if a feature would have an impact, the creation of classifier models was divided into three parts. 
+In the first part, the raw, unprocessed data set was used to create a classifier model by using GridSearchCV. 
+The only modification done to the data was removing the HTML and converting the text to lower-case. 
+In the second part, the best parameter values from the unprocessed classifier model was used to create new models for the singular feature detectors.
+This ensures that a correct comparison can be made, since the results for both models are based on the same values. 
+If they were all trained separately with GridSearchCV, there is a risk that it would select other parameters for the model.
+The last part consisted of using all the features, both with the values from the unprocessed classifier model, and using GridSearchCV to select the best parameters.
+Porter stemming was also included, but this was only used for the last classifier model.
+The confusion matrices for each classifier model is presented in Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}.
+\vspace{0.5em}\newline
+The results for the first and second part of the training is shown in Table \ref{tab:singular_feature_detector_so}.
+In this table, all classifiers have been trained using the same parameter settings, based on parameters found from the grid search on the unprocessed data set.
+Without doing anything to the questions, the accuracy is already at 79.9\%.
+The two features that sticks out the most is Numerical and Tags. 
+Numericals accuracy score is 80.55\%, which is better than the unprocessed, and Tags accuracy score is almost 4\% lower than the unprocessed.
+However, the results for both Homework and Tags are questionable, because they contain features (external and homework) not represented in the classifier for all the features.
+Furthermore, the total number of questions containing Homework is only 374 (including the assignment feature), and Hexadecimal is only present in 160 questions 
+(see Table \ref{tab:comparison_of_feature_occurences_only} and \ref{tab:amount_of_singular_questions_processed}).
+This means that if Hexadecimal was not a feature, it would not even be included (because the min\_df is set to exclude words appearing in less than 1\% of the questions).
+Therefore, Hexadecimal is not a good feature which is shown by the accuracy score in Table \ref{tab:singular_feature_detector_so} and \ref{tab:comparison_of_feature_occurences_only} 
+(this is also shown in the confusion matrix in the Appendix).
+To get a more representative score for Homework and Tags, an additional classifier model should have been made using only the homework features and the attached tags.
+Overall, the only feature that had an increase in its prediction accuracy was the classifier for Numerical (only 375 misclassified as bad).
+%The numerical feature is the only feature making a difference, with an equal classification prediction for bad, and even better for good (only 375 misclassified as bad).
+% table showing the results for all singular feature detectors, for all questions
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c |}
+		\hline
+		~ 				& Accuracy Score	\\ \hline
+		Code block 		& 79.17\%			\\ \hline
+		Hexadecimal		& 79.90\%			\\ \hline
+		Homework 		& 79.90\%			\\ \hline
+		Links			& 79.35\%			\\ \hline				
+		Numerical		& 80.55\%			\\ \hline
+		Tags			& 76.17\%			\\ \hline
+		All features	& 79.07\%			\\ \hline
+		Unprocessed		& 79.90\%			\\ \hline
+	\end{tabular}
+	\caption{Classifier results based on the parameters found for the raw (unprocessed) questions. Classifier=SVC, with Kernel=RBF, C=1000 and Gamma=($\gamma$) 0.0001}	
+	\label{tab:singular_feature_detector_so}
+\end{table}
+\vspace{0.5em}\newline
+It would also be interesting to compare the unprocessed against each feature detector for the questions containing it.
+Following the same basis as the previous part, new classifier models were made, but this a new grid search was executed for each feature. 
+This way, the classifier would be adjusted to the number of questions for each feature. 
+The results from this training is displayed in Table \ref{tab:comparison_of_feature_occurences_only}, and the confusion matrix is presented in Appendix \ref{app:conf_matrix_singular_only}, 
+p.~\pageref{app:conf_matrix_singular_only}). 
+One thing that needs to be taken into consideration is the total sample size that was used for training and testing. 
+When all questions were used, a total of 16,000 questions was used for training and 4,000 used for evaluation, which is not the same used here.
+The number of questions that contained each feature is shown in Table \ref{tab:amount_of_singular_questions_processed}, and the number used for training and evaluation (test set) 
+is shown in Table \ref{tab:questions_used_for_singular_training}.
+\vspace{0.5em}\newline
+One thing that is clear is how much effect the external tags has. Tags appear in 19,967 questions, whereas the detector for all features only appears in 17,558.
+This means that at least 2,409 contains external tags, and that if they were to be included, a filtering mechanism would be needed (e.g. ignoring everything that could be considered a word).
+The feature for code blocks now have a higher accuracy than the unprocessed, and is better at classifying bad questions. 
+This could indicate that questions including a lot of code samples is not a good question\footnote{
+	There was no analysis done on the code samples, but during the development, I noticed that some questions also used the <code> tag on words like "Integer" and "Double".
+}.
+Numerical now has a worse accuracy than the unprocessed.
+However, there are two things worth mentioning. 
+First, the classifier for Numerical is only trained on 9,024 questions, instead of 20,000.
+Second, as can be seen in Table \ref{tab:questions_used_for_singular_training}, only 30\% of the training data are good questions. 
+When also looking at the confusion matrix (Appendix \ref{app:conf_matrix_singular_only}, p.~\pageref{app:conf_matrix_singular_only}), it predicts more questions as bad.
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~				& Unprocessed			& Feature						& C				& Gamma ($\gamma$)	& Kernel	\\ \hline
+		Code block	 	& Accuracy: 78.84\%		& Accuracy: 79.04\%				& 1				& N/A				& Linear 	\\ \hline
+		Hexadecimal		& Accuracy: 81.25\%		& Accuracy: 81.25\%				& 1				& N/A				& Linear	\\ \hline
+		Homework 		& Accuracy: 84.00\%		& Accuracy: 82.67\%				& 1				& N/A				& Linear	\\ \hline
+		Links			& Accuracy: 83.72\%		& Accuracy: 81.78\%				& 1				& N/A				& Linear	\\ \hline		
+		Numerical		& Accuracy: 80.22\%		& Accuracy: 79.66\%				& 1000			& 0.0001			& RBF		\\ \hline
+		Tags			& Accuracy: 79.36\%		& Accuracy: 76.46\%				& 1000			& 0.0001			& RBF		\\ \hline
+		All features	& Accuracy: 79.24\%		& Accuracy: 79.15\%				& 1000 			& 0.0001			& RBF 		\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and singular features, for questions containing the given feature. Classifier: SVC.}
+	\label{tab:comparison_of_feature_occurences_only}
+\end{table}
+% amount of questions used for training and evaluation
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		~ 					& Bad: -1			& Good: 1		& Total		\\ \hline
+		Code block			& 5,090				& 4,765			& 9,855		\\ \hline
+		Hexadecimal			& 109				& 51			& 160		\\ \hline
+		Homework			& 261				& 113			& 374		\\ \hline
+		Links				& 778				& 1,798			& 2,575		\\ \hline
+		Numerical			& 5,804				& 3,220			& 9,024		\\ \hline
+		Tags				& 9,987				& 9,980			& 19,967	\\ \hline
+		All features		& 8,466				& 9,092			& 17,558	\\ \hline
+	\end{tabular}
+	\caption{The number of questions containing the given feature.}
+	\label{tab:amount_of_singular_questions_processed}
+\end{table}
+% overview of the amount of questions used to train each feature (using only questions containing the given feature)
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~ 					& Training: -1		& Training: 1		& Evaluation: -1	& Evaluation: 1	\\ \hline
+		Code block			& 4102				& 3782				& 988				& 983			\\ \hline
+		Hexadecimal			& 88				& 40				& 21				& 11			\\ \hline
+		Homework			& 205				& 94				& 56				& 19			\\ \hline
+		Links				& 627				& 1433				& 151				& 365			\\ \hline
+		Numerical			& 4650				& 2569				& 1154				& 651			\\ \hline
+		Tags				& 8002				& 7971				& 1985				& 2009			\\ \hline
+		All features		& 6795				& 7251				& 1671				& 1841			\\ \hline
+	\end{tabular}
+	\caption{The number of questions used for evaluation. Bad questions: -1, Good questions: 1.}
+	\label{tab:questions_used_for_singular_training}
+\end{table}
+\vspace{0.5em}\newline
+Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} shows a comparison between the classifier for unprocessed and all features. 
+This also includes a comparison of stemmed vs non-stemmed features. 
+There were two stemmers that were considered, Porter and Lancaster.
+Lancaster is based on Porter, but is more aggressive, and what I experienced was that words which was not even of the same root (e.g. 'user' and 'using' both became 'us') \cite{Textprocessing.com2016}.
+The expectation was that stemming would enhance the prediction and increase the prediction accuracy, but this was not the case. 
+When compared with the unprocessed, the accuracy score was 3.93\% lower, and 3.15\% lower than the data set with all feature detectors without stemming.
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		~ 					& Unprocessed			& All features			& All features (no stemming)	\\ \hline
+		Score 				& 79.90\%				& 75.97\%				& 79.15\%						\\ \hline
+		Gamma ($\gamma$)	& 1e$^{-04}$ (0.0001)	& 1e$^{-03}$ (0.001)	& 1e$^{-03}$ (0.001) 			\\ \hline
+	\end{tabular}
+	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SVC, Kernel=RBF and C=1000.}
+	\label{tab:unprocessed_vs_all_feature_detectors_svc_so}
+\end{table}
+\vspace{0.5em}\newline
+Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so} shows a comparison between unprocessed and all features (stemmed) using the \gls{sgd} classifier.
+A full exhaustive search was also ran on the unprocessed, but this is omitted because it resulted in the same values as for loss='log'.
+The reason loss was set to 'log' is because you can then get a probability score when using prediction.
+Probability was desired, because when a user then enters a new question to predict, the output would also contain the probability and not just "This is a good/bad question".
+
+\todo[inline]{continue re-writing from here}
+
+As expected, when comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} with Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, \gls{svc} did get a slightly higher score.
+The difference is barely notable, since the classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
+Whereas for the classifier using all features, \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
+This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier.
+
+
+% confusion matrix part
+One thing that is interesting is the comparison of the stemmed and non-stemmed classifiers for the \gls{svc}.
+The stemmed classifier has the worst prediction, but the non-stemmed classifier using its own parameters have better prediction for bad questions.
+The \gls{sgd} is better at predicting bad questions, but performs worse for good.
+When comparing the unprocessed \gls{sgd} classifier against the one using all features, it is much better at predicting good questions.
+
+
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		~				& Unprocessed (loss='log')	& All features (loss='log')	\\ \hline
+		Score 			& 79.87\%					& 75.55\%					\\ \hline
+		Min DF 			& 0.01						& 0.01						\\ \hline
+		Max DF 			& 0.5						& 0.75						\\ \hline
+		Use IDF			& False						& True						\\ \hline
+		Alpha 			& 1e$^{-05}$ (0.00001)		& 1e$^{-05}$ (0.00001)		\\ \hline
+		Normalization 	& l2						& l2						\\ \hline		
+		Penalty 		& elasticnet				& l2						\\ \hline
+		Iteration 		& 50						& 100						\\ \hline
+		Loss 			& log						& log						\\ \hline		
+	\end{tabular}
+	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
+	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
+\end{table}
+%\vspace{0.5em}\newline
+
+
+\todo[inline]{move or delete this paragraph}
+In Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}, the confusion matrices for all these are listed. 
+The confusion matrix is based on the test set that was created using train\_test\_split.
+These show a clear indication that the system is much better at predicting bad questions, then good.
+This also explains why it was easier to spot the bad questions, rather than a good one when attempting to find features. 
+\\
+
+\todo[inline]{this is not intended to be in the final version, just commentary before re-write}
+To see if the system was indeed expandable for communities in \gls{se}, Tex.StackExchange was also tested to see which would be more predictive 
+(tables are shown in Appendix \ref{app:tables_tex}, p.~\pageref{app:tables_tex}). 
+The results clearly shows that \gls{so} is more predictive, given the amount of data available when compared to Tex.StackExchange\footnote{
+	However, it should be noted that this dataset was downloaded in August 2015, but the latest post in that database was from 2014.
+}
+
+
+
+
+\clearpage
+\section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
+\label{sec:ai_methods}
+
+\todo[inline]{main goal is to write about alternative methods and potential limitations with using svm, etc.}
+
+
+\begin{comment}
+
+For Discussion chapter:
+--------------------
+
+% Re-write and use what ever fits
+In the \gls{bow} model, only single words or word stems are used as features for representing document content. 
+The issue is that learning algorithms are restricted to detecting patterns in the used terminology only, while ignoring conceptual patterns. 
+List of weaknesses with using \gls{bow} (1-3 addressed issues on a lexical level, and 4 conceptual level):
+\begin{enumerate}
+\item Multi-Word Expressions with an own meaning like "European Union" are chunked into pieces with possibly very different meanings like "union".
+\item Synonymous Words like "tungsten" and "wolfram" are mapped into different features.
+\item Polysemous Words are treated as one single feature while they may actually have multiple distinct meanings.
+\item Lack of Generalization: there is no way to generalize similar terms like "beef" and "pork" to their common hypernym "meat".
+\end{enumerate}
+WordNet database organizes simple words and multi-word expressions of different syntactic categories into so called synonym sets (synsets), 
+each of which represents an underlying concept and links these through semantic relations. \\
+Conceptual Document Representation:
+\begin{itemize}
+\item Candidate Term Detection: Strategy built on the assumption that if you find the longest multi-word expressions in the text, 
+the lexicon will lead to a mapping to the most specific concept for that word (instead of querying single words, which may lead to wrong mapping).
+\item Syntactical Patterns:Analysis by using POS-tagging.
+\item Morphological Transformations: Entry form, base form reduction. 
+Stemming if the first query for the inflected forms on the original lexicon turned out unsuccessful.
+\item Word Sense Disambiguation (WSD): A lexical entry for an expression does not necessarily imply a one-to-one mapping to a concept in the ontology. 
+\item Disambiguate an expression versus multiple possible concepts.
+\item Generalization: Going from specific concepts in the text to general concept representations. Mapping words based on generalization (up to a certain level).
+\end{itemize}
+\cite{Bloehdorn2004}
+
+% Re-write and use what ever fits
+\gls{qc}: predict the entity type of the answer of a natural language question, mostly achieved by using machine learning. 
+Used Latent Semantic Analysis (LSA) technique to reduce the large feature space of questions to a much smaller and efficient feature space. 
+Two different classifiers: Back-Propagation Neural Networks (BPNN) and Support Vector Machines (SVM). 
+Found that using LSA on question classification made it more time efficient and improved classification accuracy by removing redundant features. 
+Discovered that when the original feature space is compact and efficient, its reduced space performs better than a large feature space with a rich set of features. 
+They also found that in the reduced feature space, BPNN was better than SVM.  
+Competitive with state-of-the-art, even though they used smaller feature space.
+\cite{Loni2011}
+
+Sentiment and such: \cite{Maas2011}	
+
+------------------------
+
+Note to self: Map graph over feature impact (unprocessed, singular, all)
+Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)). 
+
+
+% could be re-phrased into "in this paper, they define question analysis with two different approaches..."
+In the paper by \textcite{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
+E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
+They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
+low precision\footnote{
+Low precision can occur if the feature sets are not fitted well enough during classifier training 
+\cite[p.~283]{Toba2011}.
+}). 
+Pattern-based would match word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be based on the accuracy of the classifier 
+(e.g. lexical or linguistic feature sets). 
+% editor space
+The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian Analogical Reasoning (BAR). 
+Features sets are extracted from the training set by use of binary values checking if the question contains a given question word. 
+The BAR framework then learns the related features and computes the estimation for them. 
+Thereafter \gls{qa} pairs are retrieved from the testing set and compared against the training set. 
+Afterwards, the \gls{qa} pairs that have identical question words are identified, and overlapping pairs are grouped according their named entity group.
+To retrieve named entities, they used two different recognizers. 
+The first was Stanford (extracts the person, organization and location), and the second was dictionary based (extract number entities and fine-grained noun-based entities). 
+Question words were extracted by building a question word list from the training set (achieved by using Stanford Part-of-Speech (POS) tagger). 
+Then for each question, look for the appearance of the question word to create the feature set.
+Mapped named-entities.
+\cite{Toba2011}
+
+\end{comment}
+
+\clearpage
+\section{Limitations and other issues}
+\label{sec:limitations_and_issues}
+\todo[inline]{This whole section will be re-written}
+One of the major issues was the fact that the latest development version was used instead of the stable one.
+The question became at one point whether or not a switch should be made from using the development version into the stable version.
+There were two things that needed to be taken into consideration. 
+First of all, it was unknown when this development version would become the next stable one.
+If the development version became the new stable version, a lot of alterations would have to be made to the source code.
+Furthermore, for the long term, if this system would become successful, it would be easier to maintain in the future if it relied on the latest version.
+\vspace{0.5em}\newline
+When you are only one person with only one computer there is a certain limitation to how much work can be done simultaneously.
+A lot of time were spent having to rebuild the database and processing the data (e.g. finding features, replacing it, training classifiers).
+To ensure expandability (for the \gls{se} community) and ensuring replicability (having a unprocessed data set), more than once code had to be updated or re-written. 
+This easily caused a lot of unforeseen issues.
+The worst one was the realization that after the update of the unprocessed data set (changing it to contain HTML like in the database), the HTML was not removed from the text.
+The impact was that all the models that were created using the parameters and data from the unprocessed had to be re-trained to get correct results. 
+\vspace{0.5em}\newline
+One of the more peculiar issues (which I do not have an explanation for), was when the real training started (using the \gls{svc} and GridSearchCV).
+The reason that this issue cannot be explained, is because I do not know what caused it to happen.
+What happened was that when the training was started, no verbose was printed at all (which was weird considering I had used the same values before and it then gave a verbose output). 
+The program ran for hours, without giving any feedback, errors or output. 
+\vspace{0.5em}\newline
+It took almost three days to find a solution, where part of the solution was switching to Windows (which had its own issues, since x64 is not supported by Numpy).
+The main difference was that in Windows, at least verbose was printed, although it only printed verbose once\footnote{
+	Verbose was printed once, sometime twice between the first 20 - 60 minutes, then nothing.
+	The longest run time that was registered was around 12 hours without any verbose printed.
+}.
+There were two things that were changed, which finally made it both print verbose and complete the training.
+The first part was changing the n\_jobs value to something else than -1. 
+By setting n\_jobs=-1, GridSearchCV will run all jobs in parallel, using all logical cores (e.g. on a CPU with 4 physical cores, it will use all 8 logical cores). 
+However, multi-threading is not supported in Windows \cite{GS2015}. 
+To ensure that progress was made, and that the program had not frozen again, the verbose level was increased.
+By increasing the verbose level, you can force the algorithm to print more information about progress, but with an increase in the time it takes to finish \cite{Manuel2015, user29912432014}. 
+The most fascinating part was that after increasing the verbose level, it not only printed out continuously, but it even finished training in less than 3 hours!
+This have not been tested in Linux, but the reason nothing happened may have been the same which happened for Windows, that it could not utilize all CPU cores\footnote{
+	My assumption is that when all the logical cores are used, there is no processing power left for the Operative System (OS). 
+	This in turn would then cause an infinite deadlock, since by using all the cores, there is no processing power left for the OS.
+	There is also a known issue with parallelization in Linux, see: 
+	\url{https://pythonhosted.org/joblib/parallel.html\#bad-interaction-of-multiprocessing-and-third-party-libraries}.
+}.
+
+
+
+
+
+
+\todo[inline]{either add this to limitation/issues or delete it}
+
+
+% this could probably be re-used
+The most useful resource were of course Scikit-learns tutorials \cite{Scikitlearn.org2016j}\footnote{
+	The examples that were worked through can be seen here (as stated in ReadMe, the only thing I have altered is comments and adjustments for v0.18.dev0): \\
+	\url{https://github.com/klAndersen/scikit-learn_tutorials}.
+} and documentation \cite{Scikitlearn.org2016,Scikitlearn.org2016h}, 
+but there were also two other tutorials that proved helpful (\cite{Rehurek2014} and \cite{Elahi2016}).
+% this could also probably be re-used
+The main problem was that Scikit-learns documentation and most of the tutorials written by others is based on v0.17.1.
+Due to various problems with installation in regards to Numpy and Scipy, Scikit-learn had to be installed from GitHub (which is v0.18.dev0).
+In the development version, a lot of functions and modules had been re-written and moved, making many tutorials and examples outdated.
+

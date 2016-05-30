@@ -165,7 +165,7 @@ One can therefore assume that if you ask a good question, you increase the chanc
 \gls{qc} is the process of categorizing a question into a class or category based on its structure, usually to decide what the expected answer type is \cite{Li, Loni2011, Lopez2011}. 
 To classify a question, it is important to select only those features that helps you identify the class it belongs to.
 To get a classification results, you use what is known as a classifier. 
-The quality of a classifier can be measured by its accuracy and precision (see Equation \ref{eq:accuracy} and \ref{eq:accuracy}; taken from \cite[p.~13]{Li}).
+The quality of a classifier can be measured by its accuracy and precision (see Equation \ref{eq:accuracy} and \ref{eq:precision}; taken from \cite[p.~13]{Li}).
 
 \begin{equation}\label{eq:accuracy}
 Accuracy = \frac{\#~of~correct~predictions}{\#~of~predictions}
@@ -335,9 +335,6 @@ To avoid overfitting, the parameter C is used for regularization, where the size
 %\gls{svm} uses the maximum margin solution, which is based on computational learning theory\footnote{	
 %	Computational learning theory is an attempt to understand how large a data set needs to be in order to give good generalization \cite[p.~344]{Bishop2006}.
 %} \cite{Bishop2006, Joachims1998}.
-%
-%
-%
 %% keep this sentence; its properly re-written
 %For \gls{qc} a question is usually represented as a vector space model, where each vector contains the words from the question \cite{Loni2011}.
 
@@ -387,26 +384,4 @@ Furthermore, \gls{svm}s do not require any parameter tuning, since they can find
 All this makes \gls{svm}s a very promising and easy-to-use method for learning text classifiers from examples.
 \cite{Joachims1998}
 \end{comment}
-
-
-
-
-
-
-
-
-\begin{comment}
-\section{Dataset}
-\label{sec:dataset}
-\section{undefined}
-\label{sec:undefined}
-% stuff everything that doesn't fit elswhere bu is still of relevance
-
-\textcite{Stanley2013} - Predicting Tags for StackOverflow Posts
-
-\textcite{Short2014} - Tag Recommendations in StackOverflow
-
-\textcite{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
-\end{comment}
-
 

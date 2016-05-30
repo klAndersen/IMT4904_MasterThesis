@@ -2,7 +2,7 @@
 \label{chap:chapter3}
 
 \section{Dataset and MySQL Database}
-\label{sec:dataset_db}
+\label{sec:dataset_and_db}
 
 \subsection{Dataset}
 The dataset contains all information that is currently available in the \gls{se} community (at the time the dataset was created). 
@@ -103,7 +103,7 @@ and "negvote\_Posts".
 posvote\_Posts contains questions with a score higher then zero (score > 0) and negvote\_Posts contains all questions with a score lower then zero (score < 0).
 
 \section{Development process} 
-\label{sec:libsvm_implementation}
+\label{sec:development_process}
 When starting the development, the focus was on retrieving the data from the database, and processing it for text analysis. 
 To be able to store all the retrieved columns and the belonging rows without creating object classes, the pandas.DataFrame\footnote{
 	Pandas: \url{http://pandas.pydata.org/}.
@@ -393,3 +393,70 @@ for word in word_set:
 	else:
 		text = text.replace(word, replacement_text)
 \end{lstlisting}
+
+\section{Selecting estimator and parameters for classification}
+\label{sec:estimator_parameter_selection}
+Two different classifiers were used, \gls{svc} and \gls{sgd}.
+The parameter values that were used for these two are shown in Listing \ref{lst:param_svc} and  \ref{lst:param_sgd}.
+These are the default values used in Scikit-learns tutorials \cite{Scikitlearn.org2016k, Scikitlearn.org2016l} (\cite{Huang2008, Maas2011, Zhang2003} used default values for training their system).
+\gls{svc} was chosen because this is what I started with in the beginning, based on the tutorial written by \cite{Rehurek2014}.
+\gls{sgd} was used in some of Scikit-learns tutorials, and are mostly used for sample sizes greater than 100,000 (see Scikit-learns "roadmap" in Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map}  
+ p.~\pageref{app:ml_map}).
+Since the sample size in this thesis was only 20,000, the expectation was that \gls{svc} would present better predictions..
+% Listing for the SVC parameters
+\begin{lstlisting}[caption={Parameters for SVC}, label={lst:param_svc}, language={Python}] 
+param_svm = [
+{'clf__C': [1, 10, 100, 1000], 'clf__kernel': ['linear']},
+{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['rbf']},
+{'clf__C': [1, 10, 100, 1000], 'clf__gamma': [0.001, 0.0001], 'clf__kernel': ['sigmoid']},
+]
+\end{lstlisting}
+\clearpage
+% Listing for the SGD parameters
+\begin{lstlisting}[caption={Parameters for SGD}, label={lst:param_sgd}, language={Python}] 
+grid_parameters = {
+'vect__min_df': (0.01, 0.025, 0.05, 0.075, 0.1),
+'vect__max_df': (0.25, 0.5, 0.75, 0.95, 1.0),
+'tfidf__use_idf': (True, False),
+'tfidf__norm': ('l1', 'l2'),
+'clf__alpha': (0.00001, 0.000001),
+'clf__penalty': ('l1', 'l2', 'elasticnet'),
+'clf__n_iter': (10, 50, 75, 100),
+# 'clf__loss': ('hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'),
+}
+\end{lstlisting}
+% editor space
+Instead of simply selecting random values for the classifier, exhaustive grid search was selected. 
+The downside with using grid search is that it takes a lot of time to train, since all parameters are matched against each other to find the best combination \cite{Bishop2006, Markham2015a}.
+An example is presented in Equation \ref{eq:fit_sgd} and \ref{eq:fit_sgd}, showing how many fits the exhaustive search must do before it is completed.
+% Equation for the amount of fits for SVC
+\begin{equation}\label{eq:fit_svc}
+\begin{split}
+\text{count(C)} + (\text{count(C)} \cdot \text{count(gamma)}) + (\text{count(C)} \cdot \text{count(gamma)}) \\
+\Longrightarrow  \text{result} \cdot \text{cross-validation} = \text{fit\_amount} \\
+\Longrightarrow  4 + (4 \cdot 2) + (4 \cdot 2) = 20 \cdot 5 = 100 
+\end{split}
+\end{equation}
+% Equation for the amount of fits for SGD
+\begin{equation}\label{eq:fit_sgd}
+ 5 \cdot 5 \cdot 2 \cdot 2 \cdot 2 \cdot 3 \cdot 4 = 2400 \cdot 5 = 12,000
+\end{equation}
+% editor space
+From Scikit-learn, there are two options for exhaustive search: GridSearchCV and RandomizedSearchCV.
+The main difference is that GridSearchCV matches all parameters, and RandomizedSearchCV only uses a selection of the parameters. 
+RandomizedSearchCV is faster than GridSearchCV, but as stated in \cite{Markham2015a}, it may give lower scores.
+\textcite{Markham2015a} also suggests to start GridSearchCV and then compare the results against RandomizedSearchCV.
+Since I wanted to find the best parameters from the selection, GridSearchCV was used. 
+However, if the goal was to fine-tune the parameters, RandomizedSearchCV could be more fitting. 
+E.g. start with a high spread of values, and after each completed training, select a new set of values based on the best results. 
+If the score was then too low, or if you wanted better results, you could use GridSearchCV to find the best parameters.
+\vspace{0.5em}\newline
+Before running the grid search, the questions were split into two parts, a training set and a test set by using 
+ train\_test\_split\footnote{\url{http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.train_test_split.html}}.
+train\_test\_split splits the data randomly, but if the random\_state has a fixed value, data will be split the same way (replicability).
+For the grid search, cross validation was also included, using StratifiedKFold with 5-folds.
+StratifiedKFold was selected because it is often used for classification tasks \cite{Kononenko2007}.
+Cross-validation splits data into k-folds, where training is done on k-1 folds, and then evaluated against the last fold \cite{Bishop2006}.
+This means that only 80\% of the 16,000 questions is used for training (12,800 questions for training, and 3,200 for evaluation).
+After the training was completed, the classifier models prediction accuracy was evaluated by using the test set.
+%\vspace{0.5em}\newline

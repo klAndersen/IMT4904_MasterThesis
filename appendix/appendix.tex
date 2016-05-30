@@ -1081,8 +1081,6 @@ Before installing anything, download the following:
 
 
 % backup of various created tables
-
-
 \begin{comment}
 
 td-10000-Unprocessed
@@ -1558,39 +1556,6 @@ Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
 \end{tabular}
 \end{minipage} 
 \end{table}	
-\end{comment}
-\begin{comment}
-% potentially flip this, and this as a Score X feature (since all kernel values were the same)
-% something like "Comparison ..., with Kernel = RBF, Gamma = gamma and C = c
-% and the table having features as rows, and score X unprocessed as column
-\begin{table}[tbp]
-\centering
-\begin{tabular}{| c | c | c | c | c | c | c | c |}
-\hline
-~ 					& Code block	& Numerical		& Hexadecimal	& Homework		& Link 		& Tags	\\ \hline
-Score 				& 0.783			& 0.796			& 0.793			& 0.794			& 0.795 	& 0.757	\\ \hline
-C					& 1000			& 1000			& 1000			& 1000			& 1000 		& 1000	\\ \hline
-Gamma ($\gamma$)	& 0.001			& 0.001			& 0.001			& 0.001			& 0.001 	& 0.001	\\ \hline
-Kernel				& RBF			& RBF			& RBF			& RBF			& RBF 		& RBF	\\ \hline
-\end{tabular}
-\caption{Comparison of raw data set (unprocessed) and singular feature detectors}
-%\label{tab:singular_feature_detector_so2}
-\end{table}
-
-\begin{table}[tbp]
-\centering
-\begin{tabular}{| c | c | c | c | c |}
-\hline
-~				& Votes < 0			& Votes = 0			& Votes > 0		& All			\\ \hline
-Amount			& 659,955			& 5,256,105			& 5,286,971		& 11,203,031	\\ \hline
-Oldest			& 06.08.2008		& 06.08.2008		& 31.07.2008	& 31.07.2008 	\\ \hline
-Newest			& 06.03.2016		& 06.03.2016		& 06.03.2016	& 06.03.2016	\\ \hline
-Vote (lowest)	& -147				& 0					& 1				& -147	 		\\ \hline
-Vote (highest)	& -1				& 0					& 13845			& 13845	 		\\ \hline
-\end{tabular}
-\caption{Overview of the Stack Overflow dataset.}
-%\label{tab:dataset_overview_so2}
-\end{table}
 
 Amount of features before anything was done to the text: 69766 - CountVectorizer(analyzer='word') - \%
 Amount of features after adding stop word (English): 69462 - CountVectorizer(analyzer='word', stop\_words="english") - \%
