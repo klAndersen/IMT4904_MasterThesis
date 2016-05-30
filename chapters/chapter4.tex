@@ -281,10 +281,28 @@ Tex.StackExchange got an accuracy score of 99\%, but it misclassified all 15 bad
 \section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
 \label{sec:ai_methods}
 
-\todo[inline]{main goal is to write about alternative methods and potential limitations with using svm, etc.}
+There are other methods and algorithms that could be applied for question classification. 
+\textcite{Echihabi2003} used a noisy-channel model to retrieve answers based on the question sentence, and \textcite{Heie2012} used it for answer extraction.
+\textcite{Loni2011} compared Back-Propagation Neural Networks (BPNN) and \gls{svm} using latent semantic analysis, where BPNN performed better than \gls{svm}.
+\textcite{Bloehdorn2004} combined Boosting and semantics, which got good results, but the results depended on the parameter settings.
+\textcite{Zhang2003} compared Nearest Neighbors, Naive Bayes, Decision Tree, Sparse Network of Winnows and \gls{svm}, and found that \gls{svm} was the best. 
+They also included suggestions for improvement by adding a tree kernel to weigh up for syntactical differences which could reduce errors by 20\%.
+\textcite{Figueroa2008} experimented with Genetic Algorithms to find the answer type for questions, but answers were mostly returned as unigrams instead of as a sentence.
+%\textcite{bibid}
+
+
+
 
 
 \begin{comment}
+% echihabi200
+finding the answer to a question Q
+amounts to selecting the sub-string SA of highest
+score.
+This model explains how a given sentence S\_A that
+contains an answer sub-string A to a question Q
+can be rewritten into Q through a sequence of
+stochastic operations.
 
 For Discussion chapter:
 --------------------
@@ -357,7 +375,7 @@ Mapped named-entities.
 
 \end{comment}
 
-\clearpage
+
 \section{Limitations and other issues}
 \label{sec:limitations_and_issues}
 One potential issue is that it is the development version (v0.18.dev0) of Scikit-learn and not the stable version (v0.17.1) that was used.
