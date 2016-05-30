@@ -25,7 +25,7 @@ or primarily opinion-based \cite{CommunityWiki2016b, StackOverflow.com2016b}.
 
 \section{Problem description}
 \label{sec:problem_description}
-Most of the systems that have been developed so far\todo[size=\small]{add examples here}~focuses on finding the best answer to a question asked by the user. 
+Most of the systems that have been developed so far focuses on finding the best answer to a question asked by the user. 
 Few, if any, focuses on the quality of the question being asked. 
 What defines a good question, and can we in anyway predict whether or not a new question posted on \gls{so} will be considered good or bad by the community?
 There are many users who has either a negative view or relationship in regards to \gls{so}.
@@ -104,13 +104,18 @@ This in turn can help to improve the question quality (at least acceptability), 
 
 \section{Limitations}
 \label{sec:limitations}
-The selection of questions is only 20,000 (10,000 good and bad), which is a lower number than the number used in\todo{cites}.
+The selection of questions is only 20,000 (10,000 good and bad), which is a lower compared to some of the work done by others\footnote{
+	\textcite{Wang2013} used 63,863 unique questions, %  to analyse how developers posted and answered questions.
+	\textcite{Anderson2012} used 28,722 questions % when analysing the long term value for questions and if a question would get an accepted answer.
+	and \textcite{Treude2011} used 38,419 questions. % for question categorization.
+}.
 The retrieval of questions could also have been better, since the vote score was based on static values, rather than selecting those with the highest/lowest score.
-Some features were not very representative (e.g. Hexadecimal, which only occurred in 160 of the 20,000 questions), and may therefore have a negative impact on classifier accuracy. 
+Some features were not very representative (e.g. Hexadecimal, which only occurred in 160 of the 20,000 questions), and would therefore have been excluded\footnote{
+	The minimum document frequency was set to 0.01, meaning it ignores words that appear in less than 1\% of the questions.
+}.
 The version of Scikit-learn that was used was the latest development version (v0.18.dev0), instead of the stable. 
 This means that potential bugs and un-finished implementations can have an effect on the prediction and probability (e.g. giving the wrong results).
-A limitation is also that the focus is only on \gls{so}, which means that one would need to make additional adjustments and add more filtering to account 
-for the differences that may occur in each community.
+A limitation is also that the focus is only on \gls{so}, meaning that some features that provide a good accuracy score for \gls{so} may have no impact in other communities.
  
 \section{Thesis contribution}
 \label{sec:thesis_contribution}

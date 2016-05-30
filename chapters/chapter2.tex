@@ -4,42 +4,30 @@
 \section[Stack Overflow]{\glsentrylong{so} (\glsentryshort{so})}
 \label{sec:stackoverflow}
 
-\subsection[Stack Overflows design]{\glsentrylong{so}s (\glsentryshort{so}) Design}
-\label{sec:stackoverflow_design}
-The following lists the factors that were used when designing \gls{so} (based on \textcite[p.~6-7]{M.Sewak2010} and \textcite[p.~805]{Treude2011}):
-\begin{enumerate}
-	\item Votes: Questions and answers which are considered good (or bad) by the community can be given a score. 
-	This gives a filtering mechanisms, which allows users to ignore answers that are bad or wrong. 
-	Furthermore, answers are sorted by votes, and you can also sort questions on \gls{so} by vote score 
-	(see Figure \ref{fig:question_list_acc_answ}). 
-	\item Accepted answer: If the user asking a question gets an answer that they find satisfactory, they can select it as the "accepted answer". 
-	This answer will be the first displayed of the answers, and is also viewable when searching for questions 
-	(see Figure \ref{fig:question_list_acc_answ} and \ref{fig:so_question_example}).
-	\item Tags: Each question is associated with a tag\footnote{
-		A full list can be seen here: \url{http://stackoverflow.com/tags/}
-	}, which can be a topic, a programming language, a methodology, etc.
-	\item Badges: Similar to achievements in games, Badges are used to reward the user for their participation.
-	\item Reputation and Bounty: Currency system for user participation. 
-	E.g. voting for questions, getting your answer selected as the accepted one, etc.
-	Bounty is a trade, where if your question goes unanswered for too long, you offer up parts of your reputation to receive an answer.
-	\item Data dump: Available data dump containing all content available within the \gls{se} community \cite{StackExchange2016}. 
-	You can either download single files, or everything by using a Torrent client.
-	\item Pre-Search: Encouraging users to check that their question is not already posted by presenting a search bar when asking a new question. 
-	\item URL keywords and Google: The questions title is included in the URL, allowing it to be processed by search engines. 
-	In addition, Google uses their crawlers every 10 second to have the latest updates from \glossary{so} in their search engine \cite{Gobry2011}.
-	\item Critical mass: Before Atwood and Spoolsky launched \gls{so}, they invited developers and programmers to participate to have some domain experts available. 
-\end{enumerate}
-
-\clearpage
+\gls{so} was started in late 2008, and has since grown into a large community. 
+Before \gls{so} was launched, the creators of \gls{so} ensured a critical mass (domain experts) would be available by inviting developers and programmers \cite{M.Sewak2010, Treude2011}.
+For every question and answer, users can give a vote, which is a measurement of its quality \cite{M.Sewak2010}. 
+If you like a question, up-vote ut, if its wrong, down-vote it. 
+Questions and answers can also be sorted based on their vote score (see Figure \ref{fig:question_list_acc_answ}). 
+When doing analysis of questions, this is an excellent way to get the best (or the worst) questions.
+In addition to answers being ranked by votes, the user asking a question can also select one questions as the "accepted answer" (see Figure \ref{fig:so_question_example}).
 % figure showing questions, where one question has an accepted answer
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{question_list_acc_answ}
-	\caption{List of questions, where one can see those with an accepted answers are marked with a green background.}
+	\caption{Questions sorted by vote. Questions with an accepted answer is marked with a green background.}
 	\label{fig:question_list_acc_answ}
 \end{figure}
-
-
+\vspace{0.5em}\newline	
+Getting votes and having your answer selected as the accepted gives the users reputation. 
+Reputation is an award given to the users for their participation, in addition to earning Badges (similar to achievements in games).
+The reputation controls how much freedom the user has on \gls{so}, everything from posting a comment to becoming a moderator. 
+Reputation can also be used to award bounties. 
+Bounty can be seen as a currency system, where the user trade parts of their reputation to get a satisfactory answer.
+URL can also be used to easily access questions on \gls{so}, as they use keywords in their links. 
+In addition, Google uses their crawlers every 10 second to have the latest updates from \glossary{so} in their search engine \cite{Gobry2011}.
+You also have full access to all data posted on \gls{so} and \gls{se}, which can be accessed either online (through their API) or offline (available from \textcite{StackExchange2016}).
+\clearpage
 % figure showing page with question and answer
 \begin{figure}[ht]
 	\centering
@@ -115,14 +103,17 @@ The owls earn reputation by asking more advanced questions, providing better ans
 	The longer it takes to answer, the more difficult the question is~\cite[p.~273]{Yang2014}.
 } questions.
 \vspace{0.5em}\newline
+\begin{comment}
 \textcite{Posnett2012} views \gls{se} and \gls{so} as a learning community, since users help each gain new knowledge, and motivates learning.
 They wanted to see if the quality of the users answers improved over time. 
 By constructing a posting history for each user, they found that the overall answer score decreased, and that the answer quality was static.
 \vspace{0.5em}\newline
+\end{comment}
 \textcite{Nasehi2012} did a qualitative analysis of code examples posted on \gls{so}. 
 Their focus was on questions related to Java programming, with the requirements that the question should at least have a score of +4 and the answer +7. 
 In addition, a code example should be included (by checking for <code> in the post).
 They found that the code explanation was just as important as the code examples (but you are still restricted to the quality of that example).
+\begin{comment}
 For the code to be considered good, they listed the following attributes: 
 \begin{enumerate}
 	\item Concise code: Code samples should not be too long. 
@@ -140,6 +131,7 @@ For the code to be considered good, they listed the following attributes:
 	\item Providing links to extra resources: 
 	Answers can be kept short by adding links to external resources, but a short summary should still be added.
 \end{enumerate}
+\end{comment}
 
 
 \section{Asking questions}
@@ -149,8 +141,8 @@ For the code to be considered good, they listed the following attributes:
 \label{sec:question_definition}
 The context of a question varies within the setting it is used. 
 A question can be broad, where multiple answers can all be correct, or they can be factual, having only one right answer. 
-When you are asking someone a question, you ask because you want to either find a solution to a problem, or learn something new. 
-In the context of learning, questions are used for evaluating the students knowledge, or help them learn something new \textcite{Nielsen2008}.
+% When you are asking someone a question, you ask because you want to either find a solution to a problem, or learn something new. 
+In the context of learning, questions are used for evaluating the students knowledge, or help them learn something new \cite{Nielsen2008}.
 \vspace{0.5em}\newline
 When doing research, you need research questions and hypotheses to decide what the goal of your research is. 
 What questions are you trying to find an answer to, and what does that answer tell you?
@@ -251,8 +243,9 @@ By using a passage retriever, the documents were split into paragraphs and ranke
 \textcite{Isozaki2005} could not use TF-IDF based paragraph retrieval, because the paragraphs were too short to cover all query terms. 
 If the terms that were used were too short or too long, the passage scores would not reflect the density distribution. 
 \textcite{Xu2012} built an online \gls{qa} system for tourism, which consisted of question analysis, information retrieval and answer extraction.
-Since rule-based approach requires expert knowledge, creating features that are domain specific can improve accuracy (what they called "domain term concept hierarchy").
+Since rule-based approaches requires expert knowledge, creating features that are domain specific can improve accuracy (what they called "domain term concept hierarchy").
 To validate the classification, they tested the results by using 5-fold cross-validation.
+If a rule-based approach were to be used in this thesis, it would require creation of categories that were specific to programming.
 \vspace{0.5em}\newline
 \textcite{Li} used semantics to categorize questions based on the possible semantic answer type. 
 One issue with questions are that since they can be very short, they contain little text. 
@@ -307,7 +300,7 @@ K (\textbf{x}_{j}, \textbf{x}) = S(\textit{v}(\textbf{x}  \cdot \textbf{x}_{j}) 
 \end{equation}
 
 For text classification, in most cases it will be non-linearly separable. 
-One can therefore allow the \gls{svm} to do some mistakes.
+One can therefore allow the \gls{svm} to make some mistakes.
 However, there is a cost for misclassifications, represented by what is called a slack variable $\xi_{i}$.
 If $\xi_{i}$ is set (not zero), then the vector can miss the margin requirement at the cost of $\xi_{i}$.
 Equations are shown in Equation \ref{eq:slack_variable1} - \ref{eq:slack_variable3} (taken from \cite[p.~301]{Manning2008}). \\
