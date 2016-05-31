@@ -24,66 +24,6 @@
 \end{figure}
 
 \clearpage
-\section{Tex.Stack Exchange: Data set and Features}
-\label{app:tables_tex}
-
-%description
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c | c | c |}
-		\hline
-		~				& Amount		& Oldest		& Newest		& Vote (lowest)		& Vote (highest)	\\ \hline
-		Votes < 0		& 93			& 22.08.2010	& 10.09.2014	& -14				& -1				\\ \hline
-		Votes = 0		& 5,078			& 26.07.2010	& 14.09.2014	& 0					& 0					\\ \hline
-		Votes > 0		& 65,919		& 18.08.2008	& 14.09.2014	& 1					& 448				\\ \hline
-		All questions	& 71,090 		& 18.08.2008	& 14.09.2014	& -14				& 448				\\ \hline
-	\end{tabular}
-\caption{Overview of the questions in the Tex.StackExhange (August 2015 data set)}
-\label{tab:dataset_overview_tex}
-\end{table}
-
-% editor space
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c |}
-		\hline
-		~ 			& Unprocessed		& Features	\\ \hline
-		Score 		& 0.99				& 0.99		\\ \hline
-		C			& 1					& 1			\\ \hline
-		Kernel		& Linear			& Linear	\\ \hline
-	\end{tabular}
-\caption{Comparison of raw data set (unprocessed) and feature detectors for Tex.StackExhange (August 2015 data set). Vote score was < 0 for bad and > +7 for good.}
-\label{tab:singular_feature_detector_tex}
-\end{table}
-
-% description
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c |}
-		\hline
-		Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
-		-1			& 0			& 15				\\ \hline
-		1			& 0			& 2004				\\ \hline
-	\end{tabular}
-	\caption{Confusion Matrix for Tex.StackExhange.}
-	\label{tab:confusion_matrix_tex}
-\end{table}
-
-% description
-\begin{table}[!h]%[tbp]
-	\centering
-	\begin{tabular}{| c | c | c | c | c |}
-		\hline
-		~				& Precision		& Recall	& F1-score		& Support	\\ \hline
-		-1      		& 0.00			& 0.00		& 0.00			& 15		\\ \hline
-		1       		& 0.99			& 1.00		& 1.00			& 2004		\\ \hline
-		avg / total		& 0.99			& 0.99		& 0.99			& 2019		\\ \hline
-	\end{tabular}
-	\caption{Classification report for Tex.StackExhange (August 2015 data set).}
-	\label{tab:tex_classification_report}
-\end{table}
-
-\clearpage
 \section{Confusion Matrices for Stack Overflow}
 \label{app:confusion_matrix}
 \subsection{Confusion matrices for unprocessed and all feature detectors}

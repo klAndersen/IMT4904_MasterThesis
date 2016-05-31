@@ -38,21 +38,15 @@ Porter stemming was also included in one of the models using all the features, t
 In the last part, \gls{sgd} was used to create three classifier models.
 The first two was based on the unprocessed data set, and the last used all the features.
 The difference between these is that one of the unprocessed models used grid search with all losses, and the other two had loss='log'.
-The reason for setting loss='log', is because this allows the model to also present a probability in addition to the prediction.
+The reason for setting loss='log', is because this allows the model to also present not only a prediction, but also a probability to the user.
 % maybe move this to Results?
 The confusion matrices for each classifier model is presented in Appendix \ref{app:confusion_matrix}, \pageref{app:confusion_matrix}.
-
-
-% TODO: add comment/section about Tex.StackExchange here
 
 \section{Results}
 \label{sec:results}
 
 
-
-
-% TODO: Come up with better, more descriptive section name
-\subsection{Using all questions}
+\subsection{Comparison of features based on unprocessed data set and all questions}
 \label{sec:comparison_all_questions_unprocessed}
 The results for the first and second part of the training is shown in Table \ref{tab:singular_feature_detector_so}.
 In this table, all classifiers have been trained using the same parameter settings, based on parameters found from the grid search on the unprocessed data set.
@@ -80,10 +74,7 @@ Tags accuracy score is almost 4\% lower than the unprocessed (467 misclassified 
 \end{table}
 
 
-
-
-% TODO: Come up with better, more descriptive section name
-\subsection{Using questions with occurrence only}
+\subsection{Comparison of features based on unprocessed data set and occurrence}
 \label{sec:comparison_feature_occurence_unprocessed}
 An overview of how many questions contained each feature is given in Table \ref{tab:amount_of_singular_questions_processed}.
 The number used for training and evaluation is shown in Table \ref{tab:questions_used_for_singular_training}.
@@ -148,7 +139,7 @@ When also looking at the confusion matrix (Appendix \ref{app:conf_matrix_singula
 
 
 % TODO: Come up with better, more descriptive section name
-\subsection{Comparing unprocessed against all features}
+\subsection{Comparison of classifier for unprocessed and stemmed}
 \label{sec:comparing_unprocessed_all_features}
 In addition to comparing the combination of all features against the unprocessed classifier, stemming was also included. 
 There were two stemmers that were considered, Porter and Lancaster.
@@ -191,25 +182,20 @@ This is because it is better at predicting bad questions.
 
 
 % TODO: Come up with better, more descriptive section name
-\subsection{Comparing SVC and SGD}
+\subsection[Comparison of SVC and SGD]{Comparison of \glsentrylong{svc} (\glsentryshort{svc}) and \glsentrylong{sgd} (\glsentryshort{sgd})}
 \label{sec:comparing_svc_sgd}
-
-
-
 Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so} shows a comparison between unprocessed and all features (stemmed) using the \gls{sgd} classifier.
-A full exhaustive search was also ran on the unprocessed, but this is omitted because it resulted in the same values as for loss='log'.
-The reason loss was set to 'log' is because you can then get a probability score when using prediction.
-Probability was desired, because when a user then enters a new question to predict, the output would also contain the probability and not just "This is a good/bad question".
+A full exhaustive search for all losses was also ran on the unprocessed, but this is omitted because it resulted in the same values as for loss='log'.
 \vspace{0.5em}\newline
 \gls{svc} did perform slightly better than the \gls{sgd}, which can be seen from comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} and \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}.
 The classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
 When comparing the feature detector containing all features (where both were stemmed), \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
 This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier than \gls{svc}.
+%\vspace{0.5em}\newline	
+\clearpage\noindent
 Based on the confusion matrices, if one only were interested in predicting bad questions, \gls{sgd} would be a better option, given that it has the lowest misclassification.
-However, as seen in Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, it uses a max document frequency of 50\%, meaning that words appearing in over 50\% of the questions are excluded.
-This could be related to it filtering out code samples and dummy words, since the classifier using all features uses up to 75\%.
-Another difference is that for the \gls{svc}, a constant value was set for max document frequency to exclude words used in more than 95\% of the questions. 
-This was mainly because it would be more interesting to use the less used words, but these results shows that it would have been better for the grid search to select that value.
+However, as seen in Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, it uses a max document frequency of 0.5, meaning it excludes words appearing in over 50\% of the questions.
+
 % table showing comparison of the unprocssed and all features classifier using loss='log'
 \begin{table}[!h]%[tbp]
 	\centering
@@ -233,4 +219,77 @@ This was mainly because it would be more interesting to use the less used words,
 
 
 
+\subsection{Applicability}
+\label{sec:applicability}
+Since this thesis was mainly focused on programming questions and \gls{so}, one could ask the question whether or not this is a closed domain system. 
+The answer is that it is an open domain system for \gls{se}.
+\gls{se} uses the same database format for all their data, which is listed in the ReadMe.txt included in the data set\footnote{
+	It is also included in the source code repository on GitHub.
+	The database tables were also based on the ReadMe.
+}.
+\vspace{0.5em}\newline
+To see if the system was expandable, the data for Tex.StackExchange\footnote{
+	The Tex.StackExchange data is based on a data set that was downloaded in August 2015, but the newest question in the data set is from 2014.
+} was extracted and added to a database. 
+Given the amount of data available in \gls{so} vs. the amount of data in Tex.StackExchange, which would be more predictive\footnote{
+	One critique is that the number of questions is not comparable, as shown in Table \ref{tab:dataset_overview_tex}.
+}?
+However, this also helps prove a point in relation to whether or not data matters when training a classifier.
+The results show that \gls{so} is more predictive than Tex.StackExchange.
+Tex.StackExchange got an accuracy score of 99\%, but it misclassified all 15 bad questions as good (and in total, it only contains 93 bad questions).
 
+%description
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		~				& Amount		& Oldest		& Newest		& Vote (lowest)		& Vote (highest)	\\ \hline
+		Votes < 0		& 93			& 22.08.2010	& 10.09.2014	& -14				& -1				\\ \hline
+		Votes = 0		& 5,078			& 26.07.2010	& 14.09.2014	& 0					& 0					\\ \hline
+		Votes > 0		& 65,919		& 18.08.2008	& 14.09.2014	& 1					& 448				\\ \hline
+		All questions	& 71,090 		& 18.08.2008	& 14.09.2014	& -14				& 448				\\ \hline
+	\end{tabular}
+	\caption{Overview of the questions in the Tex.StackExhange (August 2015 data set)}
+	\label{tab:dataset_overview_tex}
+\end{table}
+
+% editor space
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		~ 			& Unprocessed		& Features	\\ \hline
+		Score 		& 0.99				& 0.99		\\ \hline
+		C			& 1					& 1			\\ \hline
+		Kernel		& Linear			& Linear	\\ \hline
+	\end{tabular}
+	\caption{Comparison of raw data set (unprocessed) and feature detectors for Tex.StackExhange (August 2015 data set). Vote score was < 0 for bad and > +7 for good.}
+	\label{tab:singular_feature_detector_tex}
+\end{table}
+
+% description
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c |}
+		\hline
+		Actual 		& Predicted: -1	& Predicted: 1	\\ \hline
+		-1			& 0			& 15				\\ \hline
+		1			& 0			& 2004				\\ \hline
+	\end{tabular}
+	\caption{Confusion Matrix for Tex.StackExhange.}
+	\label{tab:confusion_matrix_tex}
+\end{table}
+
+% description
+\begin{table}[!h]%[tbp]
+	\centering
+	\begin{tabular}{| c | c | c | c | c |}
+		\hline
+		~				& Precision		& Recall	& F1-score		& Support	\\ \hline
+		-1      		& 0.00			& 0.00		& 0.00			& 15		\\ \hline
+		1       		& 0.99			& 1.00		& 1.00			& 2004		\\ \hline
+		avg / total		& 0.99			& 0.99		& 0.99			& 2019		\\ \hline
+	\end{tabular}
+	\caption{Classification report for Tex.StackExhange (August 2015 data set).}
+	\label{tab:tex_classification_report}
+\end{table}

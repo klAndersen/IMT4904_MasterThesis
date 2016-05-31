@@ -110,20 +110,12 @@ With the current state of the system (if it were to be used), it would be more a
 \section{Feature and classifier results}
 \label{sec:feature_classifier_results}
 
-\subsection{Applicability}
-\label{sec:applicability}
-% TODO: Go over this text to see if it needs to be cleaned up
-Since this thesis was mainly focused on programming questions and \gls{so}, one could ask the question whether or not this is a closed domain system. 
-The answer to that is that it is an open domain system for \gls{se}.
-\gls{se} uses the same database format for all their data, which is listed in the ReadMe.txt included in the data set (and also what the database was based on).
-To see if the system is expandable, the data for Tex.StackExchange\footnote{
-	The Tex.StackExchange data is based on a data set that was downloaded in August 2015, but the newest question in the data set is from 2014.
-} was extracted and added to a database. 
-Given the amount of data available in \gls{so} vs. the amount of data in Tex.StackExchange, which would be more predictive?
-One critique is that the number of questions is not comparable, as shown in Table \ref{tab:dataset_overview_tex} in Appendix \ref{app:tables_tex}, p.~\pageref{app:tables_tex}.
-However, this also helps prove a point in relation to whether or not data matters when training a classifier.
-The results show that \gls{so} is more predictive than Tex.StackExchange.
-Tex.StackExchange got an accuracy score of 99\%, but it misclassified all 15 bad questions as good (and in total, it only contains 93 bad questions).
+
+% taken from sgd section
+This could be related to it filtering out code samples and dummy words, since the classifier using all features uses up to 75\%.
+Another difference is that for the \gls{svc}, a constant value was set for max document frequency to exclude words used in more than 95\% of the questions. 
+This was mainly because it would be more interesting to use the less used words, but these results shows that it would have been better for the grid search to select that value.
+
 
 \begin{comment}
 
