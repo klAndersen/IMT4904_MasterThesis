@@ -109,6 +109,8 @@ With the current state of the system (if it were to be used), it would be more a
 
 \section{Feature and classifier results}
 \label{sec:feature_classifier_results}
+
+\subsubsection{Singular features}
 When it comes to the singular features, it was overall Numerical that achieved the highest and Tags that achieved the lowest score when compared to the unprocessed data set.
 The problem with Tags is that it uses two feature types, where 'has\_external\_tags' was not represented for the classifier using all features.
 Furthermore, when looking at Table \ref{app:acronyms} on p.~\pageref{app:acronyms} which lists only questions containing the given feature, the feature detector for Tags appear in 19,967 questions.
@@ -125,11 +127,11 @@ However, the question is also how relevant this feature is.
 From Table \ref{tab:amount_of_singular_questions_processed}, one can see that the Homework feature is only represented in 374 questions.
 If you remove all the false-positives for assignment, it might be less than 200 questions that contain it, meaning it would be excluded (because min\_df excludes less than 1\%).
 \vspace{0.5em}\newline
-Hexadecimal is only present in 160 questions, and has no impact on prediction. 
-Therefore it has no impact on prediction, and is not a good feature. 
+Hexadecimal is only present in 160 questions, which means it will be excluded by min\_df. 
+Hexadecimal is therefore not a good feature. 
 \vspace{0.5em}\newline
 
-\todo[inline]{working on re-writing text below}
+\todo[inline]{working on re-writing paragraph below; also need to add something about}
 
 % unprocessed/singular features - occurrence only
 The feature for code blocks now have a higher accuracy than the unprocessed, and is better at classifying bad questions. 
@@ -137,18 +139,21 @@ This could indicate that questions including a lot of code samples is not a good
 	There was no analysis done on the code samples, but during the development, I noticed that some questions also used the <code> tag on words like "Integer" and "Double".
 }.
 
+something about links
+
+\subsubsection{All features and stemming}
 
 
 
-% unprocessed vs. all features + stemming
 
 
-
-% sgd
+\subsubsection[SVC and SGD]{\glsentrylong{svc} (\glsentryshort{svc}) and \glsentrylong{sgd} (\glsentryshort{sgd})}
+As expected, \gls{svc} was better at prediction than \gls{sgd}, but only with 0.42\% (for the unprocessed data set classifiers).
 This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier than \gls{svc}.
-This could be related to it filtering out code samples and dummy words, since the classifier using all features uses up to 75\%.
-Another difference is that for the \gls{svc}, a constant value was set for max document frequency to exclude words used in more than 95\% of the questions. 
-This was mainly because it would be more interesting to use the less used words, but these results shows that it would have been better for the grid search to select that value.
+However, one problem with \gls{sgd} is that it excludes words that appear in more than 50\% of the questions (max\_df). 
+This could be related to it filtering out code samples and dummy words, since the classifier using all features uses up to 75\% of the words.
+For the \gls{svc}, the max document frequency was set to ignore more than 95\% of the words in a question (because I was more interested in the less used words). 
+Which means that an improvement for the \gls{svc} would be to allow it to also select the max document frequency to see whether or not this would improve its accuracy.
 
 
 \begin{comment}
@@ -480,7 +485,7 @@ The reason that this issue cannot be explained, is because I do not know what ca
 What happened was that when the training was started, no verbose was printed at all (which was weird considering I had used the same values before and it then gave a verbose output). 
 The program ran for hours, without giving any feedback, errors or output. 
 \vspace{0.5em}\newline
-It took almost three days to find a solution, where part of the solution was switching to Windows (which had its own issues, since x64 is not supported by Numpy).
+Part of the solution was switching to Windows (which had its own issues, since x64 is not supported by Numpy).
 The main difference was that in Windows, at least verbose was printed, although it only printed verbose once\footnote{
 	Verbose was printed once, sometime twice between the first 20 - 60 minutes, then nothing.
 	The longest run time that was registered was around 12 hours without any verbose printed.
@@ -491,7 +496,7 @@ By setting n\_jobs=-1, GridSearchCV will run all jobs in parallel, using all log
 However, multi-threading is not supported in Windows \cite{GS2015}. 
 To ensure that progress was made, and that the program had not frozen again, the verbose level was increased.
 By increasing the verbose level, you can force the algorithm to print more information about progress, but with an increase in the time it takes to finish \cite{Manuel2015, user29912432014}. 
-The most fascinating part was that after increasing the verbose level, it not only printed out continuously, but it even finished training in less than 3 hours!
+After increasing the verbose level, it not only printed out continuously, but it even finished training in less than 3 hours.
 This have not been tested in Linux, but the reason nothing happened may have been the same which happened for Windows, that it could not utilize all CPU cores\footnote{
 	My assumption is that when all the logical cores are used, there is no processing power left for the Operative System (OS). 
 	This in turn would then cause an infinite deadlock, since by using all the cores, there is no processing power left for the OS.
