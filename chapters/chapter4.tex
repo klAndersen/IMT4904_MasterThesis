@@ -9,8 +9,9 @@ These features were code samples\footnote{
 }, 
 hexadecimal, numerical, synonyms for homework and tags (homework and tags contained two feature types). 
 One problem with the external tags (all tags listed on the given site), was that it replaced even normal words\footnote{
-	For a visualization of how bad it was, see Figure \ref{fig:tag_features_raw} and \ref{fig:tag_features_external} in Appendix \ref{app:various_screenshots}, p.~\pageref{app:various_screenshots}.
-	See also the files "\emph{training\_data\_10000\_unprocessed\_UP\_has\_tags.csv}" and "\emph{training\_data\_10000\_unprocessed\_has\_tags.csv}", found in \\ 
+	For a visualization of how bad it was, see Figure \ref{fig:tag_features_raw} and \ref{fig:tag_features_external} in Appendix \ref{app:comparison_question_external_tags}, 
+	p.~\pageref{app:comparison_question_external_tags}.
+	See also the files "\emph{training\_data\_10000\_unprocessed\_UP\_has\_tags.csv}" and \\ "\emph{training\_data\_10000\_unprocessed\_has\_tags.csv}", found in  
 	\emph{./IMT4904\_MasterThesis\_Code/extraction\_sets/}.
 } (e.g. "this", "can", "let", etc).
 Since the external tags and the word "assignment" was conflictive, these were only included when creating classifier models for the singular feature detectors\footnote{
@@ -136,18 +137,19 @@ When also looking at the confusion matrix (Appendix \ref{app:conf_matrix_singula
 \end{table}
 
 
-
-
-% TODO: Come up with better, more descriptive section name
 \subsection{Comparison of classifier for unprocessed and stemmed}
 \label{sec:comparing_unprocessed_all_features}
 In addition to comparing the combination of all features against the unprocessed classifier, stemming was also included. 
+
+\subsubsection{Stemming}
+\label{stemming}
 There were two stemmers that were considered, Porter and Lancaster.
 Lancaster is based on Porter, but is more aggressive, and Lancaster replaced words which was not even of the same root\footnote{
 	E.g. the words "user" and "using" both became "us" with Lancaster, and with Porter it became "user" and "use".
 }.
 Therefore, Porter was used as the stemmer.
-\vspace{0.5em}\newline
+
+\subsubsection{Results}
 The expectation was that stemming would enhance the prediction and increase the prediction accuracy, but this was not the case. 
 The stemmed feature detector only achieved an accuracy score of 75.97\%, which is 3.93\% lower than the unprocessed, and 3.15\% lower than the non-stemmed classifier.
 When comparing the stemmed feature detector against the unprocessed and the other two feature detectors including all features, it has the highest misclassification\footnote{ 
@@ -172,16 +174,6 @@ This is because it is better at predicting bad questions.
 \end{table}
 
 
-
-
-
-
-
-
-
-
-
-% TODO: Come up with better, more descriptive section name
 \subsection[Comparison of SVC and SGD]{Comparison of \glsentrylong{svc} (\glsentryshort{svc}) and \glsentrylong{sgd} (\glsentryshort{sgd})}
 \label{sec:comparing_svc_sgd}
 Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so} shows a comparison between unprocessed and all features (stemmed) using the \gls{sgd} classifier.
@@ -190,9 +182,8 @@ A full exhaustive search for all losses was also ran on the unprocessed, but thi
 \gls{svc} did perform slightly better than the \gls{sgd}, which can be seen from comparing Table \ref{tab:unprocessed_vs_all_feature_detectors_svc_so} and \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}.
 The classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gls{sgd} which achieved 79.87\% (only 0.3\% difference).
 When comparing the feature detector containing all features (where both were stemmed), \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
-This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier than \gls{svc}.
-%\vspace{0.5em}\newline	
-\clearpage\noindent
+\vspace{0.5em}\newline	
+%\clearpage\noindent
 Based on the confusion matrices, if one only were interested in predicting bad questions, \gls{sgd} would be a better option, given that it has the lowest misclassification.
 However, as seen in Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, it uses a max document frequency of 0.5, meaning it excludes words appearing in over 50\% of the questions.
 
@@ -215,9 +206,6 @@ However, as seen in Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so},
 	\caption{Comparison of the classifier for the raw (unprocessed) questions vs. questions with all features. Classifier: SGD.}
 	\label{tab:unprocessed_vs_all_feature_detectors_sgd_so}
 \end{table}
-
-
-
 
 \subsection{Applicability}
 \label{sec:applicability}

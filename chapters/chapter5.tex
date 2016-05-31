@@ -109,9 +109,43 @@ With the current state of the system (if it were to be used), it would be more a
 
 \section{Feature and classifier results}
 \label{sec:feature_classifier_results}
+When it comes to the singular features, it was overall Numerical that achieved the highest and Tags that achieved the lowest score when compared to the unprocessed data set.
+The problem with Tags is that it uses two feature types, where 'has\_external\_tags' was not represented for the classifier using all features.
+Furthermore, when looking at Table \ref{app:acronyms} on p.~\pageref{app:acronyms} which lists only questions containing the given feature, the feature detector for Tags appear in 19,967 questions.
+The feature detector using all features appear only in 17,558, which means that at least 2,409 questions contains the external tags.
+What should have been done was to have trained an additional model, with just the feature for 'has\_attached\_tag'.
+If external tags should be included as feature, a filtering mechanism would be needed.
+The easiest solution would be to run a word test, ignore all English words and save the rest to file.
+\vspace{0.5em}\newline
+The same can be said for Homework, since Homework also uses two features, 'has\_homework' and 'has\_assignment'.
+A solution for this is already offered by \gls{so}.
+All the site tags that are listed, also list their related synonyms.
+The solution would then be two combine N-gram and semantic similarity, where one would check word pairs (tag synonyms are listed with hyphens, e.g. "assignment-operator").
+However, the question is also how relevant this feature is. 
+From Table \ref{tab:amount_of_singular_questions_processed}, one can see that the Homework feature is only represented in 374 questions.
+If you remove all the false-positives for assignment, it might be less than 200 questions that contain it, meaning it would be excluded (because min\_df excludes less than 1\%).
+\vspace{0.5em}\newline
+Hexadecimal is only present in 160 questions, and has no impact on prediction. 
+Therefore it has no impact on prediction, and is not a good feature. 
+\vspace{0.5em}\newline
+
+\todo[inline]{working on re-writing text below}
+
+% unprocessed/singular features - occurrence only
+The feature for code blocks now have a higher accuracy than the unprocessed, and is better at classifying bad questions. 
+This could indicate that questions including a lot of code samples is not a good question\footnote{
+	There was no analysis done on the code samples, but during the development, I noticed that some questions also used the <code> tag on words like "Integer" and "Double".
+}.
 
 
-% taken from sgd section
+
+
+% unprocessed vs. all features + stemming
+
+
+
+% sgd
+This could indicate that if one were to increase the sample size to 30,000 or higher, \gls{sgd} could be a better classifier than \gls{svc}.
 This could be related to it filtering out code samples and dummy words, since the classifier using all features uses up to 75\%.
 Another difference is that for the \gls{svc}, a constant value was set for max document frequency to exclude words used in more than 95\% of the questions. 
 This was mainly because it would be more interesting to use the less used words, but these results shows that it would have been better for the grid search to select that value.
