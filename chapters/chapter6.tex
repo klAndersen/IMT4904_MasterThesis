@@ -1,0 +1,46 @@
+%\chapter{Conclusion/Summary}
+\label{chap:chapter6}
+
+\section{Conclusion}
+\label{sec:conclusion}
+\gls{so} is today a well known \gls{qa} community for programmers, and has existed since late 2008.
+\gls{so} can be seen as a gamification system, that awards users for their participation by giving out reputation and badges. 
+If the question (or answer) that is posted is considered of good quality by the community, it gets up-voted. 
+\gls{so} has a strict policy on what type of questions are allowed to be posted, and it was therefore interesting to see if this could be used to measure question quality. 
+\vspace{0.5em}\newline
+In this thesis, a data set containing all information posted within the \gls{se} community was acquired.
+The data set (downloaded in March 2016) for \gls{so} contains a total of 11,203,031 questions.
+Two classifier types were tested, \gls{svc} and \gls{sgd} on a total of 20,000 questions.
+The testing was done on both the unprocessed questions and questions containing one or more feature detectors.
+The classifier using \gls{svc} had the highest accuracy score, where the Numerical feature got an accuracy score of 80.55\%, but only when trained on all questions. 
+The unprocessed got second place, with an accuracy score of 79.90\%.
+However, when training the classifiers only on questions that contained the given feature, numerical got a lower score than the unprocessed.
+Which could mean that the feature only did better  for all questions, because it had more questions (and not feature occurrences) to learn from. 
+\vspace{0.5em}\newline
+The classifier using \gls{sgd} achieved a slightly lower score than \gls{svc}, with an accuracy score of 79.87\%.
+This could indicate that the \gls{sgd} would perform better for a larger data set, if the number of questions was increased to 30,000 or more.
+The comparison of the confusion matrices for the singular feature detector also show that it is easier to predict bad questions, rather than good.
+
+
+\section{Further work}
+\label{sec:further_work}
+Further development of the system would include analysis of the code, to check for syntax errors. 
+Sentiment analysis could also be of interest, since \gls{so} does not want greetings or gratefulness in their questions \cite{CommunityWiki2016a}.
+For the sentiment analysis, symbol checking would also be included ( e.g. '?', '!', emoticons, etc).
+Version numbering is one of the features that were excluded, due to the complexity\footnote{
+	A version number can contain numbers, letters and symbols, in addition to including a "v." or "version", or product name.
+}.
+It would also be interesting to see what results the \gls{sgd} would give when training a classifier on each of the singular features.
+
+
+\begin{comment}
+
+If these are'nt relevant, just remove them
+
+%\textcite{Stanley2013} - Predicting Tags for StackOverflow Posts
+
+%\textcite{Short2014} - Tag Recommendations in StackOverflow
+
+%\textcite{Wang2013} - An Empirical Study on Developer Interactions in StackOverflow
+\end{comment}
+
