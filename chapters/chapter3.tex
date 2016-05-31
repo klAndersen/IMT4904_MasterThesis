@@ -174,10 +174,10 @@ However, WordNet does not have a complete database of all English words, and the
 The solution turned out to be a lot simpler. 
 Instead of creating filters, the CountVectorizer already had one built in. 
 By adjusting the minimum document frequency (min\_df) and setting it to 0.01, words that appeared in less 1\% of all documents were ignored.
-This will not have an effect on any rare words, given that this would require the words to appear in less than 200 questions. 
+%This will not have an effect on any rare words, given that this would require the words to appear in less than 200 questions. 
 In most cases these will mostly be dummy words (e.g. words that are used as examples; "abc", "wwwww", "123abc", etc) or language specific terms, which is not of interest.
 The value for min\_df is also specific for this thesis, and if a larger sample size was used, this value would perhaps need to be adjusted. 
-The min\_df can be represented either as a percentage (0.0, 0.99) or a specific number (0, n).
+The min\_df can be represented either as a percentage ([0.0, \ldots, 0.99]), or a specific number ([0, \ldots, n]).
 
 
 \section{Feature sets, attributes and processing}
@@ -212,8 +212,7 @@ print(temp_df.groupby("label").describe())
 # prints all selected columns
 print(temp_df.groupby("label").describe(include='all'))
 \end{lstlisting}
-
-\clearpage
+%\clearpage
 \begin{table}[h]%[tbp]
 	\centering
 	\begin{tabular}{| c | c | c | c |c |}
@@ -262,20 +261,19 @@ print(temp_df.groupby("label").describe(include='all'))
 	\caption{Feature reduction steps before and after text was processed.}
 	\label{tab:feature_reduction}
 \end{table}
-
+\noindent
 To be able to develop some theories on what the difference between good and bad questions was, a total of 200 questions were reviewed (by sorting questions based on 
  votes\footnote{\url{http://stackoverflow.com/questions?sort=votes}}). 
 It was easier to see certain patterns in down-voted questions rather than those that were up-voted. 
 A repetitive pattern was that many had either no code example, or poorly written code. 
 These questions could also show indications of not having tried anything, or that they were based on either homework or school assignments. 
-This in turn lead to a hypothesis that if a question contains indicator of word synonyms for homework\footnote{\url{http://www.thesaurus.com/browse/homework}}, 
-it would be considered a bad question. 
+This in turn lead to a hypothesis that if a question contains word synonyms for homework, it would be considered a bad question. 
 In addition, some code examples had syntax errors, which made the minimum working example (MWE) not executable. 
 Some questions also contained links, either to external resources or indicators of potential duplicates. 
 Therefore links was also considered a potentially useful feature. 
 Tags was also considered as a feature, which was divided into two: Attached and External tag. 
 Attached tags are tags which the user has linked to the question, whereas external tags are all the tags available on \gls{so}.
-Version numbering was also considered, but this was not included due to the complexity of writing a proper filtering method to account for all possible variations.
+Version numbering was also considered, but this was not included due to the complexity of writing a proper filtering method to account for all the possible variations.
 \vspace{0.5em}\newline
 Features were added in the same manner as was done for code samples, numerical and hexadecimal values. 
 However, there were some issues when attempting to replace the tags and the synonyms for homework.
@@ -288,7 +286,7 @@ A new problem now arose, namely the issue that the word "assignment" did not nec
 Therefore features for homework were split into two types: 'has\_homework' and 'has\_assignment'.
 \vspace{0.5em}\newline
 Tags were without a doubt one of the most annoying features to detect and replace. 
-Site tags (or external) are single text values in the database, whereas the question can have up to five tags attached. 
+Site tags (or external) are single text values in the database, whereas the questions can have up to five tags attached. 
 Attached tags are separated in the following format: "<c><multi-threading>", which had to be processed by removing the '<' and the '>'.
 After the removal, each tag value was added to a list, so that all attached tags was indexed based on the question they belonged to. 
 Furthermore, a combination of string replacement and regular expression was needed. 
@@ -313,9 +311,9 @@ for word in word_set:
 \label{sec:estimator_parameter_selection}
 Two different classifiers were used, \gls{svc} and \gls{sgd}.
 The parameter values that were used for these two are shown in Listing \ref{lst:param_svc} and  \ref{lst:param_sgd}.
-These are the default values used in Scikit-learns tutorials \cite{Scikitlearn.org2016k, Scikitlearn.org2016l} (\cite{Huang2008, Maas2011, Zhang2003} used default values for training their system).
+These are the default values used in Scikit-learns tutorials \cite{Scikitlearn.org2016k, Scikitlearn.org2016l}, and \cite{Huang2008, Maas2011, Zhang2003} used default values for training their system.
 \gls{svc} was chosen because this is what I started with in the beginning, based on the tutorial written by \cite{Rehurek2014}.
-\gls{sgd} was used in some of Scikit-learns tutorials, and are mostly used for sample sizes greater than 100,000 (see Scikit-learns "roadmap" in Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map}  
+\gls{sgd} was used in some of Scikit-learns tutorials, and are mostly used for sample sizes greater than 100,000 (see Scikit-learns "roadmap" in Appendix \ref{app:ml_map}, Figure \ref{fig:ml_map},  
  p.~\pageref{app:ml_map}).
 Since the sample size in this thesis was only 20,000, the expectation was that \gls{svc} would present better predictions.
 %\clearpage
@@ -373,7 +371,7 @@ If the score was then too low, or if you wanted better results, you could use Gr
 Before running the grid search, the questions were split into two parts, a training set and a test set by using 
  train\_test\_split\footnote{\url{http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.train_test_split.html}}.
 train\_test\_split splits the data randomly, but if the random\_state has a fixed value, data will be split the same way (replicability).
-For the grid search, cross validation was also included, using StratifiedKFold with 5-folds.
+For the grid search, cross-validation was also included, using StratifiedKFold with 5-folds.
 StratifiedKFold was selected because it is often used for classification tasks \cite{Kononenko2007}.
 Cross-validation splits data into k-folds, where training is done on k-1 folds, and then evaluated against the last fold \cite{Bishop2006}.
 This means that only 80\% of the 16,000 questions is used for training (12,800 questions for training, and 3,200 for evaluation).
