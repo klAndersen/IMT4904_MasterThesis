@@ -75,6 +75,7 @@ If the question is considered bad, it will receive down-votes, and it can also b
 However, for some question there is what I would call a bias factor. 
 If enough people have the same problem, then it will automatically become a good question. 
 Not necessary because of the questions quality, but because enough users have the same problem (e.g. Bugs, \gls{ide} behaviour, tweaks, etc).
+That being said, there are also questions which gets marked as "CommunityWiki", which gives no reputation, but are considered helpful to the community (thus evading the bias factor) \cite{CommunityWiki2016c}.
 \vspace{0.5em}\newline
 For bad questions, there are some common denominators.
 They question has already been asked, the question is school related or show indications that they have not tried to find a solution. 
@@ -113,7 +114,8 @@ With the current state of the system (if it were to be used), it would be more a
 \subsubsection{Singular features}
 When it comes to the singular features, it was overall Numerical that achieved the highest and Tags that achieved the lowest score when compared to the unprocessed data set.
 The problem with Tags is that it uses two feature types, where 'has\_external\_tags' was not represented for the classifier using all features.
-Furthermore, when looking at Table \ref{app:acronyms} on p.~\pageref{app:acronyms} which lists only questions containing the given feature, the feature detector for Tags appear in 19,967 questions.
+Furthermore, when looking at Table \ref{tab:amount_of_singular_questions_processed} on p.~\pageref{tab:amount_of_singular_questions_processed} which lists only questions containing the given feature, 
+the feature detector for Tags appear in 19,967 questions.
 The feature detector using all features appear only in 17,558, which means that at least 2,409 questions contains the external tags.
 What should have been done was to have trained an additional model, with just the feature for 'has\_attached\_tag'.
 If external tags should be included as feature, a filtering mechanism would be needed.
@@ -121,21 +123,20 @@ The easiest solution would be to run a word test, ignore all English words and s
 \vspace{0.5em}\newline
 The same can be said for Homework, since Homework also uses two features, 'has\_homework' and 'has\_assignment'.
 A solution for this is already offered by \gls{so}.
-All the site tags that are listed, also list their related synonyms.
+For each tag that is listed on \gls{so}, so is their belonging synonym.
 The solution would then be two combine N-gram and semantic similarity, where one would check word pairs (tag synonyms are listed with hyphens, e.g. "assignment-operator").
 However, the question is also how relevant this feature is. 
 From Table \ref{tab:amount_of_singular_questions_processed}, one can see that the Homework feature is only represented in 374 questions.
-If you remove all the false-positives for assignment, it might be less than 200 questions that contain it, meaning it would be excluded (because min\_df excludes less than 1\%).
+If you remove all the false-positives for "assignment", it might be less than 200 questions that contain it, meaning it would be excluded (because min\_df excludes less than 1\%).
 \vspace{0.5em}\newline
 Hexadecimal is only present in 160 questions, which means it will be excluded by min\_df. 
-Hexadecimal is therefore neither representative, nor a good feature. 
+Hexadecimal is therefore neither present, nor a good feature. 
 \vspace{0.5em}\newline
 The feature for code samples has a better prediction when used over questions containing it, then it does when used for all questions. 
 It is also better at classifying bad questions, which could indicate that questions including a lot of code samples is not considered a good question\footnote{
 	There was no analysis done on the code samples, but during the development, I noticed that some questions also used the <code> tag on words like "Integer" and "Double".
 }.
-%\vspace{0.5em}\newline
-%\todo[inline]{something about links, and more about numerical?}
+Based on the results, it would be interesting to see what the results a classifier would get if it used only numerical, code sample feature and links, since these three got the best results. 
 
 
 \subsubsection{All features and stemming}
@@ -382,7 +383,7 @@ This means that if you were to select all the best and worst (sorted on vote sco
 \vspace{0.5em}\newline
 One of the more peculiar issues (which I do not have an explanation for), was when the proper training started (using the \gls{svc} and GridSearchCV).
 The reason that this issue cannot be explained, is because I do not know what caused it to happen.
-What happened was that when the training was started, no verbose was printed at all (which was weird considering I had used the same values before and it then gave a verbose output). 
+When the training was started to create classifiers, no verbose was printed at all (which was weird considering I had used the same values before and it then gave a verbose output). 
 The program ran for hours, without giving any feedback, errors or output. 
 \vspace{0.5em}\newline
 Part of the solution was switching to Windows (which had its own issues, since x64 is not supported by Numpy).
@@ -395,7 +396,7 @@ The first part was changing the n\_jobs value to something else than -1.
 By setting n\_jobs=-1, GridSearchCV will run all jobs in parallel, using all logical cores (e.g. on a CPU with 4 physical cores, it will use all 8 logical cores). 
 However, multi-threading is not supported in Windows \cite{GS2015}. 
 To ensure that progress was made, and that the program had not frozen again, the verbose level was increased.
-By increasing the verbose level, you can force the algorithm to print more information about progress, but with an increase in the time it takes to finish \cite{Manuel2015, user29912432014}. 
+By increasing the verbose level, you can force GridSearchCV to print more information about progress, but with an increase in the time it takes to finish \cite{Manuel2015, user29912432014}. 
 After increasing the verbose level, it not only printed out continuously, but it even finished training in less than 3 hours.
 This have not been tested in Linux, but the reason nothing happened may have been the same which happened for Windows, that it could not utilize all CPU cores\footnote{
 	My assumption is that when all the logical cores are used, there is no processing power left for the Operative System (OS). 

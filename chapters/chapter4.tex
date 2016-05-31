@@ -150,7 +150,7 @@ Lancaster is based on Porter, but is more aggressive, and Lancaster replaced wor
 Therefore, Porter was used as the stemmer.
 
 \subsubsection{Results}
-The expectation was that stemming would enhance the prediction and increase the prediction accuracy, but this was not the case. 
+The expectation was that stemming would enhance the prediction and increase the accuracy score, but this was not the case. 
 The stemmed feature detector only achieved an accuracy score of 75.97\%, which is 3.93\% lower than the unprocessed, and 3.15\% lower than the non-stemmed classifier.
 When comparing the stemmed feature detector against the unprocessed and the other two feature detectors including all features, it has the highest misclassification\footnote{ 
 	Based on the confusion matrices displayed in Appendix \ref{app:confusion_matrix}, p.~\pageref{app:confusion_matrix}.
@@ -184,7 +184,7 @@ The classifier for the unprocessed \gls{svc} achieved a score of 79.90\% vs. \gl
 When comparing the feature detector containing all features (where both were stemmed), \gls{svc} achieved a score 75.97\% and \gls{sgd} achieved 75.55\% (0.42\% difference). 
 \vspace{0.5em}\newline	
 %\clearpage\noindent
-Based on the confusion matrices, if one only were interested in predicting bad questions, \gls{sgd} would be a better option, given that it has the lowest misclassification.
+Based on the confusion matrices, if you want the focus to be on bad questions (and do not care that much about false positives), \gls{sgd} would be a better option, given that it has the lowest misclassification.
 However, as seen in Table \ref{tab:unprocessed_vs_all_feature_detectors_sgd_so}, it uses a max document frequency of 0.5, meaning it excludes words appearing in over 50\% of the questions.
 
 % table showing comparison of the unprocssed and all features classifier using loss='log'
@@ -222,8 +222,8 @@ To see if the system was expandable, the data for Tex.StackExchange\footnote{
 } was extracted and added to a database. 
 Given the amount of data available in \gls{so} vs. the amount of data in Tex.StackExchange, which would be more predictive\footnote{
 	One critique is that the number of questions is not comparable, as shown in Table \ref{tab:dataset_overview_tex}.
+	However, this also helps prove a point in relation to whether or not data matters when training a classifier.
 }?
-However, this also helps prove a point in relation to whether or not data matters when training a classifier.
 The results show that \gls{so} is more predictive than Tex.StackExchange.
 Tex.StackExchange got an accuracy score of 99\%, but it misclassified all 15 bad questions as good (and in total, it only contains 93 bad questions).
 
