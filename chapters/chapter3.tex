@@ -33,7 +33,7 @@ ExcerptPostId="3673183" WikiPostId="3673182" />
 \end{lstlisting}
 
 \subsection{MySQL Database}
-In the beginning, the issue was getting access to the file and see how it looked like. 
+% In the beginning, the issue was getting access to the file and see how it looked like. 
 Since most of these XML files had a large file size (ranging from 3,9 MB to 71,9 GB) none of the editors could open them. 
 Attempting to open them through Python code also failed, since there was not enough memory to process everything. 
 The only solution was therefore to create a MySQL database that could contain all the data. 
@@ -106,7 +106,6 @@ posvote\_Posts contains questions with a score higher then zero (score > 0) and 
 
 \section{Extracting and storing questions for training} 
 \label{sec:extraction_storing_questions}
-When starting the development, the focus was on retrieving the data from the database, and processing it for text analysis. 
 To be able to store all the retrieved columns and the belonging rows without creating object classes, the pandas.DataFrame\footnote{
 	Pandas: \url{http://pandas.pydata.org/}.
 } 
@@ -118,7 +117,7 @@ Therefore, a CSV file was created using pandas.DataFrame.to\_csv\footnote{
 	pandas.DataFrame.to\_csv: \\
 	\url{http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html}.
 }. 
-At first there questions were cleaned of their HTML content, but later on I realised that this would cause issues when detecting code samples and links. 
+At first the questions were cleaned of their HTML content, but this would cause issues when detecting code samples and links. 
 Therefore the unprocessed data set was updated to also include the HTML, and is therefore identical to the data in the database.
 
 \section{Question processing} 
@@ -174,14 +173,26 @@ However, WordNet does not have a complete database of all English words, and the
 The solution turned out to be a lot simpler. 
 Instead of creating filters, the CountVectorizer already had one built in. 
 By adjusting the minimum document frequency (min\_df) and setting it to 0.01, words that appeared in less 1\% of all documents were ignored.
+%TODO: his will have no effect on future predictions, because ...
+
 
 \section{Feature sets, attributes and processing}
 \label{sec:feature_sets}
+Since I wanted a balanced data set for both high and low quality questions, the limit was set to 10,000 for both.
+To be able to retrieve an equal amount for both, the threshold for low quality questions had to be set to -5\footnote{
+	Originally, it was at -10, but this only returned 683 questions. 
+}.
+As can be seen in Table \ref{tab:pandas_categorical} (created by using code snippet in Listing \ref{lst:pandas_categorical}), the average vote score was -7.
+
+\begin{comment}
+% TODO: Remove text below
 When retrieving the questions from the database, the vote score was set to less than -10 for bad question and greater than 50 for good questions (retrieval limit set to 10,000; 20,000 total). 
 However, the vote score was set too low for the bad questions, since only 683 rows was returned. 
 Therefore, the score was then set to less than -5. 
 What was also found when using pandas.Categorical to get an overview (code snippet in Listing \ref{lst:pandas_categorical} and result in Table \ref{tab:pandas_categorical}), 
 one can see that for the 10,000 bad questions, the average vote score was -7. This could be an indicator that when a question has a vote score below -5, they are ignored.
+\end{comment}
+
 \begin{lstlisting}[caption={Getting Categorical data from pandas.DataFrame}, 
 label={lst:pandas_categorical}, language={Python}, basicstyle=\small] 
 from pandas import DataFrame, Categorical
@@ -274,14 +285,15 @@ Therefore features for homework were split into two types: 'has\_homework' and '
 \vspace{0.5em}\newline
 Tags were without a doubt one of the most annoying features to detect and replace. 
 Site tags (or external) are single text values in the database, whereas the question can have up to five tags attached. 
-Those attached tags are then separated in the following format: "<c><multi-threading>", which had to be processed by removing the '<' and the '>'.
+Attached tags are separated in the following format: "<c><multi-threading>", which had to be processed by removing the '<' and the '>'.
 After the removal, each tag value was added to a list, so that all attached tags was indexed based on the question they belonged to. 
 Furthermore, a combination of string replacement and regular expression was needed. 
 The regular expression was used for single character tags (e.g. 'C'), and word replacement for longer words.
 The reason for this was that when using string replacement, single character tags replaced occurrences even if they appeared in the middle of a word.
 If the tags contained characters that could be interpreted as a regular expression (e.g. C++), it would give error about multiple repetitions.
 In addition, the tags needed to be sorted based on their length, since for questions that contained tags which included both <C> and <C++>, 
-if <C> came first, it replaced the <C++> with 'has\_*\_tag'++. The text also had to be converted to lower-case to ensure proper tag matching. 
+if <C> came first, it replaced the <C++> with 'has\_*\_tag'++. 
+Since all the tags were in lower-case, the questions also had to be converted to lower-case to ensure proper matching.
 
 \begin{lstlisting}[caption={Replacing tags in the question}, 
 label={lst:pandas_categorical}, language={Python}, basicstyle=\small] 
@@ -341,6 +353,9 @@ An example is presented in Equation \ref{eq:fit_sgd} and \ref{eq:fit_sgd}, showi
  5 \cdot 5 \cdot 2 \cdot 2 \cdot 2 \cdot 3 \cdot 4 = 2400 \cdot 5 = 12,000
 \end{equation}
 % editor space
+There are two options for exhaustive search in Scikit-learn: GridSearchCV and RandomizedSearchCV.
+GridSearchCV was selected because it matches all parameters, and as as stated in \cite{Markham2015a}, RandomizedSearchCV can give lower scores.
+\begin{comment}
 From Scikit-learn, there are two options for exhaustive search: GridSearchCV and RandomizedSearchCV.
 The main difference is that GridSearchCV matches all parameters, and RandomizedSearchCV only uses a selection of the parameters. 
 RandomizedSearchCV is faster than GridSearchCV, but as stated in \cite{Markham2015a}, it may give lower scores.
@@ -349,6 +364,7 @@ Since I wanted to find the best parameters from the selection, GridSearchCV was 
 However, if the goal was to fine-tune the parameters, RandomizedSearchCV could be more fitting. 
 E.g. start with a high spread of values, and after each completed training, select a new set of values based on the best results. 
 If the score was then too low, or if you wanted better results, you could use GridSearchCV to find the best parameters.
+\end{comment} 
 \vspace{0.5em}\newline
 Before running the grid search, the questions were split into two parts, a training set and a test set by using 
  train\_test\_split\footnote{\url{http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.train_test_split.html}}.
@@ -363,12 +379,71 @@ After the training was completed, the classifier models prediction accuracy was 
 \section{System menu} 
 \label{sec:system_menu}
 To be able to run the system without relying on an \gls{ide}, making it run from the Terminal using basic command setup seemed like a good idea. 
-At first optparse was used, which ironically turned out to be deprecated and replaced by argparse. 
+%At first optparse was used, which ironically turned out to be deprecated and replaced by argparse. 
+For this, argparse was selected.
 However, the problem was that you could only run one command at a time, whereas I wanted the program to be able to run until exited.
+%The ability to enter multiple commands was needed, because the user first needs to load a model before it can make a prediction.
 The reason for this was because it needs to load a model before it can make a prediction, in addition the user might want to predict multiple questions. 
-This was therefore replaced with a basic while loop that runs until the users enters the exit command. 
-The setup used for argparse was kept, so users from *nix system might be more familiar with similar commands (shown in Listing \ref{lst:system_menu}).
-At the end, there were some commands that were not added to the menu, since these were mostly used for testing. 
+Argparse was therefore replaced with a basic while loop that runs until the users enters the exit command. 
+The setup used for argparse was kept, so users from *nix system might be more familiar with similar commands.
+%At the end, there were some commands that were not added to the menu, since these were mostly used for testing. 
+%There are also some commands that are not added to the menu, because they were mainly used for testing.
+The system menu is shown in Figure \ref{fig:system_menu}.
+
+% image of the system menu
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\textwidth]{system_menu}
+	\caption{The system menu}
+	\label{fig:system_menu}
+\end{figure}
+
+
+
+\begin{comment}
+\begin{table}[h]%[tbp]
+	\begin{minipage}{.5\linewidth}
+		\caption{System menu}
+		\centering
+		\begin{tabular}{| c | l | l |}
+			\hline
+			Command 		& Arguments					& Description		 				\\ \hline
+			d				& -							& Loads default model 				\\ \hline
+			e				& -							& Exit the program					\\ \hline
+			h				& -							& Displays this help menu			\\ \hline
+			1				& 
+								\begin{tabular}{ l  l }
+									path: 		& Path to directory with model(s)	\\
+									filename: 	& The models filename 				\\
+									suffix: 	& File type - Optional 				\\
+								\end{tabular}
+														& Load user created model			\\ \hline
+			p				& 
+								\begin{tabular}{ l  l }
+									question: 	& Question to predict quality of			
+								\end{tabular}
+														& Predict the quality of the entered question	\\ \hline
+			t				& 
+								\begin{tabular}{ l  l }
+									path: 		& Path to directory with training data	\\
+									filename: 	& Filename for data set 				\\
+									db\_load: 	& Load from database   					\\
+									limit		& Limit for database row retrieval  	\\
+								\end{tabular}
+														& Train a new model based on data set	\\ \hline
+			u				& 
+								\begin{tabular}{ l  l }
+									filename: 				& Filename for data set 				\\
+									limit:					& Limit for database row retrieval 		\\
+									feature\_detectors: 	& Create singular feature detectors		\\
+									create\_model: 			& Create classifier model(s)   			
+								\end{tabular}
+														& Create an \newline unprocessed data set based on database	\\ \hline
+		\end{tabular}
+	\end{minipage}%
+\end{table}
+
+
 % listing with the available menu commands
 \begin{lstlisting}[caption={System menu}, 
 label={lst:system_menu}, basicstyle=\small] 
@@ -395,6 +470,7 @@ feature_detectors: Create singular feature detectors based on data set? (Enter 0
 create_model: Create classifier model(s) based on data set? 
 0: No, 1: Unprocessed model, 2: Feature detector model(s) 3: Both (1 and 2)
 \end{lstlisting}
+\end{comment}
 
 \begin{comment}
 Timeline:
