@@ -170,10 +170,14 @@ The non-English words were a bit more troublesome to handle, since these were ma
 Attempts were made to filter them out by using corpus.words.words() and corpus.wordnet.synset() 
 from \gls{nltk}\footnote{\url{http://www.nltk.org/}}, and PyEnchant\footnote{\url{http://pythonhosted.org/pyenchant/}}. 
 However, WordNet does not have a complete database of all English words, and they all claimed some words were not English even though they were.
+\vspace{0.5em}\newline
 The solution turned out to be a lot simpler. 
 Instead of creating filters, the CountVectorizer already had one built in. 
 By adjusting the minimum document frequency (min\_df) and setting it to 0.01, words that appeared in less 1\% of all documents were ignored.
-%TODO: his will have no effect on future predictions, because ...
+This will not have an effect on any rare words, given that this would require the words to appear in less than 200 questions. 
+In most cases these will mostly be dummy words (e.g. words that are used as examples; "abc", "wwwww", "123abc", etc) or language specific terms, which is not of interest.
+The value for min\_df is also specific for this thesis, and if a larger sample size was used, this value would perhaps need to be adjusted. 
+The min\_df can be represented either as a percentage (0.0, 0.99) or a specific number (0, n).
 
 
 \section{Feature sets, attributes and processing}

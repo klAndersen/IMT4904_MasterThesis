@@ -128,24 +128,22 @@ From Table \ref{tab:amount_of_singular_questions_processed}, one can see that th
 If you remove all the false-positives for assignment, it might be less than 200 questions that contain it, meaning it would be excluded (because min\_df excludes less than 1\%).
 \vspace{0.5em}\newline
 Hexadecimal is only present in 160 questions, which means it will be excluded by min\_df. 
-Hexadecimal is therefore not a good feature. 
+Hexadecimal is therefore neither representative, nor a good feature. 
 \vspace{0.5em}\newline
-
-\todo[inline]{working on re-writing paragraph below; also need to add something about}
-
-% unprocessed/singular features - occurrence only
-The feature for code blocks now have a higher accuracy than the unprocessed, and is better at classifying bad questions. 
-This could indicate that questions including a lot of code samples is not a good question\footnote{
+The feature for code samples has a better prediction when used over questions containing it, then it does when used for all questions. 
+It is also better at classifying bad questions, which could indicate that questions including a lot of code samples is not considered a good question\footnote{
 	There was no analysis done on the code samples, but during the development, I noticed that some questions also used the <code> tag on words like "Integer" and "Double".
 }.
+%\vspace{0.5em}\newline
+%\todo[inline]{something about links, and more about numerical?}
 
-something about links
 
 \subsubsection{All features and stemming}
-
-
-
-
+A more accurate comparison on the effect of stemming would could have been achieved by also creating a stemmed classifier for the unprocessed dataset. 
+However, the results from comparing the non-stemmed against the stemmed shows that stemming decreases the predictability.
+This could be related to the length of the questions, because words that were previously excluded is now included (which a comparison against unprocessed could have shown).
+One improvement that was shown, was that the non-stemmed improved its accuracy vs. the the one using the unprocessed classifiers parameters. 
+This not only shows that the parameters have an effect on the accuracy, but also that if each singular feature detector had been trained using grid search, the results would not have been comparable.
 
 \subsubsection[SVC and SGD]{\glsentrylong{svc} (\glsentryshort{svc}) and \glsentrylong{sgd} (\glsentryshort{sgd})}
 As expected, \gls{svc} was better at prediction than \gls{sgd}, but only with 0.42\% (for the unprocessed data set classifiers).
@@ -354,104 +352,6 @@ One critique is that the number of questions is not comparable, as shown in Tabl
 However, this also helps prove a point in relation to whether or not data matters when training a classifier.
 The results show that \gls{so} is more predictive than Tex.StackExchange.
 Tex.StackExchange got an accuracy score of 99\%, but it misclassified all 15 bad questions as good (and in total, it only contains 93 bad questions).
-\end{comment}
-
-
-\section[Artificial Intelligence Methods]{\glsentrylong{ai} (\glsentryshort{ai}) Methods}
-\label{sec:ai_methods}
-
-There are other methods and algorithms that could be applied for question classification. 
-\textcite{Echihabi2003} used a noisy-channel model to retrieve answers based on the question sentence, and \textcite{Heie2012} used it for answer extraction.
-\textcite{Loni2011} compared Back-Propagation Neural Networks (BPNN) and \gls{svm} using latent semantic analysis, where BPNN performed better than \gls{svm}.
-\textcite{Bloehdorn2004} combined Boosting and semantics, which got good results, but the results depended on the parameter settings.
-\textcite{Zhang2003} compared Nearest Neighbors, Naive Bayes, Decision Tree, Sparse Network of Winnows and \gls{svm}, and found that \gls{svm} was the best. 
-They also included suggestions for improvement by adding a tree kernel to weigh up for syntactical differences which could reduce errors by 20\%.
-\textcite{Figueroa2008} experimented with Genetic Algorithms to find the answer type for questions, but answers were mostly returned as unigrams instead of as a sentence.
-%\textcite{bibid}
-
-
-
-
-
-\begin{comment}
-% echihabi200
-finding the answer to a question Q
-amounts to selecting the sub-string SA of highest
-score.
-This model explains how a given sentence S\_A that
-contains an answer sub-string A to a question Q
-can be rewritten into Q through a sequence of
-stochastic operations.
-
-For Discussion chapter:
---------------------
-
-% Re-write and use what ever fits
-In the \gls{bow} model, only single words or word stems are used as features for representing document content. 
-The issue is that learning algorithms are restricted to detecting patterns in the used terminology only, while ignoring conceptual patterns. 
-List of weaknesses with using \gls{bow} (1-3 addressed issues on a lexical level, and 4 conceptual level):
-\begin{enumerate}
-\item Multi-Word Expressions with an own meaning like "European Union" are chunked into pieces with possibly very different meanings like "union".
-\item Synonymous Words like "tungsten" and "wolfram" are mapped into different features.
-\item Polysemous Words are treated as one single feature while they may actually have multiple distinct meanings.
-\item Lack of Generalization: there is no way to generalize similar terms like "beef" and "pork" to their common hypernym "meat".
-\end{enumerate}
-WordNet database organizes simple words and multi-word expressions of different syntactic categories into so called synonym sets (synsets), 
-each of which represents an underlying concept and links these through semantic relations. \\
-Conceptual Document Representation:
-\begin{itemize}
-\item Candidate Term Detection: Strategy built on the assumption that if you find the longest multi-word expressions in the text, 
-the lexicon will lead to a mapping to the most specific concept for that word (instead of querying single words, which may lead to wrong mapping).
-\item Syntactical Patterns:Analysis by using POS-tagging.
-\item Morphological Transformations: Entry form, base form reduction. 
-Stemming if the first query for the inflected forms on the original lexicon turned out unsuccessful.
-\item Word Sense Disambiguation (WSD): A lexical entry for an expression does not necessarily imply a one-to-one mapping to a concept in the ontology. 
-\item Disambiguate an expression versus multiple possible concepts.
-\item Generalization: Going from specific concepts in the text to general concept representations. Mapping words based on generalization (up to a certain level).
-\end{itemize}
-\cite{Bloehdorn2004}
-
-% Re-write and use what ever fits
-\gls{qc}: predict the entity type of the answer of a natural language question, mostly achieved by using machine learning. 
-Used Latent Semantic Analysis (LSA) technique to reduce the large feature space of questions to a much smaller and efficient feature space. 
-Two different classifiers: Back-Propagation Neural Networks (BPNN) and Support Vector Machines (SVM). 
-Found that using LSA on question classification made it more time efficient and improved classification accuracy by removing redundant features. 
-Discovered that when the original feature space is compact and efficient, its reduced space performs better than a large feature space with a rich set of features. 
-They also found that in the reduced feature space, BPNN was better than SVM.  
-Competitive with state-of-the-art, even though they used smaller feature space.
-\cite{Loni2011}
-
-Sentiment and such: \cite{Maas2011}	
-
-------------------------
-
-Note to self: Map graph over feature impact (unprocessed, singular, all)
-Also add in estimated training time for exhaustive search (e.g. ~120 minutes for SVC vs ~100 for SGD over 16k questions (since 4k = test)). 
-
-
-% could be re-phrased into "in this paper, they define question analysis with two different approaches..."
-In the paper by \textcite{Toba2011}, they experiment with the use of statistical learning to find the expected answer pattern for factoid \gls{qa} pairs. 
-E.g. if you ask someone where a certain event took place, the answer pattern would be a location. 
-They group question analysis into two approaches; pattern-based (high precision, low recall) and \gls{ml} (high recall, 
-low precision\footnote{
-Low precision can occur if the feature sets are not fitted well enough during classifier training 
-\cite[p.~283]{Toba2011}.
-}). 
-Pattern-based would match word sequences against a set of patterns (e.g. regular expressions), whereas \gls{ml} would be based on the accuracy of the classifier 
-(e.g. lexical or linguistic feature sets). 
-% editor space
-The retrieval of \gls{qa} pairs is done by using a statistical relation framework: Bayesian Analogical Reasoning (BAR). 
-Features sets are extracted from the training set by use of binary values checking if the question contains a given question word. 
-The BAR framework then learns the related features and computes the estimation for them. 
-Thereafter \gls{qa} pairs are retrieved from the testing set and compared against the training set. 
-Afterwards, the \gls{qa} pairs that have identical question words are identified, and overlapping pairs are grouped according their named entity group.
-To retrieve named entities, they used two different recognizers. 
-The first was Stanford (extracts the person, organization and location), and the second was dictionary based (extract number entities and fine-grained noun-based entities). 
-Question words were extracted by building a question word list from the training set (achieved by using Stanford Part-of-Speech (POS) tagger). 
-Then for each question, look for the appearance of the question word to create the feature set.
-Mapped named-entities.
-\cite{Toba2011}
-
 \end{comment}
 
 
